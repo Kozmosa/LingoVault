@@ -1,0 +1,5 @@
+{
+  "name": "LingoVault",
+  "description": "A modern, lightweight vocabulary manager with AI superpowers. Supports JSON/CSV import/export, smart translation, and example generation.",
+  "requestFramePermissions": []
+}

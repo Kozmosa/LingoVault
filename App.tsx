@@ -1,0 +1,428 @@
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { WordItem, AISettings, DEFAULT_AI_SETTINGS } from './types';
+import { wordsToCsv, csvToWords, downloadFile } from './utils/csvHelper';
+import { WordList } from './components/WordList';
+import { enhanceWord } from './services/aiService';
+import { SettingsModal } from './components/SettingsModal';
+import { useTranslation } from 'react-i18next';
+import { 
+  BookOpen, 
+  Plus, 
+  Search, 
+  Upload, 
+  Sparkles, 
+  Loader2, 
+  FileJson, 
+  FileSpreadsheet, 
+  X,
+  Globe,
+  Settings,
+  Sun,
+  Moon,
+  Monitor
+} from 'lucide-react';
+
+type Theme = 'light' | 'dark' | 'system';
+
+const App: React.FC = () => {
+  const { t, i18n } = useTranslation();
+  const [words, setWords] = useState<WordItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isAdding, setIsAdding] = useState(true);
+  const [isLoadingAi, setIsLoadingAi] = useState(false);
+  
+  // Settings State
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [aiSettings, setAiSettings] = useState<AISettings>(DEFAULT_AI_SETTINGS);
+
+  // Theme State
+  const [theme, setTheme] = useState<Theme>(() => {
+    return (localStorage.getItem('lingovault_theme') as Theme) || 'system';
+  });
+
+  // New word state
+  const [newEnglish, setNewEnglish] = useState('');
+  const [newChinese, setNewChinese] = useState('');
+  const [newExample, setNewExample] = useState('');
+
+  const englishInputRef = useRef<HTMLInputElement>(null);
+
+  // Initial load
+  useEffect(() => {
+    const savedData = localStorage.getItem('lingovault_data');
+    if (savedData) {
+      try {
+        setWords(JSON.parse(savedData));
+      } catch (e) {
+        console.error("Failed to load local data", e);
+      }
+    }
+
+    const savedSettings = localStorage.getItem('lingovault_settings');
+    if (savedSettings) {
+      try {
+        setAiSettings({ ...DEFAULT_AI_SETTINGS, ...JSON.parse(savedSettings) });
+      } catch (e) {
+        console.error("Failed to load settings", e);
+      }
+    }
+  }, []);
+
+  // Theme Effect
+  useEffect(() => {
+    const root = window.document.documentElement;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (isDark: boolean) => {
+      if (isDark) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    };
+
+    const handleSystemChange = (e: MediaQueryListEvent) => {
+      if (theme === 'system') {
+        applyTheme(e.matches);
+      }
+    };
+
+    if (theme === 'system') {
+      applyTheme(mediaQuery.matches);
+      mediaQuery.addEventListener('change', handleSystemChange);
+    } else {
+      applyTheme(theme === 'dark');
+    }
+
+    localStorage.setItem('lingovault_theme', theme);
+
+    return () => mediaQuery.removeEventListener('change', handleSystemChange);
+  }, [theme]);
+
+  // Persistence
+  useEffect(() => {
+    localStorage.setItem('lingovault_data', JSON.stringify(words));
+  }, [words]);
+
+  useEffect(() => {
+    localStorage.setItem('lingovault_settings', JSON.stringify(aiSettings));
+  }, [aiSettings]);
+
+  const toggleLang = () => {
+    const newLang = i18n.language.startsWith('zh') ? 'en' : 'zh';
+    i18n.changeLanguage(newLang);
+  };
+
+  const cycleTheme = () => {
+    setTheme(prev => {
+      if (prev === 'light') return 'dark';
+      if (prev === 'dark') return 'system';
+      return 'light';
+    });
+  };
+
+  const getThemeIcon = () => {
+    switch (theme) {
+      case 'light': return <Sun size={18} />;
+      case 'dark': return <Moon size={18} />;
+      default: return <Monitor size={18} />;
+    }
+  };
+
+  // Focus English input when adding mode is active
+  useEffect(() => {
+    if (isAdding) {
+      setTimeout(() => {
+        englishInputRef.current?.focus();
+      }, 50);
+    }
+  }, [isAdding]);
+
+  const handleAddWord = useCallback(() => {
+    if (!newEnglish.trim()) return;
+
+    const newWord: WordItem = {
+      id: crypto.randomUUID(),
+      english: newEnglish,
+      chinese: newChinese,
+      example: newExample,
+      createdAt: Date.now()
+    };
+
+    setWords(prev => [newWord, ...prev]);
+    setNewEnglish('');
+    setNewChinese('');
+    setNewExample('');
+    setIsAdding(false);
+  }, [newEnglish, newChinese, newExample]);
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      e.preventDefault();
+      handleAddWord();
+    }
+  };
+
+  const handleDelete = useCallback((id: string) => {
+    setWords(prev => prev.filter(w => w.id !== id));
+  }, []);
+
+  const handleUpdate = useCallback((updatedWord: WordItem) => {
+    setWords(prev => prev.map(w => w.id === updatedWord.id ? updatedWord : w));
+  }, []);
+
+  const handleAiFill = async () => {
+    if (!newEnglish) return;
+    setIsLoadingAi(true);
+    try {
+      const result = await enhanceWord(newEnglish, aiSettings);
+      if (result.chinese) setNewChinese(result.chinese);
+      if (result.example) setNewExample(result.example);
+    } catch (e) {
+      console.error(e);
+      alert(t('aiError'));
+    } finally {
+      setIsLoadingAi(false);
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const content = e.target?.result as string;
+      try {
+        let importedWords: WordItem[] = [];
+        if (file.name.endsWith('.json')) {
+          const json = JSON.parse(content);
+          importedWords = Array.isArray(json) ? json : json.words || [];
+        } else if (file.name.endsWith('.csv')) {
+          importedWords = csvToWords(content);
+        }
+        
+        setWords(prev => {
+          const existingIds = new Set(prev.map(p => p.id));
+          const novel = importedWords.filter(w => !existingIds.has(w.id));
+          return [...novel, ...prev];
+        });
+        
+        event.target.value = '';
+      } catch (err) {
+        alert(t('fileError'));
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  const handleExportJson = () => {
+    const data = JSON.stringify(words, null, 2);
+    downloadFile(data, `lingovault_${new Date().toISOString().slice(0,10)}.json`, 'application/json');
+  };
+
+  const handleExportCsv = () => {
+    const csv = wordsToCsv(words);
+    downloadFile(csv, `lingovault_${new Date().toISOString().slice(0,10)}.csv`, 'text/csv');
+  };
+
+  const filteredWords = useMemo(() => {
+    const term = searchTerm.toLowerCase();
+    return words.filter(w => 
+      w.english.toLowerCase().includes(term) || 
+      w.chinese.includes(term) ||
+      (w.example && w.example.toLowerCase().includes(term))
+    );
+  }, [words, searchTerm]);
+
+  return (
+    <div className="min-h-screen pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <SettingsModal 
+        isOpen={isSettingsOpen} 
+        onClose={() => setIsSettingsOpen(false)}
+        onSave={(settings) => {
+            setAiSettings(settings);
+            setIsSettingsOpen(false);
+        }}
+        initialSettings={aiSettings}
+      />
+
+      {/* Header */}
+      <header className="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-brand-600 dark:text-brand-500">
+            <BookOpen className="h-6 w-6" />
+            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t('appName')}</h1>
+          </div>
+          
+          <div className="flex items-center gap-2">
+            
+            <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 gap-1 transition-colors">
+                <button 
+                  onClick={toggleLang}
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all flex items-center gap-1"
+                  title={t('switchTo')}
+                >
+                  <Globe size={18} />
+                  <span className="text-xs font-bold uppercase w-5 text-center">
+                    {i18n.language.startsWith('zh') ? 'ZH' : 'EN'}
+                  </span>
+                </button>
+                <div className="w-px bg-slate-300 dark:bg-slate-600 my-1"></div>
+                <button 
+                  onClick={cycleTheme}
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all"
+                  title={t(theme)}
+                >
+                  {getThemeIcon()}
+                </button>
+                <div className="w-px bg-slate-300 dark:bg-slate-600 my-1"></div>
+                <button 
+                  onClick={() => setIsSettingsOpen(true)}
+                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all"
+                  title={t('settings')}
+                >
+                  <Settings size={18} />
+                </button>
+            </div>
+
+            <div className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1 hidden sm:block"></div>
+            
+            <div className="hidden sm:flex items-center gap-2">
+                <button onClick={handleExportJson} className="p-2 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-brand-50 dark:hover:bg-slate-800 rounded-lg transition-colors" title={t('exportJson')}>
+                    <FileJson size={20} />
+                </button>
+                <button onClick={handleExportCsv} className="p-2 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-brand-50 dark:hover:bg-slate-800 rounded-lg transition-colors" title={t('exportCsv')}>
+                    <FileSpreadsheet size={20} />
+                </button>
+                <div className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1"></div>
+            </div>
+            
+            <label className="cursor-pointer p-2 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-brand-50 dark:hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-2" title={t('import')}>
+              <Upload size={20} />
+              <span className="hidden sm:inline text-sm font-medium">{t('import')}</span>
+              <input type="file" accept=".json,.csv" className="hidden" onChange={handleFileUpload} />
+            </label>
+            
+            <button 
+              onClick={() => setIsAdding(!isAdding)}
+              className="ml-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium shadow-sm shadow-brand-500/30 flex items-center gap-2 transition-all active:scale-95"
+            >
+              <Plus size={18} />
+              <span className="hidden sm:inline">{t('addWord')}</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+        
+        {/* Add Word Panel */}
+        {isAdding && (
+          <div 
+            className="mb-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-brand-100 dark:border-slate-800 overflow-hidden animate-in slide-in-from-top-4 duration-300"
+            onKeyDown={handleKeyDown}
+          >
+            <div className="bg-brand-50/50 dark:bg-brand-900/10 p-4 border-b border-brand-100 dark:border-slate-800 flex justify-between items-center">
+              <h2 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+                <Plus size={18} /> {t('newEntry')}
+              </h2>
+              <button onClick={() => setIsAdding(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={18} /></button>
+            </div>
+            <div className="p-6 grid gap-4 sm:grid-cols-2">
+              <div className="sm:col-span-2 relative">
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('englishLabel')}</label>
+                <div className="flex gap-2">
+                    <input 
+                    ref={englishInputRef}
+                    type="text" 
+                    placeholder={t('englishPlaceholder')} 
+                    className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                    value={newEnglish}
+                    onChange={(e) => setNewEnglish(e.target.value)}
+                    />
+                    <button 
+                        onClick={handleAiFill}
+                        disabled={isLoadingAi || !newEnglish}
+                        className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                        title="Auto-fill with AI"
+                    >
+                        {isLoadingAi ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                        <span className="text-sm font-medium hidden sm:inline">{t('aiFill')}</span>
+                    </button>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('meaningLabel')}</label>
+                <input 
+                  type="text" 
+                  placeholder={t('meaningPlaceholder')} 
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                  value={newChinese}
+                  onChange={(e) => setNewChinese(e.target.value)}
+                />
+              </div>
+
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('exampleLabel')}</label>
+                <input 
+                  type="text" 
+                  placeholder={t('examplePlaceholder')} 
+                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                  value={newExample}
+                  onChange={(e) => setNewExample(e.target.value)}
+                />
+              </div>
+
+              <div className="sm:col-span-2 flex justify-between items-center pt-2">
+                <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">{t('proTip')}</span>
+                <button 
+                  onClick={handleAddWord}
+                  disabled={!newEnglish}
+                  className="px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all ml-auto"
+                >
+                  {t('saveBtn')}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Search & Stats */}
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <input 
+              type="text" 
+              placeholder={t('searchPlaceholder')} 
+              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all shadow-sm"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <div className="text-sm text-slate-500 dark:text-slate-400 font-medium px-1">
+            {filteredWords.length} {filteredWords.length === 1 ? t('entry') : t('entries')}
+          </div>
+        </div>
+
+        <WordList words={filteredWords} onDelete={handleDelete} onUpdate={handleUpdate} />
+
+      </main>
+
+      {/* Mobile Sticky Action Button */}
+      <div className="sm:hidden fixed bottom-6 right-6 z-20">
+         <button 
+           onClick={() => setIsAdding(true)}
+           className="h-14 w-14 bg-brand-600 text-white rounded-full shadow-lg shadow-brand-600/40 flex items-center justify-center hover:scale-105 transition-transform"
+         >
+           <Plus size={24} />
+         </button>
+      </div>
+
+    </div>
+  );
+};
+
+export default App;
