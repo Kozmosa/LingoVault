@@ -386,10 +386,10 @@ const App: React.FC = () => {
               </h2>
               <button onClick={() => setIsAdding(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={18} /></button>
             </div>
-            <div className="p-6 grid gap-4 sm:grid-cols-2">
-              <div className="sm:col-span-2 relative">
+            <div className="p-6 grid gap-5 md:grid-cols-2">
+              <div className="md:col-span-2 relative">
                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('englishLabel')}</label>
-                <div className="flex gap-2">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-2">
                     <input 
                     ref={englishInputRef}
                     type="text" 
@@ -401,7 +401,7 @@ const App: React.FC = () => {
                     <button 
                         onClick={handleAiFill}
                         disabled={isLoadingAi || !newEnglish}
-                        className="px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                        className="w-full sm:w-auto px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
                         title="Auto-fill with AI"
                     >
                         {isLoadingAi ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
@@ -421,7 +421,7 @@ const App: React.FC = () => {
                 />
               </div>
 
-              <div className="sm:col-span-2">
+              <div className="md:col-span-2">
                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('exampleLabel')}</label>
                 <input 
                   type="text" 
@@ -432,12 +432,12 @@ const App: React.FC = () => {
                 />
               </div>
 
-              <div className="sm:col-span-2 flex justify-between items-center pt-2">
-                <span className="text-xs text-slate-400 dark:text-slate-500 hidden sm:inline">{t('proTip')}</span>
+              <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                <span className="text-xs text-slate-400 dark:text-slate-500 text-center md:text-left">{t('proTip')}</span>
                 <button 
                   onClick={handleAddWord}
                   disabled={!newEnglish}
-                  className="px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all ml-auto"
+                  className="w-full md:w-auto px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all md:ml-auto"
                 >
                   {t('saveBtn')}
                 </button>
