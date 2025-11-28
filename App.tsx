@@ -30,6 +30,8 @@ const App: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [isAdding, setIsAdding] = useState(true);
   const [isLoadingAi, setIsLoadingAi] = useState(false);
+  const [isAutoMeaningLoading, setIsAutoMeaningLoading] = useState(false);
+  const [isAutoExampleLoading, setIsAutoExampleLoading] = useState(false);
   
   // Settings State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -185,6 +187,60 @@ const App: React.FC = () => {
       setIsLoadingAi(false);
     }
   };
+
+  const handleAutoMeaning = useCallback(async () => {
+    const targets = words.filter(word => !word.chinese?.trim());
+    if (targets.length === 0) {
+      alert(t('noMissingMeaning'));
+      return;
+    }
+
+    setIsAutoMeaningLoading(true);
+    try {
+      for (const word of targets) {
+        try {
+          const result = await enhanceWord(word.english, aiSettings);
+          const meaning = result.chinese?.trim();
+          if (meaning) {
+            setWords(prev => prev.map(w => w.id === word.id ? { ...w, chinese: meaning } : w));
+          }
+        } catch (error) {
+          console.error('Auto meaning fill failed for', word.english, error);
+          alert(t('aiError'));
+          break;
+        }
+      }
+    } finally {
+      setIsAutoMeaningLoading(false);
+    }
+  }, [aiSettings, t, words]);
+
+  const handleAutoExample = useCallback(async () => {
+    const targets = words.filter(word => !word.example?.trim());
+    if (targets.length === 0) {
+      alert(t('noMissingExample'));
+      return;
+    }
+
+    setIsAutoExampleLoading(true);
+    try {
+      for (const word of targets) {
+        try {
+          const result = await enhanceWord(word.english, aiSettings);
+          const example = result.example?.trim();
+          if (example) {
+            setWords(prev => prev.map(w => w.id === word.id ? { ...w, example } : w));
+          }
+        } catch (error) {
+          console.error('Auto example fill failed for', word.english, error);
+          alert(t('aiError'));
+          break;
+        }
+      }
+    } finally {
+      setIsAutoExampleLoading(false);
+    }
+  }, [aiSettings, t, words]);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -402,8 +458,30 @@ const App: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="text-sm text-slate-500 dark:text-slate-400 font-medium px-1">
-            {filteredWords.length} {filteredWords.length === 1 ? t('entry') : t('entries')}
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handleAutoMeaning}
+                disabled={isAutoMeaningLoading || isAutoExampleLoading}
+                className="px-3 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                title={t('autoMeaningTitle')}
+              >
+                {isAutoMeaningLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                <span className="text-sm font-medium">{t('autoMeaning')}</span>
+              </button>
+              <button
+                onClick={handleAutoExample}
+                disabled={isAutoMeaningLoading || isAutoExampleLoading}
+                className="px-3 py-2 bg-sky-50 dark:bg-sky-900/20 text-sky-600 dark:text-sky-300 border border-sky-100 dark:border-sky-900 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                title={t('autoExampleTitle')}
+              >
+                {isAutoExampleLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                <span className="text-sm font-medium">{t('autoExample')}</span>
+              </button>
+            </div>
+            <div className="text-sm text-slate-500 dark:text-slate-400 font-medium px-1 text-center sm:text-left">
+              {filteredWords.length} {filteredWords.length === 1 ? t('entry') : t('entries')}
+            </div>
           </div>
         </div>
 
