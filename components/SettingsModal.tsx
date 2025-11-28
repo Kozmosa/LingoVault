@@ -10,16 +10,36 @@ interface SettingsModalProps {
   initialSettings: AISettings;
 }
 
+const ANIMATION_DURATION = 420;
+
 export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, onSave, initialSettings }) => {
   const { t } = useTranslation();
   const [settings, setSettings] = useState<AISettings>(initialSettings);
+  const [isRendered, setIsRendered] = useState(isOpen);
+  const [isVisible, setIsVisible] = useState(isOpen);
 
   // Reset local state when modal opens with new props
   useEffect(() => {
     setSettings(initialSettings);
   }, [initialSettings, isOpen]);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    if (isOpen) {
+      setIsRendered(true);
+      requestAnimationFrame(() => setIsVisible(true));
+    } else if (isRendered) {
+      setIsVisible(false);
+      const timeout = window.setTimeout(() => setIsRendered(false), ANIMATION_DURATION);
+      return () => window.clearTimeout(timeout);
+    }
+  }, [isOpen, isRendered]);
+
+  if (!isRendered) return null;
+
+  const handleRequestClose = () => {
+    setIsVisible(false);
+    onClose();
+  };
 
   const handleProviderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newProvider = e.target.value as AIProvider;
@@ -59,11 +79,17 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, o
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 transition-colors">
+    <div
+      className={`fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4 transition-opacity duration-[420ms] modal-ease ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      onClick={handleRequestClose}
+    >
+      <div
+        className={`bg-white dark:bg-slate-900 rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800 transition-colors transition-transform transition-opacity duration-[420ms] modal-ease ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-[0.96] translate-y-4'}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="flex justify-between items-center p-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850">
           <h2 className="text-lg font-bold text-slate-800 dark:text-slate-100">{t('settingsTitle')}</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+          <button onClick={handleRequestClose} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition">
             <X size={20} />
           </button>
         </div>
