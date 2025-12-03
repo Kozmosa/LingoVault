@@ -35,12 +35,6 @@
     ]
   },
   "plugins": {
-    "updater": {
-      "endpoints": [
-        "https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json"
-      ],
-      "pubkey": "YOUR_PUBLIC_KEY_HERE"
-    },
     "http": {
       "scope": [
         "https://github.com/*",
