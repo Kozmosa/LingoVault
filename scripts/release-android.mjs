@@ -1,22 +1,23 @@
-// scripts/release-android.mjs
 import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 // --- 配置区域 ---
-const NEW_VERSION = process.argv[2]; // 从命令行获取版本号
+const NEW_VERSION = process.argv[2];
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/universal/release');
-// 如果你没有构建 universal 包，可能是这个路径，请根据实际情况调整：
-// const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/arm64-v8a/release');
+
+// 修正点1: 针对 aarch64 架构的输出路径
+const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/arm64-v8a/release');
+// 修正点2: Gradle 生成的文件名通常带架构标识
+const GENERATED_APK_NAME = 'app-arm64-v8a-release.apk'; 
 
 const TARGET_RELEASE_DIR = path.join(PROJECT_ROOT, 'release');
-const TARGET_APK_NAME = 'android_arm.apk'; // 必须和 GitHub Action 里的名字一致
+const TARGET_APK_NAME = 'android_arm.apk'; // GitHub Release 最终发布的文件名
 
 // --- 检查输入 ---
 if (!NEW_VERSION) {
-  console.error('❌ 请提供版本号，例如: node scripts/release-android.mjs 0.1.3');
+  console.error('❌ 请提供版本号，例如: npm run release:android 0.1.3');
   process.exit(1);
 }
 
@@ -35,7 +36,7 @@ function updateJsonVersion(filePath, version) {
 function updateTauriConf(filePath, version) {
   const content = fs.readFileSync(filePath, 'utf-8');
   const json = JSON.parse(content);
-  json.version = version;
+  json.version = version; // v2 可能是 json.package.version 或直接 json.version
   fs.writeFileSync(filePath, JSON.stringify(json, null, 2));
 }
 
@@ -49,42 +50,50 @@ function updateTauriConf(filePath, version) {
     updateTauriConf(path.join(PROJECT_ROOT, 'src-tauri/tauri.conf.json'), NEW_VERSION);
 
     // 2. 构建 Android APK
-    console.log('🔨 开始构建 Android APK (这可能需要几分钟)...');
-    // 使用 --apk 确保生成 apk，--target aarch64 针对真机 (如果你想生成通用包去掉 target 参数)
-    // 注意：第一次为了稳妥，我们生成 universal 包 (包含所有架构)，或者你可以指定 aarch64
-    // 这里演示构建 universal 包，兼容性最好
-    run('npx tauri android build --apk'); 
+    console.log('🔨 开始构建 Android APK (加速模式: 仅构建 arm64)...');
+    
+    // 修正点3: 显式指定 --apk true，可以指定架构以加速编译
+    // run('npx tauri android build --apk true --target aarch64'); 
+    run('npx tauri android build --apk true'); 
 
     // 3. 寻找并移动 APK
     console.log('📦 处理构建产物...');
     
-    // 确保 release 目录存在
     if (!fs.existsSync(TARGET_RELEASE_DIR)) {
       fs.mkdirSync(TARGET_RELEASE_DIR);
     }
 
-    // 查找生成的 APK
-    // 注意：Tauri 构建后的文件名通常叫 app-universal-release.apk
-    const sourceApk = path.join(APK_OUTPUT_DIR, 'app-universal-release.apk');
+    const sourceApk = path.join(APK_OUTPUT_DIR, GENERATED_APK_NAME);
     
     if (!fs.existsSync(sourceApk)) {
-      throw new Error(`找不到构建好的 APK 文件: ${sourceApk}\n请检查 src-tauri/gen/android/app/build/outputs/apk 下的实际生成路径`);
+      // 如果找不到，尝试查找 universal 路径（以防万一 CLI 行为差异）
+      const fallbackPath = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/release/app-release.apk');
+      if (fs.existsSync(fallbackPath)) {
+        console.log('⚠️ 未找到 arm64 包，但找到了通用包，将使用通用包。');
+        fs.copyFileSync(fallbackPath, path.join(TARGET_RELEASE_DIR, TARGET_APK_NAME));
+      } else {
+        throw new Error(`找不到构建好的 APK 文件。\n预期路径: ${sourceApk}\n请检查 build 输出日志。`);
+      }
+    } else {
+      const destApk = path.join(TARGET_RELEASE_DIR, TARGET_APK_NAME);
+      fs.copyFileSync(sourceApk, destApk);
+      console.log(`✅ APK 已复制到: ${destApk}`);
     }
-
-    const destApk = path.join(TARGET_RELEASE_DIR, TARGET_APK_NAME);
-    fs.copyFileSync(sourceApk, destApk);
-    console.log(`✅ APK 已复制到: ${destApk}`);
 
     // 4. Git 操作
     console.log('git 提交与推送...');
-    run(`git add package.json src-tauri/tauri.conf.json release/${TARGET_APK_NAME}`);
+    // 强制添加 release 文件夹，即使它被 gitignore 忽略
+    run(`git add -f release/${TARGET_APK_NAME}`);
+    run(`git add package.json src-tauri/tauri.conf.json`);
+    
     run(`git commit -m "chore: release v${NEW_VERSION}"`);
     run(`git tag v${NEW_VERSION}`);
-    run(`git push origin main`); // 假设你的主分支叫 main
+    
+    console.log('📤 推送到远程仓库...');
+    run(`git push origin main`); // 确保这里是你的主分支名 (main 或 master)
     run(`git push origin v${NEW_VERSION}`);
 
-    console.log(`\n🎉 发布流程完成！GitHub Action 应该已经开始工作了。`);
-    console.log(`👉 查看进度: https://github.com/Kozmosa/LingoVault/actions`);
+    console.log(`\n🎉 发布流程完成！请前往 GitHub Actions 查看发布进度。`);
 
   } catch (error) {
     console.error('\n❌ 发布失败:', error.message);
