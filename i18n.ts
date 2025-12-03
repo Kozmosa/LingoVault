@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 const resources = {
   en: {
     translation: {
-      appName: "LingoVault",
+      appName: "Lingo Vault",
       navigationSubtitle: "Choose a page",
       openNavigation: "Open navigation",
       navigationLabel: "Primary navigation",
@@ -90,7 +90,7 @@ const resources = {
   },
   zh: {
     translation: {
-      appName: "单词宝库",
+      appName: "Lingo Vault",
       navigationSubtitle: "选择页面",
       openNavigation: "打开侧边栏",
       navigationLabel: "主导航",
