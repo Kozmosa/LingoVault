@@ -204,6 +204,35 @@ const extractTagsAndMeaning = (raw: string | undefined): { tags?: string[]; mean
   };
 };
 
+const splitLeadingTags = (raw: string): { meaning: string; tags: string[] } => {
+  const trimmed = raw.trim();
+  if (!trimmed) {
+    return { meaning: '', tags: [] };
+  }
+
+  const firstCjkIndex = [...trimmed].findIndex(char => /[\u4e00-\u9fff]/.test(char));
+  if (firstCjkIndex <= 0) {
+    return { meaning: trimmed, tags: [] };
+  }
+
+  const prefix = trimmed.slice(0, firstCjkIndex).trim().replace(/[。．\.]+$/g, '');
+  const meaning = trimmed.slice(firstCjkIndex).replace(/^[\s:：\.]+/, '').trim();
+
+  if (!prefix) {
+    return { meaning, tags: [] };
+  }
+
+  const tags = prefix
+    .split(/[\/;,，、\s]+/)
+    .map(tag => tag.replace(/[。．\.]+$/g, '').trim())
+    .filter(Boolean);
+
+  return {
+    meaning,
+    tags
+  };
+};
+
 const coerceToString = (value: unknown): string => {
   if (value === null || value === undefined) return '';
   if (typeof value === 'string') return value;
@@ -258,7 +287,8 @@ export const applySmartImportPlan = (
         };
 
         records = lines.map((line, idx) => {
-          const rawParts = delimiter ? line.split(delimiter) : [line];
+          const rawPartsWithWhitespace = delimiter ? line.split(delimiter) : [line];
+          const rawParts = rawPartsWithWhitespace.map(part => part.trim());
           const expandedParts: string[] = [];
 
           rawParts.forEach(part => {
@@ -271,11 +301,12 @@ export const applySmartImportPlan = (
           }
 
           const record: Record<string, unknown> = {};
-          expandedParts.forEach((part, partIdx) => {
+          rawParts.forEach((part, partIdx) => {
             record[`column${partIdx + 1}`] = part;
             record[String(partIdx)] = part;
           });
           record.__parts = expandedParts;
+          record.__raw = rawParts;
           record.__line = idx + 1;
           return record;
         });
@@ -323,6 +354,18 @@ export const applySmartImportPlan = (
         }
 
         const partsArray = Array.isArray((record as any).__parts) ? ((record as any).__parts as unknown[]) : [];
+        const rawArray = Array.isArray((record as any).__raw) ? ((record as any).__raw as unknown[]) : [];
+
+        if (rawArray.length > 0) {
+          const mappedIndex = Number(fieldMap.chinese);
+          if (Number.isInteger(mappedIndex) && rawArray[mappedIndex] && typeof rawArray[mappedIndex] === 'string') {
+            const split = splitLeadingTags(rawArray[mappedIndex] as string);
+            split.tags.forEach(tag => ensureTag(tag));
+            if (split.meaning) {
+              chinese = split.meaning;
+            }
+          }
+        }
 
         if (!chinese || !containsCjk(chinese)) {
           const fallback = partsArray.find((part) => {
@@ -339,6 +382,11 @@ export const applySmartImportPlan = (
               ensureTag(chinese);
             }
             chinese = fallback.trim();
+            const split = splitLeadingTags(chinese);
+            split.tags.forEach(tag => ensureTag(tag));
+            if (split.meaning) {
+              chinese = split.meaning;
+            }
           }
         }
 

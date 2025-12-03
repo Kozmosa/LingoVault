@@ -1,0 +1,7 @@
+## 2025-12-03
+- Added Smart Import workflow with AI-generated mapping plans and bulk conversion into the vault.
+- Extended WordItem schema with `source` tracking, auto-migrated legacy data, and surfaced migration toasts.
+- Implemented toast notifications for import results and other system messages.
+- Enhanced AI service abstraction to support Smart Import planning alongside dictionary fills.
+- Built robust import utilities covering CSV, TSV, JSON, and text inputs with duplicate guards.
+- Improved text parsing to respect model-provided mappings, promote POS markers into tags, and recover Chinese meanings reliably.
