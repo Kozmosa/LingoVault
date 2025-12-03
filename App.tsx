@@ -8,6 +8,7 @@ import { FullScreenDrill } from './components/FullScreenDrill';
 import { SmartImport } from './components/SmartImport';
 import { enhanceWord } from './services/aiService';
 import { SettingsModal } from './components/SettingsModal';
+import { AddWordModal } from './components/AddWordModal';
 import { useTranslation } from 'react-i18next';
 import { 
   BookOpen, 
@@ -45,7 +46,7 @@ const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [words, setWords] = useState<WordItem[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [isAdding, setIsAdding] = useState(true);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isLoadingAi, setIsLoadingAi] = useState(false);
   const [isAutoMeaningLoading, setIsAutoMeaningLoading] = useState(false);
   const [isAutoExampleLoading, setIsAutoExampleLoading] = useState(false);
@@ -211,18 +212,12 @@ const App: React.FC = () => {
 
   // Focus English input when adding mode is active
   useEffect(() => {
-    if (isAdding) {
-      setTimeout(() => {
+    if (isAddModalOpen) {
+      window.setTimeout(() => {
         englishInputRef.current?.focus();
       }, 50);
     }
-  }, [isAdding]);
-
-  useEffect(() => {
-    if (activePage !== 'vault') {
-      setIsAdding(false);
-    }
-  }, [activePage]);
+  }, [isAddModalOpen]);
 
   const handleAddWord = useCallback(() => {
     if (!newEnglish.trim()) return;
@@ -241,10 +236,10 @@ const App: React.FC = () => {
     setNewEnglish('');
     setNewChinese('');
     setNewExample('');
-    setIsAdding(false);
+    setIsAddModalOpen(false);
   }, [newEnglish, newChinese, newExample]);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       e.preventDefault();
       handleAddWord();
@@ -538,7 +533,7 @@ const App: React.FC = () => {
             </label>
             
             <button 
-              onClick={() => setIsAdding(!isAdding)}
+              onClick={() => setIsAddModalOpen(true)}
               className="ml-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium shadow-sm shadow-brand-500/30 flex items-center gap-2 transition-all active:scale-95"
             >
               <Plus size={18} />
@@ -552,77 +547,6 @@ const App: React.FC = () => {
       <main className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}>
         {activePage === 'vault' ? (
           <>
-            {isAdding && (
-              <div 
-                className="mb-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-brand-100 dark:border-slate-800 overflow-hidden animate-in slide-in-from-top-4 duration-300"
-                onKeyDown={handleKeyDown}
-              >
-                <div className="bg-brand-50/50 dark:bg-brand-900/10 p-4 border-b border-brand-100 dark:border-slate-800 flex justify-between items-center">
-                  <h2 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-2">
-                    <Plus size={18} /> {t('newEntry')}
-                  </h2>
-                  <button onClick={() => setIsAdding(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={18} /></button>
-                </div>
-                <div className="p-6 grid gap-5 md:grid-cols-2">
-                  <div className="md:col-span-2 relative">
-                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('englishLabel')}</label>
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-2">
-                        <input 
-                        ref={englishInputRef}
-                        type="text" 
-                        placeholder={t('englishPlaceholder')} 
-                        className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                        value={newEnglish}
-                        onChange={(e) => setNewEnglish(e.target.value)}
-                        />
-                        <button 
-                            onClick={handleAiFill}
-                            disabled={isLoadingAi || !newEnglish}
-                            className="w-full sm:w-auto px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-                            title="Auto-fill with AI"
-                        >
-                            {isLoadingAi ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                            <span className="text-sm font-medium hidden sm:inline">{t('aiFill')}</span>
-                        </button>
-                    </div>
-                  </div>
-                
-                  <div>
-                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('meaningLabel')}</label>
-                    <input 
-                      type="text" 
-                      placeholder={t('meaningPlaceholder')} 
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                      value={newChinese}
-                      onChange={(e) => setNewChinese(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="md:col-span-2">
-                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('exampleLabel')}</label>
-                    <input 
-                      type="text" 
-                      placeholder={t('examplePlaceholder')} 
-                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                      value={newExample}
-                      onChange={(e) => setNewExample(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <span className="text-xs text-slate-400 dark:text-slate-500 text-center md:text-left">{t('proTip')}</span>
-                    <button 
-                      onClick={handleAddWord}
-                      disabled={!newEnglish}
-                      className="w-full md:w-auto px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all md:ml-auto"
-                    >
-                      {t('saveBtn')}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="relative flex-1 max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
@@ -679,12 +603,28 @@ const App: React.FC = () => {
       {/* Mobile Sticky Action Button */}
       <div className="sm:hidden fixed bottom-6 right-6 z-20">
          <button 
-           onClick={() => setIsAdding(true)}
+           onClick={() => setIsAddModalOpen(true)}
            className="h-14 w-14 bg-brand-600 text-white rounded-full shadow-lg shadow-brand-600/40 flex items-center justify-center hover:scale-105 transition-transform"
          >
            <Plus size={24} />
          </button>
       </div>
+
+      <AddWordModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={handleAddWord}
+        english={newEnglish}
+        chinese={newChinese}
+        example={newExample}
+        onEnglishChange={setNewEnglish}
+        onChineseChange={setNewChinese}
+        onExampleChange={setNewExample}
+        onAiFill={handleAiFill}
+        isAiLoading={isLoadingAi}
+        englishInputRef={englishInputRef}
+        onKeyDown={handleKeyDown}
+      />
 
     </div>
   );
