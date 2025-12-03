@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build"
+    "tauri:build": "tauri build",
+    "tauri:build:android": "tauri android build",
+    "clean": "rm lingovault-signed.apk && rm lingovault-signed.apk.idsig"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",

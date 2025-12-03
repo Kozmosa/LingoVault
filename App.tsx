@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { WordItem, AISettings, DEFAULT_AI_SETTINGS } from './types';
 import { wordsToCsv, csvToWords, downloadFile } from './utils/csvHelper';
+import { formatImportSource } from './utils/importUtils';
 import { WordList } from './components/WordList';
 import { NavigationDrawer, DrawerItem } from './components/NavigationDrawer';
 import { FullScreenDrill } from './components/FullScreenDrill';
+import { SmartImport } from './components/SmartImport';
 import { enhanceWord } from './services/aiService';
 import { SettingsModal } from './components/SettingsModal';
 import { useTranslation } from 'react-i18next';
@@ -21,20 +23,22 @@ import {
   Settings,
   Sun,
   Moon,
-  Monitor
+  Monitor,
+  CheckCircle2
 } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
-type AppPage = 'vault' | 'practice' | 'drill';
+type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport';
 
-const normalizeWordItem = (word: any): WordItem => ({
+const normalizeWordItem = (word: any, defaultSource: string = 'user'): WordItem => ({
   id: word.id || crypto.randomUUID(),
   english: word.english || '',
   chinese: word.chinese || '',
   example: word.example ?? '',
   tags: word.tags,
   isMastered: typeof word.isMastered === 'number' ? word.isMastered : 0,
-  createdAt: typeof word.createdAt === 'number' ? word.createdAt : Date.now()
+  createdAt: typeof word.createdAt === 'number' ? word.createdAt : Date.now(),
+  source: typeof word.source === 'string' && word.source.trim() ? word.source : defaultSource
 });
 
 const App: React.FC = () => {
@@ -61,17 +65,36 @@ const App: React.FC = () => {
   const [newEnglish, setNewEnglish] = useState('');
   const [newChinese, setNewChinese] = useState('');
   const [newExample, setNewExample] = useState('');
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const englishInputRef = useRef<HTMLInputElement>(null);
+  const toastTimerRef = useRef<number>();
+  const hasInitializedRef = useRef(false);
+
+  const showToast = useCallback((message: string) => {
+    setToastMessage(message);
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = window.setTimeout(() => setToastMessage(null), 4000);
+  }, []);
 
   // Initial load
   useEffect(() => {
+    if (hasInitializedRef.current) return;
+    hasInitializedRef.current = true;
+
     const savedData = localStorage.getItem('lingovault_data');
     if (savedData) {
       try {
         const parsed = JSON.parse(savedData);
         if (Array.isArray(parsed)) {
-          setWords(parsed.map(normalizeWordItem));
+          const legacyDetected = parsed.some((word: any) => !word || typeof word.source !== 'string');
+          const normalized = parsed.map((item: any) => normalizeWordItem(item));
+          setWords(normalized);
+          if (legacyDetected) {
+            window.setTimeout(() => showToast(t('migrationNotice')), 50);
+          }
         }
       } catch (e) {
         console.error("Failed to load local data", e);
@@ -86,6 +109,14 @@ const App: React.FC = () => {
         console.error("Failed to load settings", e);
       }
     }
+  }, [showToast, t]);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimerRef.current) {
+        window.clearTimeout(toastTimerRef.current);
+      }
+    };
   }, []);
 
   // Theme Effect
@@ -156,6 +187,11 @@ const App: React.FC = () => {
       description: t('navWordVaultDesc')
     },
     {
+      key: 'smartImport',
+      label: t('navSmartImport'),
+      description: t('navSmartImportDesc')
+    },
+    {
       key: 'practice',
       label: t('navPractice'),
       description: t('navPracticeDesc')
@@ -168,8 +204,8 @@ const App: React.FC = () => {
   ]), [t]);
 
   const handleSelectPage = useCallback((key: string) => {
-    if (key === 'vault' || key === 'practice' || key === 'drill') {
-      setActivePage(key);
+    if (key === 'vault' || key === 'practice' || key === 'drill' || key === 'smartImport') {
+      setActivePage(key as AppPage);
     }
   }, []);
 
@@ -197,7 +233,8 @@ const App: React.FC = () => {
       chinese: newChinese,
       example: newExample,
       isMastered: 0,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      source: 'user'
     };
 
     setWords(prev => [newWord, ...prev]);
@@ -299,6 +336,55 @@ const App: React.FC = () => {
     }
   }, [aiSettings, t, words]);
 
+  const mergeImportedWords = useCallback((incoming: WordItem[]): number => {
+    if (!incoming || incoming.length === 0) {
+      return 0;
+    }
+
+    let inserted = 0;
+    setWords(prev => {
+      const existingIds = new Set(prev.map(item => item.id));
+      const existingEnglish = new Set(prev.map(item => item.english.toLowerCase()));
+      const novel: WordItem[] = [];
+
+      for (const word of incoming) {
+        const englishNormalized = word.english.trim().toLowerCase();
+        if (!englishNormalized) {
+          continue;
+        }
+        if (existingIds.has(word.id) || existingEnglish.has(englishNormalized)) {
+          continue;
+        }
+        existingIds.add(word.id);
+        existingEnglish.add(englishNormalized);
+        novel.push(word);
+      }
+
+      inserted = novel.length;
+      if (inserted === 0) {
+        return prev;
+      }
+
+      return [...novel, ...prev];
+    });
+
+    return inserted;
+  }, []);
+
+  const notifyImportResult = useCallback((count: number) => {
+    if (count > 0) {
+      showToast(t('importAdded', { count }));
+    } else {
+      showToast(t('importNone'));
+    }
+  }, [showToast, t]);
+
+  const handleSmartImportMerge = useCallback((incoming: WordItem[]) => {
+    const inserted = mergeImportedWords(incoming);
+    notifyImportResult(inserted);
+    return inserted;
+  }, [mergeImportedWords, notifyImportResult]);
+
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -315,14 +401,12 @@ const App: React.FC = () => {
           importedWords = csvToWords(content);
         }
         
-        const normalized = importedWords.map(normalizeWordItem);
+        const importSource = formatImportSource();
+        const normalized = importedWords.map(item => normalizeWordItem(item, importSource));
 
-        setWords(prev => {
-          const existingIds = new Set(prev.map(p => p.id));
-          const novel = normalized.filter(w => !existingIds.has(w.id));
-          return [...novel, ...prev];
-        });
-        
+        const inserted = mergeImportedWords(normalized);
+        notifyImportResult(inserted);
+
         event.target.value = '';
       } catch (err) {
         alert(t('fileError'));
@@ -352,6 +436,21 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      {toastMessage && (
+        <div className="fixed top-6 right-6 z-50 flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-lg px-4 py-3 text-slate-700 dark:text-slate-200 backdrop-blur">
+          <CheckCircle2 className="text-brand-500" size={18} />
+          <span className="text-sm font-medium">{toastMessage}</span>
+          <button
+            type="button"
+            onClick={() => setToastMessage(null)}
+            className="ml-2 rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600"
+            aria-label={t('dismiss')}
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
       <SettingsModal 
         isOpen={isSettingsOpen} 
         onClose={() => setIsSettingsOpen(false)}
@@ -569,6 +668,8 @@ const App: React.FC = () => {
             <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">{t('comingSoonTitle')}</h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-md">{t('comingSoonMessage')}</p>
           </div>
+        ) : activePage === 'smartImport' ? (
+          <SmartImport aiSettings={aiSettings} onImport={handleSmartImportMerge} />
         ) : (
           <FullScreenDrill words={words} onToggleMastered={handleToggleMastered} />
         )}

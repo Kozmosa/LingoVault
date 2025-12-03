@@ -6,6 +6,27 @@ export interface WordItem {
   tags?: string[];
   isMastered: number;
   createdAt: number;
+  source: string;
+}
+
+export type SmartImportFormat = 'csv' | 'tsv' | 'json' | 'text';
+
+export interface SmartImportFieldMap {
+  english?: string;
+  chinese?: string;
+  example?: string;
+  tags?: string;
+}
+
+export interface SmartImportPlan {
+  format: SmartImportFormat;
+  delimiter?: string;
+  hasHeader?: boolean;
+  skipRows?: number;
+  recordPath?: string;
+  fieldMap: SmartImportFieldMap;
+  notes?: string;
+  confidence?: number;
 }
 
 export type SortMethod = 'date_desc' | 'date_asc' | 'a_z';
