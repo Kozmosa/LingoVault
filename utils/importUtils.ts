@@ -48,7 +48,7 @@ const buildDelimitedRecords = (
   delimiter: string,
   hasHeader: boolean,
   skipRows: number = 0
-): Record<string, string>[] => {
+): Record<string, unknown>[] => {
   const lines = rawData
     .split(/\r?\n/)
     .map(line => line.trimEnd())
@@ -69,16 +69,20 @@ const buildDelimitedRecords = (
     headers = sample.map((_, idx) => `column${idx + 1}`);
   }
 
-  const records: Record<string, string>[] = [];
+  const records: Record<string, unknown>[] = [];
 
   for (let i = Math.max(dataStart, 0); i < lines.length; i++) {
     const cols = parseDelimitedLine(lines[i], effectiveDelimiter);
-    const record: Record<string, string> = {};
+    const record: Record<string, unknown> = {};
 
     headers.forEach((header, idx) => {
-      record[header] = cols[idx] !== undefined ? cols[idx] : '';
+      const value = cols[idx] !== undefined ? cols[idx] : '';
+      record[header] = value;
+      record[`column${idx + 1}`] = value;
+      record[String(idx)] = value;
     });
 
+    record.__parts = cols;
     records.push(record);
   }
 
@@ -162,13 +166,42 @@ const parseJsonRecords = (rawData: string, recordPath?: string): Record<string, 
   return [];
 };
 
-const parseTags = (raw: string | undefined): string[] | undefined => {
-  if (!raw) return undefined;
-  const tags = raw
-    .split(/[,;|\uFF0C\u3001]/)
-    .map(tag => tag.trim())
-    .filter(Boolean);
-  return tags.length > 0 ? tags : undefined;
+const extractTagsAndMeaning = (raw: string | undefined): { tags?: string[]; meaning?: string } => {
+  if (!raw) {
+    return {};
+  }
+
+  const normalized = raw.trim();
+  if (!normalized) {
+    return {};
+  }
+
+  const cjkIndex = [...normalized].findIndex(char => /[\u4e00-\u9fff]/.test(char));
+  let tagSegment = normalized;
+  let meaningSegment: string | undefined;
+
+  if (cjkIndex >= 0) {
+    tagSegment = normalized.slice(0, cjkIndex).trim();
+    meaningSegment = normalized.slice(cjkIndex).replace(/^[\s:：\.]+/, '').trim();
+  }
+
+  const cleanedTagSegment = tagSegment.replace(/[。．\.]+$/g, '').trim();
+  let tags: string[] | undefined;
+
+  if (cleanedTagSegment) {
+    tags = cleanedTagSegment
+      .split(/[\/;,，、\s]+/)
+      .map(tag => tag.replace(/[。．\.]+$/g, '').trim())
+      .filter(Boolean);
+    if (tags.length === 0) {
+      tags = undefined;
+    }
+  }
+
+  return {
+    tags,
+    meaning: meaningSegment && meaningSegment.length > 0 ? meaningSegment : undefined
+  };
 };
 
 const coerceToString = (value: unknown): string => {
@@ -198,15 +231,51 @@ export const applySmartImportPlan = (
           .split(/\r?\n/)
           .map(line => line.trim())
           .filter(Boolean);
-        records = lines.map((line, idx) => {
-          const parts = delimiter ? line.split(delimiter) : [line];
-          const record: Record<string, unknown> = {};
-          parts.forEach((part, partIdx) => {
-            record[`column${partIdx + 1}`] = part;
-          });
-          if (parts.length === 1) {
-            record.column1 = line;
+
+        const expandSegments = (segment: string): string[] => {
+          const trimmed = segment.trim();
+          if (!trimmed) {
+            return [''];
           }
+
+          const firstCjkIndex = [...trimmed].findIndex(char => /[\u4e00-\u9fff]/.test(char));
+          if (firstCjkIndex > 0) {
+            const posPart = trimmed.slice(0, firstCjkIndex).replace(/[。．\.]+$/g, '').trim();
+            const meaningPart = trimmed.slice(firstCjkIndex).replace(/^[\s:：\.]+/, '').trim();
+            const result: string[] = [];
+            if (posPart) {
+              result.push(posPart);
+            }
+            if (meaningPart) {
+              result.push(meaningPart);
+            }
+            if (result.length > 0) {
+              return result;
+            }
+          }
+
+          return [trimmed];
+        };
+
+        records = lines.map((line, idx) => {
+          const rawParts = delimiter ? line.split(delimiter) : [line];
+          const expandedParts: string[] = [];
+
+          rawParts.forEach(part => {
+            const segments = expandSegments(part);
+            expandedParts.push(...segments);
+          });
+
+          if (expandedParts.length === 0) {
+            expandedParts.push(line.trim());
+          }
+
+          const record: Record<string, unknown> = {};
+          expandedParts.forEach((part, partIdx) => {
+            record[`column${partIdx + 1}`] = part;
+            record[String(partIdx)] = part;
+          });
+          record.__parts = expandedParts;
           record.__line = idx + 1;
           return record;
         });
@@ -233,9 +302,58 @@ export const applySmartImportPlan = (
         const tagsRaw = getValueByPath(record, fieldMap.tags);
 
         const english = coerceToString(englishRaw).trim();
-        const chinese = coerceToString(chineseRaw).trim();
+        let chinese = coerceToString(chineseRaw).trim();
         const example = coerceToString(exampleRaw).trim();
-        const tags = parseTags(coerceToString(tagsRaw));
+        const tagsInfo = extractTagsAndMeaning(coerceToString(tagsRaw));
+        let tags = tagsInfo.tags;
+
+        const ensureTag = (tagCandidate?: string) => {
+          const normalizedTag = (tagCandidate || '').trim();
+          if (!normalizedTag) return;
+          tags = tags ?? [];
+          if (!tags.includes(normalizedTag)) {
+            tags.push(normalizedTag);
+          }
+        };
+
+        const containsCjk = (value: string) => /[\u4e00-\u9fff]/.test(value);
+
+        if (tagsInfo.meaning && !chinese) {
+          chinese = tagsInfo.meaning;
+        }
+
+        const partsArray = Array.isArray((record as any).__parts) ? ((record as any).__parts as unknown[]) : [];
+
+        if (!chinese || !containsCjk(chinese)) {
+          const fallback = partsArray.find((part) => {
+            return (
+              typeof part === 'string' &&
+              containsCjk(part) &&
+              part.trim().length > 0 &&
+              part.trim() !== english
+            );
+          });
+
+          if (typeof fallback === 'string') {
+            if (chinese && !containsCjk(chinese)) {
+              ensureTag(chinese);
+            }
+            chinese = fallback.trim();
+          }
+        }
+
+        if ((!tags || tags.length === 0) && partsArray.length > 1) {
+          const nonChineseParts = partsArray.filter(part => {
+            return (
+              typeof part === 'string' &&
+              !containsCjk(part) &&
+              part.trim().length > 0 &&
+              part.trim() !== english
+            );
+          }) as string[];
+
+          nonChineseParts.forEach(candidate => ensureTag(candidate));
+        }
 
         if (!english) {
           return null;
