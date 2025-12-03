@@ -7,6 +7,7 @@ import { NavigationDrawer, DrawerItem } from './components/NavigationDrawer';
 import { FullScreenDrill } from './components/FullScreenDrill';
 import { SmartImport } from './components/SmartImport';
 import { enhanceWord } from './services/aiService';
+import { checkAndroidUpdate } from './services/androidUpdateService';
 import { SettingsModal } from './components/SettingsModal';
 import { AddWordModal } from './components/AddWordModal';
 import { useTranslation } from 'react-i18next';
@@ -212,15 +213,43 @@ const App: React.FC = () => {
     }
   }, []);
 
-  const handleCheckForUpdates = useCallback(() => {
+  const handleCheckForUpdates = useCallback(async () => {
     if (isCheckingUpdates) return;
     setIsCheckingUpdates(true);
     setIsDrawerOpen(false);
 
-    window.setTimeout(() => {
+    const userAgent = window.navigator.userAgent.toLowerCase();
+    const isAndroid = userAgent.includes('android');
+
+    if (!isAndroid) {
       showToast(t('latestVersionMessage', { version: APP_VERSION }));
       setIsCheckingUpdates(false);
-    }, 400);
+      return;
+    }
+
+    try {
+      await checkAndroidUpdate({
+        manifestUrl: 'https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json',
+        strings: {
+          promptTitle: t('androidUpdateTitle'),
+          promptBody: (version, notes) => t('androidUpdatePrompt', {
+            version,
+            notes: notes.trim() || t('androidUpdateDefaultNotes')
+          }),
+          promptConfirm: t('androidUpdateConfirm'),
+          promptCancel: t('androidUpdateLater'),
+          downloadToast: t('androidUpdateDownloading'),
+          installToast: t('androidUpdateInstalling'),
+          configMissing: t('androidUpdateConfigMissing'),
+          checkError: (reason) => t('androidUpdateCheckError', { error: reason }),
+          installError: (reason) => t('androidUpdateInstallError', { error: reason }),
+          alreadyLatest: t('latestVersionMessage', { version: APP_VERSION })
+        },
+        onStatus: showToast
+      });
+    } finally {
+      setIsCheckingUpdates(false);
+    }
   }, [isCheckingUpdates, showToast, t]);
 
   // Focus English input when adding mode is active

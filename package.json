@@ -1,7 +1,7 @@
 {
   "name": "lingovault",
   "private": true,
-  "version": "0.1.2",
+  "version": "0.1.3",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -11,6 +11,7 @@
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
     "tauri:build:android": "tauri android build",
+    "release:android": "node scripts/release-android.mjs",
     "clean": "rm lingovault-signed.apk && rm lingovault-signed.apk.idsig"
   },
   "dependencies": {
