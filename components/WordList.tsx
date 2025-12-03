@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { WordItem } from '../types';
 import { Trash2, Edit2, Volume2, Check, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +13,13 @@ const WordCard: React.FC<{ word: WordItem; onDelete: (id: string) => void; onUpd
   const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState(word);
   const { t, i18n } = useTranslation();
+  const isMastered = word.isMastered === 1;
+
+  useEffect(() => {
+    if (!isEditing) {
+      setEditForm(word);
+    }
+  }, [isEditing, word]);
 
   const handleSpeak = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -74,43 +81,72 @@ const WordCard: React.FC<{ word: WordItem; onDelete: (id: string) => void; onUpd
   }
 
   return (
-    <div className="group bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-5 hover:shadow-md transition-all hover:border-brand-200 dark:hover:border-brand-800">
-      <div className="flex justify-between items-start mb-2">
+    <div
+      className={`group rounded-xl border p-5 transition-all shadow-sm hover:shadow-md ${
+        isMastered
+          ? 'border-slate-200 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-900/60 dark:text-slate-400'
+          : 'border-slate-200 bg-white text-slate-600 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300'
+      } hover:border-brand-200 dark:hover:border-brand-800`}
+    >
+      <div className="mb-2 flex items-start justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{word.english}</h3>
-          <button 
+          <h3
+            className={`text-xl font-bold ${
+              isMastered ? 'text-slate-400 dark:text-slate-500' : 'text-slate-800 dark:text-slate-100'
+            }`}
+          >
+            {word.english}
+          </h3>
+          <button
             onClick={() => handleSpeak(word.english)}
-            className="text-slate-400 hover:text-brand-500 dark:hover:text-brand-400 transition-colors p-1 rounded-full hover:bg-brand-50 dark:hover:bg-slate-800"
+            className="rounded-full p-1 text-slate-400 transition-colors hover:bg-brand-50 hover:text-brand-500 dark:hover:bg-slate-800 dark:hover:text-brand-400"
             title="Listen"
           >
             <Volume2 size={18} />
           </button>
         </div>
-        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <button 
-            onClick={() => setIsEditing(true)}
-            className="p-1.5 text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-brand-50 dark:hover:bg-slate-800 rounded-lg"
-          >
-            <Edit2 size={16} />
-          </button>
-          <button 
-            onClick={() => onDelete(word.id)}
-            className="p-1.5 text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-slate-800 rounded-lg"
-          >
-            <Trash2 size={16} />
-          </button>
+        <div className="flex items-center gap-2">
+          {isMastered && (
+            <span className="rounded-full bg-slate-200 px-2 py-0.5 text-xs font-semibold text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              {t('mastered')}
+            </span>
+          )}
+          <div className="flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-brand-50 hover:text-brand-600 dark:hover:bg-slate-800 dark:hover:text-brand-400"
+            >
+              <Edit2 size={16} />
+            </button>
+            <button
+              onClick={() => onDelete(word.id)}
+              className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:hover:bg-slate-800 dark:hover:text-red-400"
+            >
+              <Trash2 size={16} />
+            </button>
+          </div>
         </div>
       </div>
-      
-      <p className="text-lg text-slate-600 dark:text-slate-300 font-medium mb-3">{word.chinese}</p>
-      
+
+      <p
+        className={`mb-3 text-lg font-medium ${
+          isMastered ? 'text-slate-400 dark:text-slate-500' : 'text-slate-600 dark:text-slate-300'
+        }`}
+      >
+        {word.chinese}
+      </p>
+
       {word.example && (
-        <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-lg border border-slate-100 dark:border-slate-800">
-          <p className="text-sm text-slate-500 dark:text-slate-400 italic">"{word.example}"</p>
+        <div className="rounded-lg border border-slate-100 bg-slate-50 p-3 dark:border-slate-800 dark:bg-slate-950">
+          <p className="text-sm italic text-slate-500 dark:text-slate-400">"{word.example}"</p>
         </div>
       )}
-      
-      <div className="mt-4 text-xs text-slate-400 dark:text-slate-500 text-right">
+
+      <div
+        className={`mt-4 text-right text-xs ${
+          isMastered ? 'text-slate-300 dark:text-slate-600' : 'text-slate-400 dark:text-slate-500'
+        }`}
+      >
         {t('added')} {new Date(word.createdAt).toLocaleDateString(i18n.language.startsWith('zh') ? 'zh-CN' : 'en-US')}
       </div>
     </div>

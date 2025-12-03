@@ -11,12 +11,13 @@ const escapeCsvField = (field: string | undefined): string => {
 };
 
 export const wordsToCsv = (words: WordItem[]): string => {
-  const header = ['id', 'english', 'chinese', 'example', 'createdAt'];
+  const header = ['id', 'english', 'chinese', 'example', 'isMastered', 'createdAt'];
   const rows = words.map(w => [
     w.id,
     w.english,
     w.chinese,
     w.example || '',
+    String(w.isMastered ?? 0),
     new Date(w.createdAt).toISOString()
   ].map(escapeCsvField).join(','));
   
@@ -72,6 +73,7 @@ export const csvToWords = (csvContent: string): WordItem[] => {
 
   const idIdx = headers.indexOf('id');
   const exampleIdx = headers.indexOf('example');
+  const masteredIdx = headers.indexOf('ismastered');
   const dateIdx = headers.indexOf('createdat');
 
   return lines.slice(1).map((line) => {
@@ -81,6 +83,7 @@ export const csvToWords = (csvContent: string): WordItem[] => {
       english: cols[englishIdx] || '',
       chinese: cols[chineseIdx] || '',
       example: exampleIdx !== -1 ? cols[exampleIdx] : '',
+      isMastered: masteredIdx !== -1 && cols[masteredIdx] !== undefined ? Number(cols[masteredIdx]) || 0 : 0,
       createdAt: dateIdx !== -1 && cols[dateIdx] ? new Date(cols[dateIdx]).getTime() : Date.now(),
     };
   });

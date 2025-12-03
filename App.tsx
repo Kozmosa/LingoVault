@@ -3,6 +3,7 @@ import { WordItem, AISettings, DEFAULT_AI_SETTINGS } from './types';
 import { wordsToCsv, csvToWords, downloadFile } from './utils/csvHelper';
 import { WordList } from './components/WordList';
 import { NavigationDrawer, DrawerItem } from './components/NavigationDrawer';
+import { FullScreenDrill } from './components/FullScreenDrill';
 import { enhanceWord } from './services/aiService';
 import { SettingsModal } from './components/SettingsModal';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +25,17 @@ import {
 } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
-type AppPage = 'vault' | 'practice';
+type AppPage = 'vault' | 'practice' | 'drill';
+
+const normalizeWordItem = (word: any): WordItem => ({
+  id: word.id || crypto.randomUUID(),
+  english: word.english || '',
+  chinese: word.chinese || '',
+  example: word.example ?? '',
+  tags: word.tags,
+  isMastered: typeof word.isMastered === 'number' ? word.isMastered : 0,
+  createdAt: typeof word.createdAt === 'number' ? word.createdAt : Date.now()
+});
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -58,7 +69,10 @@ const App: React.FC = () => {
     const savedData = localStorage.getItem('lingovault_data');
     if (savedData) {
       try {
-        setWords(JSON.parse(savedData));
+        const parsed = JSON.parse(savedData);
+        if (Array.isArray(parsed)) {
+          setWords(parsed.map(normalizeWordItem));
+        }
       } catch (e) {
         console.error("Failed to load local data", e);
       }
@@ -145,11 +159,16 @@ const App: React.FC = () => {
       key: 'practice',
       label: t('navPractice'),
       description: t('navPracticeDesc')
+    },
+    {
+      key: 'drill',
+      label: t('navDrill'),
+      description: t('navDrillDesc')
     }
   ]), [t]);
 
   const handleSelectPage = useCallback((key: string) => {
-    if (key === 'vault' || key === 'practice') {
+    if (key === 'vault' || key === 'practice' || key === 'drill') {
       setActivePage(key);
     }
   }, []);
@@ -177,6 +196,7 @@ const App: React.FC = () => {
       english: newEnglish,
       chinese: newChinese,
       example: newExample,
+      isMastered: 0,
       createdAt: Date.now()
     };
 
@@ -200,6 +220,14 @@ const App: React.FC = () => {
 
   const handleUpdate = useCallback((updatedWord: WordItem) => {
     setWords(prev => prev.map(w => w.id === updatedWord.id ? updatedWord : w));
+  }, []);
+
+  const handleToggleMastered = useCallback((id: string, nextValue?: number) => {
+    setWords(prev => prev.map(word => {
+      if (word.id !== id) return word;
+      const resolved = typeof nextValue === 'number' ? nextValue : (word.isMastered === 1 ? 0 : 1);
+      return { ...word, isMastered: resolved };
+    }));
   }, []);
 
   const handleAiFill = async () => {
@@ -287,9 +315,11 @@ const App: React.FC = () => {
           importedWords = csvToWords(content);
         }
         
+        const normalized = importedWords.map(normalizeWordItem);
+
         setWords(prev => {
           const existingIds = new Set(prev.map(p => p.id));
-          const novel = importedWords.filter(w => !existingIds.has(w.id));
+          const novel = normalized.filter(w => !existingIds.has(w.id));
           return [...novel, ...prev];
         });
         
@@ -420,8 +450,7 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-        
+      <main className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}>
         {activePage === 'vault' ? (
           <>
             {isAdding && (
@@ -535,11 +564,13 @@ const App: React.FC = () => {
 
             <WordList words={filteredWords} onDelete={handleDelete} onUpdate={handleUpdate} />
           </>
-        ) : (
+        ) : activePage === 'practice' ? (
           <div className="min-h-[60vh] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col items-center justify-center text-center gap-3 p-10">
             <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">{t('comingSoonTitle')}</h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-md">{t('comingSoonMessage')}</p>
           </div>
+        ) : (
+          <FullScreenDrill words={words} onToggleMastered={handleToggleMastered} />
         )}
 
       </main>

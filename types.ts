@@ -4,6 +4,7 @@ export interface WordItem {
   chinese: string;
   example?: string;
   tags?: string[];
+  isMastered: number;
   createdAt: number;
 }
 
