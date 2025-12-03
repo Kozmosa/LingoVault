@@ -32,6 +32,18 @@ import {
 
 type Theme = 'light' | 'dark' | 'system';
 type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport';
+type ToastVariant = 'info' | 'error' | 'success';
+interface ToastEntry {
+  id: string;
+  text: string;
+  variant: ToastVariant;
+}
+interface ToastOptions {
+  variant?: ToastVariant;
+  duration?: number;
+}
+const ANDROID_MANIFEST_URL = 'https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json';
+const GITHUB_RELEASES_API = 'https://api.github.com/repos/Kozmosa/LingoVault/releases/latest';
 
 const normalizeWordItem = (word: any, defaultSource: string = 'user'): WordItem => ({
   id: word.id || crypto.randomUUID(),
@@ -69,19 +81,32 @@ const App: React.FC = () => {
   const [newEnglish, setNewEnglish] = useState('');
   const [newChinese, setNewChinese] = useState('');
   const [newExample, setNewExample] = useState('');
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
+  const [toasts, setToasts] = useState<ToastEntry[]>([]);
 
   const englishInputRef = useRef<HTMLInputElement>(null);
-  const toastTimerRef = useRef<number>();
+  const toastTimersRef = useRef<Map<string, number>>(new Map());
   const hasInitializedRef = useRef(false);
 
-  const showToast = useCallback((message: string) => {
-    setToastMessage(message);
-    if (toastTimerRef.current) {
-      window.clearTimeout(toastTimerRef.current);
+  const removeToast = useCallback((id: string) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+    const timer = toastTimersRef.current.get(id);
+    if (timer) {
+      window.clearTimeout(timer);
+      toastTimersRef.current.delete(id);
     }
-    toastTimerRef.current = window.setTimeout(() => setToastMessage(null), 4000);
   }, []);
+
+  const showToast = useCallback((message: string, options?: ToastOptions) => {
+    const id = crypto.randomUUID();
+    const variant = options?.variant ?? 'info';
+    const duration = options?.duration ?? 4000;
+    setToasts(prev => [...prev, { id, text: message, variant }]);
+    if (duration > 0) {
+      const timer = window.setTimeout(() => removeToast(id), duration);
+      toastTimersRef.current.set(id, timer);
+    }
+    return id;
+  }, [removeToast]);
 
   // Initial load
   useEffect(() => {
@@ -117,9 +142,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      if (toastTimerRef.current) {
-        window.clearTimeout(toastTimerRef.current);
-      }
+      toastTimersRef.current.forEach(timer => window.clearTimeout(timer));
+      toastTimersRef.current.clear();
     };
   }, []);
 
@@ -222,14 +246,43 @@ const App: React.FC = () => {
     const isAndroid = userAgent.includes('android');
 
     if (!isAndroid) {
-      showToast(t('latestVersionMessage', { version: APP_VERSION }));
-      setIsCheckingUpdates(false);
+      try {
+        const response = await fetch(`${GITHUB_RELEASES_API}?t=${Date.now()}`, {
+          headers: {
+            Accept: 'application/vnd.github+json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const release = await response.json();
+        const version = (release?.tag_name || release?.name || '').replace(/^v/, '') || APP_VERSION;
+        const notes = (release?.body ?? '').trim() || t('androidUpdateDefaultNotes');
+        const assets: Array<{ name?: string; browser_download_url?: string }> = release?.assets ?? [];
+        const apkAsset = assets.find(asset => asset?.name?.toLowerCase().endsWith('.apk'));
+        if (!apkAsset?.browser_download_url) {
+          showToast(t('androidUpdateConfigMissing'), { variant: 'error' });
+          return;
+        }
+        window.alert(
+          t('webUpdateDownloadMessage', {
+            version,
+            url: apkAsset.browser_download_url,
+            notes
+          })
+        );
+      } catch (error) {
+        const messageText = error instanceof Error ? error.message : String(error);
+        showToast(t('androidUpdateCheckError', { error: messageText }), { variant: 'error' });
+      } finally {
+        setIsCheckingUpdates(false);
+      }
       return;
     }
 
     try {
       await checkAndroidUpdate({
-        manifestUrl: 'https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json',
+        manifestUrl: ANDROID_MANIFEST_URL,
         strings: {
           promptTitle: t('androidUpdateTitle'),
           promptBody: (version, notes) => t('androidUpdatePrompt', {
@@ -245,7 +298,8 @@ const App: React.FC = () => {
           installError: (reason) => t('androidUpdateInstallError', { error: reason }),
           alreadyLatest: t('latestVersionMessage', { version: APP_VERSION })
         },
-        onStatus: showToast
+        onStatus: (message) => showToast(message),
+        notify: (message, options) => showToast(message, options)
       });
     } finally {
       setIsCheckingUpdates(false);
@@ -473,18 +527,37 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
-      {toastMessage && (
-        <div className="fixed bottom-10 left-1/2 z-50 flex w-[min(90vw,22rem)] -translate-x-1/2 items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-lg px-4 py-3 text-slate-700 dark:text-slate-200 backdrop-blur">
-          <CheckCircle2 className="text-brand-500" size={18} />
-          <span className="text-sm font-medium">{toastMessage}</span>
-          <button
-            type="button"
-            onClick={() => setToastMessage(null)}
-            className="ml-auto rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600"
-            aria-label={t('dismiss')}
-          >
-            <X size={16} />
-          </button>
+      {toasts.length > 0 && (
+        <div className="fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 flex-col gap-3 px-4">
+          {toasts.map((toast) => {
+            const variantClasses = toast.variant === 'error'
+              ? 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950/80 dark:text-red-200'
+              : toast.variant === 'success'
+                ? 'border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/80 dark:text-emerald-200'
+                : 'border-slate-200 bg-white/95 text-slate-700 dark:border-slate-800 dark:bg-slate-900/95 dark:text-slate-200';
+            const iconColor = toast.variant === 'error'
+              ? 'text-red-500'
+              : toast.variant === 'success'
+                ? 'text-emerald-500'
+                : 'text-brand-500';
+            return (
+              <div
+                key={toast.id}
+                className={`flex items-center gap-3 rounded-xl border shadow-lg px-4 py-3 backdrop-blur ${variantClasses}`}
+              >
+                <CheckCircle2 className={iconColor} size={18} />
+                <span className="text-sm font-medium whitespace-pre-line">{toast.text}</span>
+                <button
+                  type="button"
+                  onClick={() => removeToast(toast.id)}
+                  className="ml-auto rounded-full p-1 text-current/60 transition-colors hover:bg-white/30 dark:hover:bg-slate-800/70"
+                  aria-label={t('dismiss')}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            );
+          })}
         </div>
       )}
 

@@ -2,7 +2,7 @@ import { getVersion } from '@tauri-apps/api/app';
 import { cacheDir, join } from '@tauri-apps/api/path';
 import { fetch } from '@tauri-apps/plugin-http';
 import { writeFile, BaseDirectory } from '@tauri-apps/plugin-fs';
-import { ask, message } from '@tauri-apps/plugin-dialog';
+import { ask } from '@tauri-apps/plugin-dialog';
 
 interface UpdateManifest {
   version: string;
@@ -30,6 +30,7 @@ interface AndroidUpdateOptions {
   manifestUrl: string;
   strings: AndroidUpdateStrings;
   onStatus?: (message: string) => void;
+  notify?: (message: string, options?: { variant?: 'info' | 'error' | 'success'; duration?: number }) => void;
 }
 
 const compareVersions = (remote: string, current: string) => {
@@ -60,6 +61,18 @@ const notifyStatus = (handler: AndroidUpdateOptions['onStatus'], text: string) =
   }
 };
 
+const notifyFrontend = (
+  handler: AndroidUpdateOptions['notify'],
+  text: string,
+  options?: { variant?: 'info' | 'error' | 'success'; duration?: number }
+) => {
+  if (handler) {
+    handler(text, options);
+  }
+};
+
+const LOG_DELAY_MS = 10_000;
+
 const downloadApk = async (url: string, fileName: string) => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -85,44 +98,87 @@ const openInstaller = async (filePath: string) => {
   await handler(filePath);
 };
 
-export const checkAndroidUpdate = async ({ manifestUrl, strings, onStatus }: AndroidUpdateOptions) => {
+export const checkAndroidUpdate = async ({ manifestUrl, strings, onStatus, notify }: AndroidUpdateOptions) => {
+  const logs: string[] = [];
+  const log = (text: string) => {
+    const stamp = new Date().toISOString();
+    logs.push(`[${stamp}] ${text}`);
+  };
+
+  const logDelay = new Promise<void>((resolve) => {
+    setTimeout(resolve, LOG_DELAY_MS);
+  });
+
+  log('Android update check invoked.');
+  log(`Manifest endpoint: ${manifestUrl}`);
+
   try {
+    log('Resolving current app version.');
     const currentVersion = await getVersion();
+    log(`Current version detected: v${currentVersion}`);
+
+    log('Fetching remote manifest.');
     const manifest = await fetchManifest(manifestUrl);
+    log(`Manifest fetched (app v${manifest.version ?? 'unknown'})`);
     const androidConfig = manifest.android;
+    log(`Android manifest entry: ${androidConfig ? `v${androidConfig.version} @ ${androidConfig.url}` : 'missing'}`);
+    const normalizedNotes = (manifest.notes ?? '').trim();
+    if (normalizedNotes) {
+      log(`Release notes: ${normalizedNotes.replace(/\s+/g, ' ')}`);
+    }
 
     if (!androidConfig?.url || !androidConfig.version) {
-      await message(strings.configMissing, { kind: 'error' });
+      log('Manifest missing Android URL or version. Aborting.');
+      notifyFrontend(notify, strings.configMissing, { variant: 'error', duration: 6000 });
       return;
     }
 
     if (compareVersions(androidConfig.version, currentVersion) <= 0) {
-      await message(strings.alreadyLatest, { title: strings.promptTitle });
+      log(`Remote version v${androidConfig.version} is not newer than current v${currentVersion}.`);
+      notifyFrontend(notify, strings.alreadyLatest, { variant: 'info', duration: 4000 });
       return;
     }
 
+    log(`Prompting user to install v${androidConfig.version}.`);
     const shouldUpdate = await ask(strings.promptBody(androidConfig.version, manifest.notes ?? ''), {
       title: strings.promptTitle,
       okLabel: strings.promptConfirm,
       cancelLabel: strings.promptCancel,
     });
 
+    log(`User response: ${shouldUpdate ? 'confirmed update' : 'declined update'}.`);
     if (!shouldUpdate) {
       return;
     }
 
+    log('Starting APK download.');
     notifyStatus(onStatus, strings.downloadToast);
+    log(`Status notified: ${strings.downloadToast}`);
     const filePath = await downloadApk(androidConfig.url, `LingoVault_v${androidConfig.version}.apk`);
+    log(`APK downloaded to ${filePath}.`);
 
+    log('Preparing to launch installer.');
     notifyStatus(onStatus, strings.installToast);
+    log(`Status notified: ${strings.installToast}`);
     try {
       await openInstaller(filePath);
+      log('Installer launched successfully.');
     } catch (installError) {
       const messageText = installError instanceof Error ? installError.message : String(installError);
-      await message(strings.installError(messageText), { kind: 'error' });
+      log(`Installer launch failed: ${messageText}`);
+      notifyFrontend(notify, strings.installError(messageText), { variant: 'error', duration: 6000 });
     }
   } catch (error) {
     const messageText = error instanceof Error ? error.message : String(error);
-    await message(strings.checkError(messageText), { kind: 'error' });
+    log(`Update check failed: ${messageText}`);
+    notifyFrontend(notify, strings.checkError(messageText), { variant: 'error', duration: 6000 });
+  } finally {
+    log('Update check flow finished. Awaiting log display.');
+    await logDelay;
+    const logBody = logs.join('\n') || '[no log entries]';
+    notifyFrontend(notify, `${strings.promptTitle} · Logs\n${logBody}`, {
+      variant: 'info',
+      duration: 10000
+    });
   }
 };
