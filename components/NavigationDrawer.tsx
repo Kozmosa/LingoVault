@@ -1,5 +1,5 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, RefreshCcw, Loader2 } from 'lucide-react';
 
 export interface DrawerItem {
   key: string;
@@ -17,6 +17,9 @@ interface NavigationDrawerProps {
   activeKey: string;
   onSelect: (key: string) => void;
   onClose: () => void;
+  onCheckUpdates: () => void;
+  checkUpdatesLabel: string;
+  isCheckingUpdates?: boolean;
 }
 
 export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
@@ -29,6 +32,9 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
   activeKey,
   onSelect,
   onClose,
+  onCheckUpdates,
+  checkUpdatesLabel,
+  isCheckingUpdates = false,
 }) => {
   return (
     <div
@@ -78,6 +84,19 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
             );
           })}
         </nav>
+        <div className="px-4 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/70">
+          <button
+            onClick={onCheckUpdates}
+            className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-brand-200/60 dark:border-brand-900/40 bg-white dark:bg-slate-900 text-sm font-medium text-brand-600 dark:text-brand-400 hover:bg-brand-50/60 dark:hover:bg-slate-800/70 transition-colors"
+          >
+            <span>{checkUpdatesLabel}</span>
+            {isCheckingUpdates ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <RefreshCcw size={16} />
+            )}
+          </button>
+        </div>
       </aside>
     </div>
   );

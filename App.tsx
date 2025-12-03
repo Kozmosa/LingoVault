@@ -10,6 +10,7 @@ import { enhanceWord } from './services/aiService';
 import { SettingsModal } from './components/SettingsModal';
 import { AddWordModal } from './components/AddWordModal';
 import { useTranslation } from 'react-i18next';
+import { APP_VERSION } from './utils/version';
 import { 
   BookOpen, 
   Plus, 
@@ -52,6 +53,7 @@ const App: React.FC = () => {
   const [isAutoExampleLoading, setIsAutoExampleLoading] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activePage, setActivePage] = useState<AppPage>('vault');
+  const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
   
   // Settings State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -209,6 +211,17 @@ const App: React.FC = () => {
       setActivePage(key as AppPage);
     }
   }, []);
+
+  const handleCheckForUpdates = useCallback(() => {
+    if (isCheckingUpdates) return;
+    setIsCheckingUpdates(true);
+    setIsDrawerOpen(false);
+
+    window.setTimeout(() => {
+      showToast(t('latestVersionMessage', { version: APP_VERSION }));
+      setIsCheckingUpdates(false);
+    }, 400);
+  }, [isCheckingUpdates, showToast, t]);
 
   // Focus English input when adding mode is active
   useEffect(() => {
@@ -432,13 +445,13 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       {toastMessage && (
-        <div className="fixed top-6 right-6 z-50 flex items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-lg px-4 py-3 text-slate-700 dark:text-slate-200 backdrop-blur">
+        <div className="fixed bottom-10 left-1/2 z-50 flex w-[min(90vw,22rem)] -translate-x-1/2 items-center gap-3 rounded-xl bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-lg px-4 py-3 text-slate-700 dark:text-slate-200 backdrop-blur">
           <CheckCircle2 className="text-brand-500" size={18} />
           <span className="text-sm font-medium">{toastMessage}</span>
           <button
             type="button"
             onClick={() => setToastMessage(null)}
-            className="ml-2 rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600"
+            className="ml-auto rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-600"
             aria-label={t('dismiss')}
           >
             <X size={16} />
@@ -466,6 +479,9 @@ const App: React.FC = () => {
         activeKey={activePage}
         onSelect={handleSelectPage}
         onClose={() => setIsDrawerOpen(false)}
+        onCheckUpdates={handleCheckForUpdates}
+        checkUpdatesLabel={t('checkForUpdates', { version: APP_VERSION })}
+        isCheckingUpdates={isCheckingUpdates}
       />
 
       {/* Header */}

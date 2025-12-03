@@ -1,7 +1,7 @@
 {
   "name": "lingovault",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,6 +15,11 @@
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
+    "@tauri-apps/plugin-dialog": "^2.4.2",
+    "@tauri-apps/plugin-fs": "^2.4.4",
+    "@tauri-apps/plugin-http": "^2.5.4",
+    "@tauri-apps/plugin-opener": "^2.5.2",
+    "@tauri-apps/plugin-updater": "^2.9.0",
     "i18next": "23.10.0",
     "i18next-browser-languagedetector": "7.2.0",
     "lucide-react": "^0.555.0",
@@ -23,7 +28,7 @@
     "react-i18next": "14.1.0"
   },
   "devDependencies": {
-    "@tauri-apps/api": "^2.9.0",
+    "@tauri-apps/api": "^2.9.1",
     "@tauri-apps/cli": "^2.9.4",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
