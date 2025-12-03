@@ -594,7 +594,7 @@ const App: React.FC = () => {
       {/* Main Content */}
       <main
         className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}
-        style={{ paddingTop: 'calc(4rem + var(--safe-area-top))' }}
+        style={{ paddingTop: 'calc(5rem + var(--safe-area-top))' }}
       >
         {activePage === 'vault' ? (
           <>

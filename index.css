@@ -28,6 +28,25 @@
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  .drawer-overlay {
+    background-color: rgba(15, 23, 42, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    opacity: 0;
+    pointer-events: none;
+    transition-property: opacity, background-color, backdrop-filter, -webkit-backdrop-filter;
+    transition-duration: 420ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .drawer-overlay[data-open="true"] {
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   /* 安全区域工具类 */
   .pt-safe {
     padding-top: var(--safe-area-top);

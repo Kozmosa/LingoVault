@@ -38,15 +38,16 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-40 transition-opacity duration-300 ${isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
+      className={`fixed inset-0 z-40 ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
     >
       <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+        className="absolute inset-0 drawer-overlay"
+        data-open={isOpen}
         onClick={onClose}
         aria-hidden="true"
       />
       <aside
-        className={`absolute left-0 top-0 h-full w-72 max-w-full bg-white dark:bg-slate-900 shadow-xl border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`absolute left-0 top-0 h-full w-72 max-w-full bg-white dark:bg-slate-900 shadow-xl border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-[420ms] modal-ease flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label={navLabel}
         style={{ paddingTop: 'var(--safe-area-top)' }}
       >
