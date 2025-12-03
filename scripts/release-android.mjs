@@ -7,10 +7,14 @@ import { fileURLToPath } from 'url';
 const NEW_VERSION = process.argv[2];
 const PROJECT_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
-// 修正点1: 针对 aarch64 架构的输出路径
-const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/arm64-v8a/release');
-// 修正点2: Gradle 生成的文件名通常带架构标识
-const GENERATED_APK_NAME = 'app-arm64-v8a-release.apk'; 
+// 针对 aarch64 架构的输出路径
+// const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/arm64-v8a/release');
+// universal 路径
+const APK_OUTPUT_DIR = path.join(PROJECT_ROOT, 'src-tauri/gen/android/app/build/outputs/apk/universal/release');
+// Gradle 生成的文件名通常带架构标识
+// const GENERATED_APK_NAME = 'app-arm64-v8a-release.apk'; 
+// universal apk file
+const GENERATED_APK_NAME = 'app-universal-release.apk'; 
 
 const TARGET_RELEASE_DIR = path.join(PROJECT_ROOT, 'release');
 const TARGET_APK_NAME = 'android_arm.apk'; // GitHub Release 最终发布的文件名
@@ -53,8 +57,8 @@ function updateTauriConf(filePath, version) {
     console.log('🔨 开始构建 Android APK (加速模式: 仅构建 arm64)...');
     
     // 修正点3: 显式指定 --apk true，可以指定架构以加速编译
-    // run('npx tauri android build --apk true --target aarch64'); 
-    run('npx tauri android build --apk true'); 
+    run('npx tauri android build --apk true --target aarch64'); 
+    // run('npx tauri android build --apk true'); 
 
     // 3. 寻找并移动 APK
     console.log('📦 处理构建产物...');

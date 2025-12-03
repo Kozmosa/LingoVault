@@ -514,8 +514,11 @@ const App: React.FC = () => {
       />
 
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <header
+        className="fixed top-0 left-0 right-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors"
+        style={{ paddingTop: 'var(--safe-area-top)' }}
+      >
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between min-h-16">
           <div className="flex items-center gap-2 text-brand-600 dark:text-brand-500">
             <button
               type="button"
@@ -589,7 +592,10 @@ const App: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}>
+      <main
+        className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}
+        style={{ paddingTop: 'calc(4rem + var(--safe-area-top))' }}
+      >
         {activePage === 'vault' ? (
           <>
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">

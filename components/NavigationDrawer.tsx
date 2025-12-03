@@ -48,6 +48,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
       <aside
         className={`absolute left-0 top-0 h-full w-72 max-w-full bg-white dark:bg-slate-900 shadow-xl border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-out flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label={navLabel}
+        style={{ paddingTop: 'var(--safe-area-top)' }}
       >
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800">
           <div className="flex flex-col">
