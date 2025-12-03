@@ -543,10 +543,10 @@ const App: React.FC = () => {
             return (
               <div
                 key={toast.id}
-                className={`flex items-center gap-3 rounded-xl border shadow-lg px-4 py-3 backdrop-blur ${variantClasses}`}
+                className={`flex items-start gap-3 rounded-xl border shadow-lg px-4 py-3 backdrop-blur ${variantClasses}`}
               >
-                <CheckCircle2 className={iconColor} size={18} />
-                <span className="text-sm font-medium whitespace-pre-line">{toast.text}</span>
+                <CheckCircle2 className={`${iconColor} flex-shrink-0`} size={18} />
+                <span className="flex-1 min-w-0 text-sm font-medium whitespace-pre-line break-words text-left leading-snug">{toast.text}</span>
                 <button
                   type="button"
                   onClick={() => removeToast(toast.id)}
