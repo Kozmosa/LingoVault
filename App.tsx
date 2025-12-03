@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { WordItem, AISettings, DEFAULT_AI_SETTINGS } from './types';
 import { wordsToCsv, csvToWords, downloadFile } from './utils/csvHelper';
 import { WordList } from './components/WordList';
+import { NavigationDrawer, DrawerItem } from './components/NavigationDrawer';
 import { enhanceWord } from './services/aiService';
 import { SettingsModal } from './components/SettingsModal';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +24,7 @@ import {
 } from 'lucide-react';
 
 type Theme = 'light' | 'dark' | 'system';
+type AppPage = 'vault' | 'practice';
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -32,6 +34,8 @@ const App: React.FC = () => {
   const [isLoadingAi, setIsLoadingAi] = useState(false);
   const [isAutoMeaningLoading, setIsAutoMeaningLoading] = useState(false);
   const [isAutoExampleLoading, setIsAutoExampleLoading] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activePage, setActivePage] = useState<AppPage>('vault');
   
   // Settings State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -131,6 +135,25 @@ const App: React.FC = () => {
     }
   };
 
+  const navigationItems = useMemo<DrawerItem[]>(() => ([
+    {
+      key: 'vault',
+      label: t('navWordVault'),
+      description: t('navWordVaultDesc')
+    },
+    {
+      key: 'practice',
+      label: t('navPractice'),
+      description: t('navPracticeDesc')
+    }
+  ]), [t]);
+
+  const handleSelectPage = useCallback((key: string) => {
+    if (key === 'vault' || key === 'practice') {
+      setActivePage(key);
+    }
+  }, []);
+
   // Focus English input when adding mode is active
   useEffect(() => {
     if (isAdding) {
@@ -139,6 +162,12 @@ const App: React.FC = () => {
       }, 50);
     }
   }, [isAdding]);
+
+  useEffect(() => {
+    if (activePage !== 'vault') {
+      setIsAdding(false);
+    }
+  }, [activePage]);
 
   const handleAddWord = useCallback(() => {
     if (!newEnglish.trim()) return;
@@ -303,11 +332,30 @@ const App: React.FC = () => {
         initialSettings={aiSettings}
       />
 
+      <NavigationDrawer
+        isOpen={isDrawerOpen}
+        title={t('appName')}
+        subtitle={t('navigationSubtitle')}
+        navLabel={t('navigationLabel')}
+        closeLabel={t('closeNavigation')}
+        items={navigationItems}
+        activeKey={activePage}
+        onSelect={handleSelectPage}
+        onClose={() => setIsDrawerOpen(false)}
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 text-brand-600 dark:text-brand-500">
-            <BookOpen className="h-6 w-6" />
+            <button
+              type="button"
+              onClick={() => setIsDrawerOpen(true)}
+              className="p-2 rounded-lg transition-colors hover:bg-brand-100/70 dark:hover:bg-brand-900/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 text-current"
+              aria-label={t('openNavigation')}
+            >
+              <BookOpen className="h-6 w-6" />
+            </button>
             <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">{t('appName')}</h1>
           </div>
           
@@ -374,118 +422,125 @@ const App: React.FC = () => {
       {/* Main Content */}
       <main className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
         
-        {/* Add Word Panel */}
-        {isAdding && (
-          <div 
-            className="mb-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-brand-100 dark:border-slate-800 overflow-hidden animate-in slide-in-from-top-4 duration-300"
-            onKeyDown={handleKeyDown}
-          >
-            <div className="bg-brand-50/50 dark:bg-brand-900/10 p-4 border-b border-brand-100 dark:border-slate-800 flex justify-between items-center">
-              <h2 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-2">
-                <Plus size={18} /> {t('newEntry')}
-              </h2>
-              <button onClick={() => setIsAdding(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={18} /></button>
-            </div>
-            <div className="p-6 grid gap-5 md:grid-cols-2">
-              <div className="md:col-span-2 relative">
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('englishLabel')}</label>
-                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-2">
+        {activePage === 'vault' ? (
+          <>
+            {isAdding && (
+              <div 
+                className="mb-8 bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-brand-100 dark:border-slate-800 overflow-hidden animate-in slide-in-from-top-4 duration-300"
+                onKeyDown={handleKeyDown}
+              >
+                <div className="bg-brand-50/50 dark:bg-brand-900/10 p-4 border-b border-brand-100 dark:border-slate-800 flex justify-between items-center">
+                  <h2 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-2">
+                    <Plus size={18} /> {t('newEntry')}
+                  </h2>
+                  <button onClick={() => setIsAdding(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300"><X size={18} /></button>
+                </div>
+                <div className="p-6 grid gap-5 md:grid-cols-2">
+                  <div className="md:col-span-2 relative">
+                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('englishLabel')}</label>
+                    <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-2">
+                        <input 
+                        ref={englishInputRef}
+                        type="text" 
+                        placeholder={t('englishPlaceholder')} 
+                        className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                        value={newEnglish}
+                        onChange={(e) => setNewEnglish(e.target.value)}
+                        />
+                        <button 
+                            onClick={handleAiFill}
+                            disabled={isLoadingAi || !newEnglish}
+                            className="w-full sm:w-auto px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+                            title="Auto-fill with AI"
+                        >
+                            {isLoadingAi ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                            <span className="text-sm font-medium hidden sm:inline">{t('aiFill')}</span>
+                        </button>
+                    </div>
+                  </div>
+                
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('meaningLabel')}</label>
                     <input 
-                    ref={englishInputRef}
-                    type="text" 
-                    placeholder={t('englishPlaceholder')} 
-                    className="flex-1 px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                    value={newEnglish}
-                    onChange={(e) => setNewEnglish(e.target.value)}
+                      type="text" 
+                      placeholder={t('meaningPlaceholder')} 
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                      value={newChinese}
+                      onChange={(e) => setNewChinese(e.target.value)}
                     />
+                  </div>
+
+                  <div className="md:col-span-2">
+                    <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('exampleLabel')}</label>
+                    <input 
+                      type="text" 
+                      placeholder={t('examplePlaceholder')} 
+                      className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
+                      value={newExample}
+                      onChange={(e) => setNewExample(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <span className="text-xs text-slate-400 dark:text-slate-500 text-center md:text-left">{t('proTip')}</span>
                     <button 
-                        onClick={handleAiFill}
-                        disabled={isLoadingAi || !newEnglish}
-                        className="w-full sm:w-auto px-4 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-                        title="Auto-fill with AI"
+                      onClick={handleAddWord}
+                      disabled={!newEnglish}
+                      className="w-full md:w-auto px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all md:ml-auto"
                     >
-                        {isLoadingAi ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                        <span className="text-sm font-medium hidden sm:inline">{t('aiFill')}</span>
+                      {t('saveBtn')}
                     </button>
+                  </div>
                 </div>
               </div>
-              
-              <div>
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('meaningLabel')}</label>
+            )}
+
+            <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
                 <input 
                   type="text" 
-                  placeholder={t('meaningPlaceholder')} 
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                  value={newChinese}
-                  onChange={(e) => setNewChinese(e.target.value)}
+                  placeholder={t('searchPlaceholder')} 
+                  className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all shadow-sm"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
-
-              <div className="md:col-span-2">
-                <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">{t('exampleLabel')}</label>
-                <input 
-                  type="text" 
-                  placeholder={t('examplePlaceholder')} 
-                  className="w-full px-4 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all"
-                  value={newExample}
-                  onChange={(e) => setNewExample(e.target.value)}
-                />
-              </div>
-
-              <div className="md:col-span-2 flex flex-col gap-3 md:flex-row md:items-center md:justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                <span className="text-xs text-slate-400 dark:text-slate-500 text-center md:text-left">{t('proTip')}</span>
-                <button 
-                  onClick={handleAddWord}
-                  disabled={!newEnglish}
-                  className="w-full md:w-auto px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 shadow-md shadow-brand-500/20 disabled:opacity-50 disabled:cursor-not-allowed transition-all md:ml-auto"
-                >
-                  {t('saveBtn')}
-                </button>
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleAutoMeaning}
+                    disabled={isAutoMeaningLoading || isAutoExampleLoading}
+                    className="px-3 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                    title={t('autoMeaningTitle')}
+                  >
+                    {isAutoMeaningLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                    <span className="text-sm font-medium">{t('autoMeaning')}</span>
+                  </button>
+                  <button
+                    onClick={handleAutoExample}
+                    disabled={isAutoMeaningLoading || isAutoExampleLoading}
+                    className="px-3 py-2 bg-sky-50 dark:bg-sky-900/20 text-sky-600 dark:text-sky-300 border border-sky-100 dark:border-sky-900 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
+                    title={t('autoExampleTitle')}
+                  >
+                    {isAutoExampleLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
+                    <span className="text-sm font-medium">{t('autoExample')}</span>
+                  </button>
+                </div>
+                <div className="text-sm text-slate-500 dark:text-slate-400 font-medium px-1 text-center sm:text-left">
+                  {filteredWords.length} {filteredWords.length === 1 ? t('entry') : t('entries')}
+                </div>
               </div>
             </div>
+
+            <WordList words={filteredWords} onDelete={handleDelete} onUpdate={handleUpdate} />
+          </>
+        ) : (
+          <div className="min-h-[60vh] bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col items-center justify-center text-center gap-3 p-10">
+            <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">{t('comingSoonTitle')}</h2>
+            <p className="text-slate-500 dark:text-slate-400 max-w-md">{t('comingSoonMessage')}</p>
           </div>
         )}
-
-        {/* Search & Stats */}
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input 
-              type="text" 
-              placeholder={t('searchPlaceholder')} 
-              className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-slate-900 dark:text-slate-100 transition-all shadow-sm"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handleAutoMeaning}
-                disabled={isAutoMeaningLoading || isAutoExampleLoading}
-                className="px-3 py-2 bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-300 border border-purple-100 dark:border-purple-900 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
-                title={t('autoMeaningTitle')}
-              >
-                {isAutoMeaningLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                <span className="text-sm font-medium">{t('autoMeaning')}</span>
-              </button>
-              <button
-                onClick={handleAutoExample}
-                disabled={isAutoMeaningLoading || isAutoExampleLoading}
-                className="px-3 py-2 bg-sky-50 dark:bg-sky-900/20 text-sky-600 dark:text-sky-300 border border-sky-100 dark:border-sky-900 rounded-lg hover:bg-sky-100 dark:hover:bg-sky-900/40 flex items-center gap-2 transition-colors disabled:opacity-50"
-                title={t('autoExampleTitle')}
-              >
-                {isAutoExampleLoading ? <Loader2 size={16} className="animate-spin" /> : <Sparkles size={16} />}
-                <span className="text-sm font-medium">{t('autoExample')}</span>
-              </button>
-            </div>
-            <div className="text-sm text-slate-500 dark:text-slate-400 font-medium px-1 text-center sm:text-left">
-              {filteredWords.length} {filteredWords.length === 1 ? t('entry') : t('entries')}
-            </div>
-          </div>
-        </div>
-
-        <WordList words={filteredWords} onDelete={handleDelete} onUpdate={handleUpdate} />
 
       </main>
 
