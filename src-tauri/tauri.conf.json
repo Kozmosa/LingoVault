@@ -40,6 +40,17 @@
         "https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json"
       ],
       "pubkey": "YOUR_PUBLIC_KEY_HERE"
+    },
+    "http": {
+      "scope": [
+        "https://github.com/*",
+        "https://api.github.com/*",
+        "https://objects.githubusercontent.com/*",
+        "https://cdn.jsdelivr.net/*",
+        "https://gh-proxy.com/*",
+        "https://fastgit.cc/*",
+        "https://s3.amazonaws.com/*"
+      ]
     }
   }
 }
