@@ -6,6 +6,31 @@
     "main"
   ],
   "permissions": [
-    "core:default"
+    "core:default",
+    "dialog:default",
+    "fs:default",
+    {
+      "identifier": "http:default",
+      "scope": {
+        "allow": [
+          "https://github.com/*",
+          "https://api.github.com/*",
+          "https://objects.githubusercontent.com/*",
+          "https://cdn.jsdelivr.net/*",
+          "https://gh-proxy.com/*",
+          "https://fastgit.cc/*",
+          "https://s3.amazonaws.com/*"
+        ]
+      }
+    },
+    {
+      "identifier": "opener:allow-open-path",
+      "scope": {
+        "allow": [
+          { "path": "$APPCACHE/*" },
+          { "path": "$APPCACHE/**" }
+        ]
+      }
+    }
   ]
 }
