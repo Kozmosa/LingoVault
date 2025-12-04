@@ -29,6 +29,7 @@ import {
   Monitor,
   CheckCircle2
 } from 'lucide-react';
+import { fetch } from '@tauri-apps/plugin-http';
 
 type Theme = 'light' | 'dark' | 'system';
 type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport';
@@ -248,6 +249,7 @@ const App: React.FC = () => {
     if (!isAndroid) {
       try {
         const response = await fetch(`${GITHUB_RELEASES_API}?t=${Date.now()}`, {
+          method: 'GET',
           headers: {
             Accept: 'application/vnd.github+json'
           }

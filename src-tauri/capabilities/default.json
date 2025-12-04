@@ -11,17 +11,22 @@
     "fs:default",
     {
       "identifier": "http:default",
-      "scope": {
-        "allow": [
-          "https://github.com/*",
-          "https://api.github.com/*",
-          "https://objects.githubusercontent.com/*",
-          "https://cdn.jsdelivr.net/*",
-          "https://gh-proxy.com/*",
-          "https://fastgit.cc/*",
-          "https://s3.amazonaws.com/*"
-        ]
-      }
+      "allow": [
+        { "url": "https://github.com/*" },
+        { "url": "https://api.github.com/*" },
+        { "url": "https://objects.githubusercontent.com/*" },
+        { "url": "https://cdn.jsdelivr.net/*" },
+        { "url": "https://gh-proxy.com/*" },
+        { "url": "https://fastgit.cc/*" },
+        { "url": "https://s3.amazonaws.com/*" },
+        { "url": "https://*.s3.amazonaws.com/*" },
+        { "url": "https://github-production-release-asset-*.s3.amazonaws.com/*" },
+        { "url": "https://github-releases.githubusercontent.com/*" },
+        { "url": "https://raw.githubusercontent.com/*" },
+        { "url": "https://gist.githubusercontent.com/*" },
+        { "url": "http://26.18.80.140:5173/*" },
+        { "url": "http://192.168.251.183:5173/*" }
+      ]
     },
     {
       "identifier": "opener:allow-open-path",

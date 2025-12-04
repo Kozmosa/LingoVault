@@ -20,7 +20,10 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "capabilities": [
+        "default"
+      ]
     }
   },
   "bundle": {
@@ -33,18 +36,5 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ]
-  },
-  "plugins": {
-    "http": {
-      "scope": [
-        "https://github.com/*",
-        "https://api.github.com/*",
-        "https://objects.githubusercontent.com/*",
-        "https://cdn.jsdelivr.net/*",
-        "https://gh-proxy.com/*",
-        "https://fastgit.cc/*",
-        "https://s3.amazonaws.com/*"
-      ]
-    }
   }
 }
