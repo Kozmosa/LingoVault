@@ -33,6 +33,18 @@ interface AndroidUpdateOptions {
   notify?: (message: string, options?: { variant?: 'info' | 'error' | 'success'; duration?: number }) => void;
 }
 
+type DownloadMirror = 'global' | 'china';
+
+// Toggle mirror preference here if a China-optimized CDN is required.
+let DOWNLOAD_MIRROR: DownloadMirror = 'china';
+
+const buildDownloadUrl = (sourceUrl: string): string => {
+  if (!sourceUrl) return sourceUrl;
+  return DOWNLOAD_MIRROR === 'china'
+    ? `https://fastgit.cc/${sourceUrl}`
+    : sourceUrl;
+};
+
 const compareVersions = (remote: string, current: string) => {
   const remoteParts = remote.split('.').map(Number);
   const currentParts = current.split('.').map(Number);
@@ -73,6 +85,7 @@ const notifyFrontend = (
 
 const LOG_DELAY_MS = 10_000;
 
+/*
 const downloadApk = async (url: string, fileName: string) => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -85,8 +98,9 @@ const downloadApk = async (url: string, fileName: string) => {
   const cachePath = await cacheDir();
   return join(cachePath, fileName);
 };
+*/
 
-const openInstaller = async (filePath: string) => {
+const openSystemTarget = async (target: string) => {
   const openerModule = await import('@tauri-apps/plugin-opener');
   const handler = (openerModule as { open?: (target: string) => Promise<void> }).open
     ?? (openerModule as { default?: (target: string) => Promise<void> }).default;
@@ -95,7 +109,7 @@ const openInstaller = async (filePath: string) => {
     throw new Error('opener plugin unavailable');
   }
 
-  await handler(filePath);
+  await handler(target);
 };
 
 export const checkAndroidUpdate = async ({ manifestUrl, strings, onStatus, notify }: AndroidUpdateOptions) => {
@@ -151,21 +165,20 @@ export const checkAndroidUpdate = async ({ manifestUrl, strings, onStatus, notif
       return;
     }
 
-    log('Starting APK download.');
+    const resolvedUrl = buildDownloadUrl(androidConfig.url);
+    log(`Resolved download URL (${DOWNLOAD_MIRROR}): ${resolvedUrl}`);
+
+    log('Opening system browser for manual installation.');
     notifyStatus(onStatus, strings.downloadToast);
     log(`Status notified: ${strings.downloadToast}`);
-    const filePath = await downloadApk(androidConfig.url, `LingoVault_v${androidConfig.version}.apk`);
-    log(`APK downloaded to ${filePath}.`);
-
-    log('Preparing to launch installer.');
-    notifyStatus(onStatus, strings.installToast);
-    log(`Status notified: ${strings.installToast}`);
     try {
-      await openInstaller(filePath);
-      log('Installer launched successfully.');
+      await openSystemTarget(resolvedUrl);
+      log('System browser launched successfully.');
+      notifyStatus(onStatus, strings.installToast);
+      log(`Status notified: ${strings.installToast}`);
     } catch (installError) {
       const messageText = installError instanceof Error ? installError.message : String(installError);
-      log(`Installer launch failed: ${messageText}`);
+      log(`System browser launch failed: ${messageText}`);
       notifyFrontend(notify, strings.installError(messageText), { variant: 'error', duration: 6000 });
     }
   } catch (error) {
