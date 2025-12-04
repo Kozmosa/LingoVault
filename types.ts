@@ -51,3 +51,20 @@ export const DEFAULT_AI_SETTINGS: AISettings = {
   baseUrl: '',
   model: 'gemini-2.5-flash'
 };
+
+export type SmartImportMode = 'words' | 'essay';
+
+export interface EssayImportResult {
+  structureComplete: boolean;
+  formatFixed: boolean;
+  titleRestored: boolean;
+  title: string;
+  content: string;
+}
+
+export interface EssayRecord extends EssayImportResult {
+  id: string;
+  createdAt: number;
+  source: string;
+  rawInput: string;
+}

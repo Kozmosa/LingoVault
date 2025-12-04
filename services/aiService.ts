@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from "@google/genai";
-import { AISettings, SmartImportFieldMap, SmartImportPlan, WordItem } from "../types";
+import { AISettings, SmartImportFieldMap, SmartImportPlan, WordItem, EssayImportResult } from "../types";
 
 type ResponseFormat = "json_object";
 
@@ -8,6 +8,21 @@ interface ProviderRequest {
   userPrompt: string;
   responseFormat?: ResponseFormat;
   geminiSchema?: Type;
+}
+
+interface EssayExtractionDraft {
+  structureComplete?: boolean;
+  formatIssuesDetected?: boolean;
+  title?: string;
+  content?: string;
+}
+
+interface EssayTitleDraft {
+  title?: string;
+}
+
+interface EssayRewriteDraft {
+  content?: string;
 }
 
 // Helper to clean JSON from Markdown (```json ... ```)
@@ -22,6 +37,8 @@ const ENHANCE_PROMPT = (word: string) =>
      "chinese": "中文翻译",
      "example": "English example sentence."
    }`;
+
+const parseJsonResponse = <T>(payload: string): T => JSON.parse(cleanJson(payload));
 
 // --- Providers ---
 
@@ -312,6 +329,72 @@ const normalizeSmartImportPlan = (raw: any): SmartImportPlan => {
   return plan;
 };
 
+const ESSAY_EXTRACTION_SYSTEM_PROMPT =
+  "You analyze raw exam essays and identify titles plus well-formed content. Respond only with JSON.";
+
+const ESSAY_EXTRACTION_PROMPT = (text: string) =>
+  [
+    "From the raw essay submission below, extract the intended essay title (if present) and the full essay body.",
+    "Detect whether the source text already contains both a recognizable prompt/title and the essay itself.",
+    "If formatting issues such as random line breaks, punctuation glitches, or obvious typos are present, set formatIssuesDetected to true but DO NOT rewrite the essay yet.",
+    "Return JSON with this shape:",
+    `{
+  "structureComplete": true,
+  "formatIssuesDetected": false,
+  "title": "string (empty if missing)",
+  "content": "string (empty if not found)"
+}`,
+    "Raw submission:",
+    text
+  ].join("\n\n");
+
+const ESSAY_EXTRACTION_SCHEMA: Type = {
+  type: Type.OBJECT,
+  properties: {
+    structureComplete: { type: Type.BOOLEAN },
+    formatIssuesDetected: { type: Type.BOOLEAN },
+    title: { type: Type.STRING },
+    content: { type: Type.STRING }
+  },
+  required: ["structureComplete", "formatIssuesDetected", "content"],
+};
+
+const ESSAY_TITLE_PROMPT = (content: string) =>
+  [
+    "A reference essay is provided below. Infer the most likely essay prompt/title in <= 18 Chinese characters or <= 14 English words.",
+    "Focus on the central topic; respond with JSON { \"title\": \"VALUE\" }.",
+    content
+  ].join("\n\n");
+
+const ESSAY_TITLE_SYSTEM_PROMPT =
+  "You infer concise essay titles from provided compositions. Respond strictly with JSON.";
+
+const ESSAY_TITLE_SCHEMA: Type = {
+  type: Type.OBJECT,
+  properties: {
+    title: { type: Type.STRING }
+  },
+  required: ["title"],
+};
+
+const ESSAY_REWRITE_PROMPT = (content: string) =>
+  [
+    "You are a copy editor. Clean the essay below by fixing accidental line breaks, spacing, casing, punctuation, and obvious typos WITHOUT altering meaning.",
+    "Return JSON { \"content\": \"cleaned essay\" } and keep the original language and tone.",
+    content
+  ].join("\n\n");
+
+const ESSAY_REWRITE_SYSTEM_PROMPT =
+  "You polish essay formatting without altering meaning. Respond strictly with JSON.";
+
+const ESSAY_REWRITE_SCHEMA: Type = {
+  type: Type.OBJECT,
+  properties: {
+    content: { type: Type.STRING }
+  },
+  required: ["content"],
+};
+
 export const generateSmartImportPlan = async (
   sampleData: string,
   settings: AISettings
@@ -330,4 +413,87 @@ export const generateSmartImportPlan = async (
     console.error("Smart import plan generation failed:", error);
     throw error;
   }
+};
+
+const extractEssayDraft = async (
+  rawText: string,
+  settings: AISettings
+): Promise<Required<Pick<EssayExtractionDraft, "structureComplete" | "formatIssuesDetected" | "title" | "content">>> => {
+  const jsonString = await executeProviderRequest(settings, {
+    systemPrompt: ESSAY_EXTRACTION_SYSTEM_PROMPT,
+    userPrompt: ESSAY_EXTRACTION_PROMPT(rawText),
+    responseFormat: "json_object",
+    geminiSchema: ESSAY_EXTRACTION_SCHEMA
+  });
+
+  const parsed = parseJsonResponse<EssayExtractionDraft>(jsonString);
+  return {
+    structureComplete: Boolean(parsed.structureComplete),
+    formatIssuesDetected: Boolean(parsed.formatIssuesDetected),
+    title: (parsed.title ?? "").trim(),
+    content: (parsed.content ?? "").trim()
+  };
+};
+
+const inferMissingEssayTitle = async (content: string, settings: AISettings): Promise<string> => {
+  const jsonString = await executeProviderRequest(settings, {
+    systemPrompt: ESSAY_TITLE_SYSTEM_PROMPT,
+    userPrompt: ESSAY_TITLE_PROMPT(content),
+    responseFormat: "json_object",
+    geminiSchema: ESSAY_TITLE_SCHEMA
+  });
+
+  const parsed = parseJsonResponse<EssayTitleDraft>(jsonString);
+  return (parsed.title ?? "").trim();
+};
+
+const repairEssayContent = async (content: string, settings: AISettings): Promise<string> => {
+  const jsonString = await executeProviderRequest(settings, {
+    systemPrompt: ESSAY_REWRITE_SYSTEM_PROMPT,
+    userPrompt: ESSAY_REWRITE_PROMPT(content),
+    responseFormat: "json_object",
+    geminiSchema: ESSAY_REWRITE_SCHEMA
+  });
+
+  const parsed = parseJsonResponse<EssayRewriteDraft>(jsonString);
+  return (parsed.content ?? "").trim();
+};
+
+export const buildEssayImportResult = async (
+  rawText: string,
+  settings: AISettings
+): Promise<EssayImportResult> => {
+  const draft = await extractEssayDraft(rawText, settings);
+  let title = draft.title;
+  let content = draft.content;
+
+  if (!content) {
+    throw new Error("essay_content_missing");
+  }
+
+  let titleRestored = false;
+  if (!title && content) {
+    const inferred = await inferMissingEssayTitle(content, settings);
+    if (inferred) {
+      title = inferred;
+      titleRestored = true;
+    }
+  }
+
+  let formatFixed = false;
+  if (draft.formatIssuesDetected && content) {
+    const repaired = await repairEssayContent(content, settings);
+    if (repaired) {
+      content = repaired;
+      formatFixed = true;
+    }
+  }
+
+  return {
+    structureComplete: Boolean(draft.structureComplete),
+    formatFixed,
+    titleRestored,
+    title,
+    content
+  };
 };
