@@ -9,6 +9,8 @@
     "core:default",
     "dialog:default",
     "fs:default",
+    "fs:write-all",
+    "fs:read-all",
     {
       "identifier": "http:default",
       "allow": [
@@ -33,6 +35,14 @@
       "allow": [
         { "path": "$APPCACHE/*" },
         { "path": "$APPCACHE/**" }
+      ]
+    },
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [
+        { "path": "$APPDATA/*" },
+        { "path": "$APPCACHE/**"},
+        { "path": "$DOWNLOAD/**"}
       ]
     }
   ]
