@@ -24,11 +24,7 @@ import {
   FileJson, 
   FileSpreadsheet, 
   X,
-  Globe,
   Settings,
-  Sun,
-  Moon,
-  Monitor,
   CheckCircle2
 } from 'lucide-react';
 import { fetch } from '@tauri-apps/plugin-http';
@@ -263,26 +259,15 @@ const App: React.FC = () => {
     localStorage.setItem('lingovault_settings', JSON.stringify(aiSettings));
   }, [aiSettings]);
 
-  const toggleLang = () => {
-    const newLang = i18n.language.startsWith('zh') ? 'en' : 'zh';
-    i18n.changeLanguage(newLang);
-  };
+  const activeLanguage: 'en' | 'zh' = i18n.language.startsWith('zh') ? 'zh' : 'en';
 
-  const cycleTheme = () => {
-    setTheme(prev => {
-      if (prev === 'light') return 'dark';
-      if (prev === 'dark') return 'system';
-      return 'light';
-    });
-  };
-
-  const getThemeIcon = () => {
-    switch (theme) {
-      case 'light': return <Sun size={18} />;
-      case 'dark': return <Moon size={18} />;
-      default: return <Monitor size={18} />;
+  const handleLanguageSelect = useCallback((lang: 'en' | 'zh') => {
+    const target = lang === 'zh' ? 'zh' : 'en';
+    if (i18n.language.startsWith(target)) {
+      return;
     }
-  };
+    i18n.changeLanguage(target);
+  }, [i18n]);
 
   const navigationItems = useMemo<DrawerItem[]>(() => ([
     {
@@ -715,6 +700,10 @@ const App: React.FC = () => {
             setIsSettingsOpen(false);
         }}
         initialSettings={aiSettings}
+        theme={theme}
+        onThemeChange={(value) => setTheme(value)}
+        language={activeLanguage}
+        onLanguageChange={handleLanguageSelect}
       />
 
       <NavigationDrawer
@@ -752,34 +741,13 @@ const App: React.FC = () => {
           
           <div className="flex items-center gap-2">
             
-            <div className="flex bg-slate-100 dark:bg-slate-800 rounded-lg p-1 gap-1 transition-colors">
-                <button 
-                  onClick={toggleLang}
-                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all flex items-center gap-1"
-                  title={t('switchTo')}
-                >
-                  <Globe size={18} />
-                  <span className="text-xs font-bold uppercase w-5 text-center">
-                    {i18n.language.startsWith('zh') ? 'ZH' : 'EN'}
-                  </span>
-                </button>
-                <div className="w-px bg-slate-300 dark:bg-slate-600 my-1"></div>
-                <button 
-                  onClick={cycleTheme}
-                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all"
-                  title={t(theme)}
-                >
-                  {getThemeIcon()}
-                </button>
-                <div className="w-px bg-slate-300 dark:bg-slate-600 my-1"></div>
-                <button 
-                  onClick={() => setIsSettingsOpen(true)}
-                  className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-700 rounded-md transition-all"
-                  title={t('settings')}
-                >
-                  <Settings size={18} />
-                </button>
-            </div>
+            <button 
+              onClick={() => setIsSettingsOpen(true)}
+              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-white dark:hover:bg-slate-800 transition-colors"
+              title={t('settings')}
+            >
+              <Settings size={20} />
+            </button>
 
             <div className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1 hidden sm:block"></div>
             
