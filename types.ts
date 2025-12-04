@@ -67,4 +67,6 @@ export interface EssayRecord extends EssayImportResult {
   createdAt: number;
   source: string;
   rawInput: string;
+  reciteLog: number[];
+  readLog: number[];
 }

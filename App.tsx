@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import { WordItem, AISettings, DEFAULT_AI_SETTINGS } from './types';
+import { WordItem, AISettings, DEFAULT_AI_SETTINGS, EssayRecord } from './types';
 import { wordsToCsv, csvToWords, downloadFile } from './utils/csvHelper';
 import { formatImportSource } from './utils/importUtils';
 import { WordList } from './components/WordList';
 import { NavigationDrawer, DrawerItem } from './components/NavigationDrawer';
 import { FullScreenDrill } from './components/FullScreenDrill';
 import { SmartImport } from './components/SmartImport';
+import { EssayGallery } from './components/EssayGallery';
+import { EssayRecital } from './components/EssayRecital';
 import { enhanceWord } from './services/aiService';
 import { checkAndroidUpdate } from './services/androidUpdateService';
 import { SettingsModal } from './components/SettingsModal';
@@ -32,7 +34,7 @@ import {
 import { fetch } from '@tauri-apps/plugin-http';
 
 type Theme = 'light' | 'dark' | 'system';
-type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport';
+type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport' | 'essays' | 'essayRecite';
 type ToastVariant = 'info' | 'error' | 'success';
 interface ToastEntry {
   id: string;
@@ -45,6 +47,38 @@ interface ToastOptions {
 }
 const ANDROID_MANIFEST_URL = 'https://github.com/Kozmosa/LingoVault/releases/latest/download/latest.json';
 const GITHUB_RELEASES_API = 'https://api.github.com/repos/Kozmosa/LingoVault/releases/latest';
+const ESSAY_STORAGE_KEY = 'lingovault_essays';
+
+const coerceTimestampArray = (input: unknown): number[] => {
+  if (!Array.isArray(input)) return [];
+  return input
+    .map(entry => (typeof entry === 'number' ? entry : Number(entry)))
+    .filter(value => Number.isFinite(value));
+};
+
+const normalizeEssayRecord = (record: any): EssayRecord => ({
+  id: typeof record?.id === 'string' && record.id.trim() ? record.id : crypto.randomUUID(),
+  createdAt: typeof record?.createdAt === 'number' ? record.createdAt : Date.now(),
+  source: typeof record?.source === 'string' && record.source.trim() ? record.source : 'import',
+  rawInput: typeof record?.rawInput === 'string' ? record.rawInput : '',
+  reciteLog: coerceTimestampArray(record?.reciteLog),
+  readLog: coerceTimestampArray(record?.readLog),
+  structureComplete: Boolean(record?.structureComplete),
+  formatFixed: Boolean(record?.formatFixed),
+  titleRestored: Boolean(record?.titleRestored),
+  title: typeof record?.title === 'string' ? record.title : '',
+  content: typeof record?.content === 'string' ? record.content : ''
+});
+
+const isSameDay = (timestamp: number, comparison: number): boolean => {
+  const a = new Date(timestamp);
+  const b = new Date(comparison);
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+};
 
 const normalizeWordItem = (word: any, defaultSource: string = 'user'): WordItem => ({
   id: word.id || crypto.randomUUID(),
@@ -83,9 +117,13 @@ const App: React.FC = () => {
   const [newChinese, setNewChinese] = useState('');
   const [newExample, setNewExample] = useState('');
   const [toasts, setToasts] = useState<ToastEntry[]>([]);
+  const [essays, setEssays] = useState<EssayRecord[]>([]);
+  const [selectedEssay, setSelectedEssay] = useState<EssayRecord | null>(null);
 
   const englishInputRef = useRef<HTMLInputElement>(null);
   const toastTimersRef = useRef<Map<string, number>>(new Map());
+  const detailHistoryKeyRef = useRef<string | null>(null);
+  const pendingPageRef = useRef<AppPage | null>(null);
   const hasInitializedRef = useRef(false);
 
   const removeToast = useCallback((id: string) => {
@@ -139,6 +177,18 @@ const App: React.FC = () => {
         console.error("Failed to load settings", e);
       }
     }
+
+    const savedEssays = localStorage.getItem(ESSAY_STORAGE_KEY);
+    if (savedEssays) {
+      try {
+        const parsedEssays = JSON.parse(savedEssays);
+        if (Array.isArray(parsedEssays)) {
+          setEssays(parsedEssays.map(normalizeEssayRecord));
+        }
+      } catch (error) {
+        console.error('Failed to load essays', error);
+      }
+    }
   }, [showToast, t]);
 
   useEffect(() => {
@@ -179,10 +229,35 @@ const App: React.FC = () => {
     return () => mediaQuery.removeEventListener('change', handleSystemChange);
   }, [theme]);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      if (!detailHistoryKeyRef.current) {
+        return;
+      }
+      detailHistoryKeyRef.current = null;
+      setSelectedEssay(null);
+      setActivePage('essays');
+      if (pendingPageRef.current) {
+        const target = pendingPageRef.current;
+        pendingPageRef.current = null;
+        if (target !== 'essayRecite') {
+          setActivePage(target);
+        }
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Persistence
   useEffect(() => {
     localStorage.setItem('lingovault_data', JSON.stringify(words));
   }, [words]);
+
+  useEffect(() => {
+    localStorage.setItem(ESSAY_STORAGE_KEY, JSON.stringify(essays));
+  }, [essays]);
 
   useEffect(() => {
     localStorage.setItem('lingovault_settings', JSON.stringify(aiSettings));
@@ -216,6 +291,11 @@ const App: React.FC = () => {
       description: t('navWordVaultDesc')
     },
     {
+      key: 'essays',
+      label: t('navEssayVault'),
+      description: t('navEssayVaultDesc')
+    },
+    {
       key: 'smartImport',
       label: t('navSmartImport'),
       description: t('navSmartImportDesc')
@@ -233,8 +313,15 @@ const App: React.FC = () => {
   ]), [t]);
 
   const handleSelectPage = useCallback((key: string) => {
-    if (key === 'vault' || key === 'practice' || key === 'drill' || key === 'smartImport') {
-      setActivePage(key as AppPage);
+    if (key === 'vault' || key === 'practice' || key === 'drill' || key === 'smartImport' || key === 'essays') {
+      const target = key as AppPage;
+      if (detailHistoryKeyRef.current) {
+        pendingPageRef.current = target;
+        window.history.back();
+        return;
+      }
+      setSelectedEssay(null);
+      setActivePage(target);
     }
   }, []);
 
@@ -428,6 +515,63 @@ const App: React.FC = () => {
       setIsAutoExampleLoading(false);
     }
   }, [aiSettings, t, words]);
+
+  const handleEssaySaved = useCallback((record: EssayRecord) => {
+    setEssays(prev => [normalizeEssayRecord(record), ...prev]);
+  }, []);
+
+  const openEssayRecital = useCallback((essay: EssayRecord) => {
+    const normalized = normalizeEssayRecord(essay);
+    setSelectedEssay(normalized);
+    setActivePage('essayRecite');
+    const stateId = crypto.randomUUID();
+    detailHistoryKeyRef.current = stateId;
+    window.history.pushState({ essayDetail: stateId }, '', `#essay-${normalized.id}`);
+  }, []);
+
+  const handleEssayBack = useCallback(() => {
+    if (detailHistoryKeyRef.current) {
+      window.history.back();
+      return;
+    }
+    setSelectedEssay(null);
+    setActivePage('essays');
+  }, []);
+
+  const handleEssayLogUpdate = useCallback((essayId: string, kind: 'recite' | 'read') => {
+    let toastMessage: string | null = null;
+    let variant: ToastVariant = 'info';
+    setEssays(prev => {
+      const idx = prev.findIndex(essay => essay.id === essayId);
+      if (idx === -1) {
+        return prev;
+      }
+      const essay = prev[idx];
+      const logKey: 'reciteLog' | 'readLog' = kind === 'recite' ? 'reciteLog' : 'readLog';
+      const log = Array.isArray(essay[logKey]) ? essay[logKey] : [];
+      if (log.some(entry => isSameDay(entry, Date.now()))) {
+        toastMessage = t(kind === 'recite' ? 'essayReciteAlready' : 'essayReadAlready');
+        variant = 'info';
+        return prev;
+      }
+
+      const updatedEssay: EssayRecord = {
+        ...essay,
+        [logKey]: [...log, Date.now()]
+      } as EssayRecord;
+
+      toastMessage = t(kind === 'recite' ? 'essayReciteSuccess' : 'essayReadSuccess');
+      variant = 'success';
+      setSelectedEssay(current => current?.id === essayId ? updatedEssay : current);
+      const next = [...prev];
+      next[idx] = updatedEssay;
+      return next;
+    });
+
+    if (toastMessage) {
+      showToast(toastMessage, { variant });
+    }
+  }, [showToast, t]);
 
   const mergeImportedWords = useCallback((incoming: WordItem[]): number => {
     if (!incoming || incoming.length === 0) {
@@ -718,8 +862,31 @@ const App: React.FC = () => {
             <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">{t('comingSoonTitle')}</h2>
             <p className="text-slate-500 dark:text-slate-400 max-w-md">{t('comingSoonMessage')}</p>
           </div>
+        ) : activePage === 'essays' ? (
+          <EssayGallery essays={essays} onSelect={openEssayRecital} />
+        ) : activePage === 'essayRecite' ? (
+          selectedEssay ? (
+            <EssayRecital
+              essay={selectedEssay}
+              onBack={handleEssayBack}
+              onRecite={(essayId) => handleEssayLogUpdate(essayId, 'recite')}
+              onRead={(essayId) => handleEssayLogUpdate(essayId, 'read')}
+            />
+          ) : (
+            <div className="min-h-[60vh] bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 flex items-center justify-center text-center p-10">
+              <div className="space-y-3">
+                <p className="text-lg font-semibold text-slate-700 dark:text-slate-100">{t('essayRecitalMissing')}</p>
+                <button
+                  onClick={() => setActivePage('essays')}
+                  className="text-sm font-medium text-brand-600 hover:text-brand-500"
+                >
+                  {t('essayRecitalReturnGallery')}
+                </button>
+              </div>
+            </div>
+          )
         ) : activePage === 'smartImport' ? (
-          <SmartImport aiSettings={aiSettings} onImport={handleSmartImportMerge} />
+          <SmartImport aiSettings={aiSettings} onImport={handleSmartImportMerge} onEssaySaved={handleEssaySaved} />
         ) : (
           <FullScreenDrill words={words} onToggleMastered={handleToggleMastered} />
         )}

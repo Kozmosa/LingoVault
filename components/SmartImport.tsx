@@ -10,9 +10,10 @@ const ESSAY_STORAGE_KEY = 'lingovault_essays';
 interface SmartImportProps {
   aiSettings: AISettings;
   onImport: (words: WordItem[]) => number;
+  onEssaySaved?: (record: EssayRecord) => void;
 }
 
-export const SmartImport: React.FC<SmartImportProps> = ({ aiSettings, onImport }) => {
+export const SmartImport: React.FC<SmartImportProps> = ({ aiSettings, onImport, onEssaySaved }) => {
   const { t } = useTranslation();
   const [rawInput, setRawInput] = useState('');
   const [mode, setMode] = useState<SmartImportMode>('words');
@@ -80,10 +81,13 @@ export const SmartImport: React.FC<SmartImportProps> = ({ aiSettings, onImport }
         createdAt: Date.now(),
         source: formatImportSource(),
         rawInput: rawInput.trim(),
+        reciteLog: [],
+        readLog: [],
         ...essay
       };
 
       persistEssayRecord(record);
+      onEssaySaved?.(record);
       setEssayResult(record);
     } catch (error) {
       console.error('Smart import failed', error);
