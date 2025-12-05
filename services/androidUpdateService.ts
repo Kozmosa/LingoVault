@@ -3,6 +3,7 @@ import { cacheDir, join } from '@tauri-apps/api/path';
 import { fetch } from '@tauri-apps/plugin-http';
 import { writeFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 import { ask } from '@tauri-apps/plugin-dialog';
+import { openUrl } from '@tauri-apps/plugin-opener';
 
 interface UpdateManifest {
   version: string;
@@ -100,16 +101,25 @@ const downloadApk = async (url: string, fileName: string) => {
 };
 */
 
+// const openSystemTarget = async (target: string) => {
+//   const openerModule = await import('@tauri-apps/plugin-opener');
+//   const handler = (openerModule as { open?: (target: string) => Promise<void> }).open
+//     ?? (openerModule as { default?: (target: string) => Promise<void> }).default;
+
+//   if (typeof handler !== 'function') {
+//     throw new Error('opener plugin unavailable');
+//   }
+
+//   await handler(target);
+// };
+
 const openSystemTarget = async (target: string) => {
-  const openerModule = await import('@tauri-apps/plugin-opener');
-  const handler = (openerModule as { open?: (target: string) => Promise<void> }).open
-    ?? (openerModule as { default?: (target: string) => Promise<void> }).default;
-
-  if (typeof handler !== 'function') {
-    throw new Error('opener plugin unavailable');
+  try {
+    await openUrl(target);
+  } catch (err) {
+    console.error('Failed to open URL:', err);
+    throw new Error('opener plugin unavailable!');
   }
-
-  await handler(target);
 };
 
 export const checkAndroidUpdate = async ({ manifestUrl, strings, onStatus, notify }: AndroidUpdateOptions) => {
