@@ -12,6 +12,8 @@ import { enhanceWord } from './services/aiService';
 import { checkAndroidUpdate } from './services/androidUpdateService';
 import { SettingsModal } from './components/SettingsModal';
 import { AddWordModal } from './components/AddWordModal';
+import { CetModule } from './components/cet/CetModule';
+import { CET_PAGES, isCetPage, type CetPage } from './types/cet';
 import { useTranslation } from 'react-i18next';
 import { APP_VERSION } from './utils/version';
 import { 
@@ -30,7 +32,7 @@ import {
 import { fetch } from '@tauri-apps/plugin-http';
 
 type Theme = 'light' | 'dark' | 'system';
-type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport' | 'essays' | 'essayRecite';
+type AppPage = 'vault' | 'practice' | 'drill' | 'smartImport' | 'essays' | 'essayRecite' | CetPage;
 type ToastVariant = 'info' | 'error' | 'success';
 interface ToastEntry {
   id: string;
@@ -96,7 +98,7 @@ const App: React.FC = () => {
   const [isAutoMeaningLoading, setIsAutoMeaningLoading] = useState(false);
   const [isAutoExampleLoading, setIsAutoExampleLoading] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [activePage, setActivePage] = useState<AppPage>('vault');
+  const [activePage, setActivePage] = useState<AppPage>('cetToday');
   const [isCheckingUpdates, setIsCheckingUpdates] = useState(false);
   
   // Settings State
@@ -270,6 +272,7 @@ const App: React.FC = () => {
   }, [i18n]);
 
   const navigationItems = useMemo<DrawerItem[]>(() => ([
+    ...CET_PAGES.map(key => ({ key, label: t(`cet.nav.${key}`) })),
     {
       key: 'vault',
       label: t('navWordVault'),
@@ -298,7 +301,7 @@ const App: React.FC = () => {
   ]), [t]);
 
   const handleSelectPage = useCallback((key: string) => {
-    if (key === 'vault' || key === 'practice' || key === 'drill' || key === 'smartImport' || key === 'essays') {
+    if (isCetPage(key) || key === 'vault' || key === 'practice' || key === 'drill' || key === 'smartImport' || key === 'essays') {
       const target = key as AppPage;
       if (detailHistoryKeyRef.current) {
         pendingPageRef.current = target;
@@ -657,7 +660,7 @@ const App: React.FC = () => {
   }, [words, searchTerm]);
 
   return (
-    <div className="min-h-screen pb-20 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+    <div className="min-h-screen pb-20 desktop:pl-56 bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       {toasts.length > 0 && (
         <div className="fixed bottom-6 left-1/2 z-50 flex w-full max-w-md -translate-x-1/2 flex-col gap-3 px-4">
           {toasts.map((toast) => {
@@ -723,7 +726,7 @@ const App: React.FC = () => {
 
       {/* Header */}
       <header
-        className="fixed top-0 left-0 right-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors"
+        className="fixed top-0 left-0 desktop:left-56 right-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors"
         style={{ paddingTop: 'var(--safe-area-top)' }}
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between min-h-16">
@@ -731,7 +734,7 @@ const App: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
-              className="p-2 rounded-lg transition-colors hover:bg-brand-100/70 dark:hover:bg-brand-900/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 text-current"
+              className="desktop:hidden p-2 rounded-lg transition-colors hover:bg-brand-100/70 dark:hover:bg-brand-900/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500/50 text-current"
               aria-label={t('openNavigation')}
             >
               <BookOpen className="h-6 w-6" />
@@ -749,6 +752,7 @@ const App: React.FC = () => {
               <Settings size={20} />
             </button>
 
+            {!isCetPage(activePage) && <>
             <div className="h-4 w-px bg-slate-300 dark:bg-slate-700 mx-1 hidden sm:block"></div>
             
             <div className="hidden sm:flex items-center gap-2">
@@ -774,6 +778,7 @@ const App: React.FC = () => {
               <Plus size={18} />
               <span className="hidden sm:inline">{t('addWord')}</span>
             </button>
+            </>}
           </div>
         </div>
       </header>
@@ -783,7 +788,9 @@ const App: React.FC = () => {
         className={activePage === 'drill' ? 'px-3 sm:px-6 py-6' : 'max-w-5xl mx-auto px-4 sm:px-6 py-8'}
         style={{ paddingTop: 'calc(5rem + var(--safe-area-top))' }}
       >
-        {activePage === 'vault' ? (
+        {isCetPage(activePage) ? (
+          <CetModule page={activePage} navigate={handleSelectPage} openAppearance={() => setIsSettingsOpen(true)} paused={isSettingsOpen || isDrawerOpen || isAddModalOpen} />
+        ) : activePage === 'vault' ? (
           <>
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="relative flex-1 max-w-md">
@@ -862,7 +869,7 @@ const App: React.FC = () => {
       </main>
 
       {/* Mobile Sticky Action Button */}
-      <div className="sm:hidden fixed bottom-6 right-6 z-20">
+      <div className={`${isCetPage(activePage) ? 'hidden' : 'sm:hidden'} fixed bottom-6 right-6 z-20`}>
          <button 
            onClick={() => setIsAddModalOpen(true)}
            className="h-14 w-14 bg-brand-600 text-white rounded-full shadow-lg shadow-brand-600/40 flex items-center justify-center hover:scale-105 transition-transform"

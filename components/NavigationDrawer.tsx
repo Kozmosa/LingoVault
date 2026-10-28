@@ -38,16 +38,16 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
 }) => {
   return (
     <div
-      className={`fixed inset-0 z-40 ${isOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      className={`fixed inset-0 z-40 desktop:right-auto desktop:w-56 desktop:pointer-events-auto desktop:visible ${isOpen ? 'pointer-events-auto visible' : 'pointer-events-none invisible'}`}
     >
       <div
-        className="absolute inset-0 drawer-overlay"
+        className="absolute inset-0 drawer-overlay desktop:hidden"
         data-open={isOpen}
         onClick={onClose}
         aria-hidden="true"
       />
       <aside
-        className={`absolute left-0 top-0 h-full w-72 max-w-full bg-white dark:bg-slate-900 shadow-xl border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-[420ms] modal-ease flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`absolute left-0 top-0 h-full w-72 desktop:w-56 desktop:translate-x-0 desktop:shadow-none max-w-full bg-white dark:bg-slate-900 shadow-xl border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-[420ms] modal-ease flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label={navLabel}
         style={{ paddingTop: 'var(--safe-area-top)' }}
       >
@@ -58,7 +58,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="desktop:hidden p-2 rounded-md text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800"
             aria-label={closeLabel}
           >
             <X size={18} />
@@ -70,6 +70,7 @@ export const NavigationDrawer: React.FC<NavigationDrawerProps> = ({
             return (
               <button
                 key={item.key}
+                aria-current={isActive ? 'page' : undefined}
                 onClick={() => {
                   onSelect(item.key);
                   onClose();
