@@ -13,8 +13,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: { desktop: '900px' },
       fontFamily: {
-        sans: ['Inter', 'sans-serif']
+        sans: ['Inter', 'Segoe UI', 'Microsoft YaHei', 'sans-serif']
       },
       colors: {
         brand: {

@@ -1,10 +1,12 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
+import { cetZh, cetEn } from './components/cet/i18n';
 
 const resources = {
   en: {
     translation: {
+      cet: cetEn,
       appName: "Lingor",
       navigationSubtitle: "Choose a page",
       openNavigation: "Open navigation",
@@ -159,6 +161,7 @@ const resources = {
   },
   zh: {
     translation: {
+      cet: cetZh,
       appName: "Lingor",
       navigationSubtitle: "选择页面",
       openNavigation: "打开侧边栏",
@@ -322,8 +325,9 @@ i18n
     supportedLngs: ['en', 'zh'],
     load: 'languageOnly',
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['localStorage'],
       lookupLocalStorage: 'lingovault_lang',
+      caches: ['localStorage'],
     },
     interpolation: {
       escapeValue: false

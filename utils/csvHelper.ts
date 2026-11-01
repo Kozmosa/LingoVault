@@ -1,4 +1,5 @@
 import { WordItem } from '../types';
+import { formatImportSource } from './importUtils';
 
 // Helper to escape CSV fields
 const escapeCsvField = (field: string | undefined): string => {
@@ -85,6 +86,7 @@ export const csvToWords = (csvContent: string): WordItem[] => {
       example: exampleIdx !== -1 ? cols[exampleIdx] : '',
       isMastered: masteredIdx !== -1 && cols[masteredIdx] !== undefined ? Number(cols[masteredIdx]) || 0 : 0,
       createdAt: dateIdx !== -1 && cols[dateIdx] ? new Date(cols[dateIdx]).getTime() : Date.now(),
+      source: formatImportSource(),
     };
   });
 };

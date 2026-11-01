@@ -1,0 +1,4374 @@
+[
+  {
+    "word": "appropriate",
+    "homograph": 1,
+    "phonetic": "əˈprəʊpriət",
+    "meaning": "adj. 合适的；恰当的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "合适的；恰当的"
+      }
+    ]
+  },
+  {
+    "word": "appropriate",
+    "homograph": 2,
+    "phonetic": "əˈprəʊprieɪt",
+    "meaning": "v. 挪用；拨款",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "挪用；拨款"
+      }
+    ]
+  },
+  {
+    "word": "bank",
+    "homograph": 1,
+    "phonetic": "bæŋk",
+    "meaning": "n. 银行  v. 存款",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "银行"
+      },
+      {
+        "pos": "v.",
+        "text": "存款"
+      }
+    ]
+  },
+  {
+    "word": "bank",
+    "homograph": 2,
+    "phonetic": "bæŋk",
+    "meaning": "n. 河岸",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "河岸"
+      }
+    ]
+  },
+  {
+    "word": "bore",
+    "homograph": 1,
+    "phonetic": "bɔː",
+    "meaning": "v. 使厌烦  n. 令人厌烦的人",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使厌烦"
+      },
+      {
+        "pos": "n.",
+        "text": "令人厌烦的人"
+      }
+    ]
+  },
+  {
+    "word": "bore",
+    "homograph": 2,
+    "phonetic": "bɔː",
+    "meaning": "v. 钻孔  n. 孔洞",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "钻孔"
+      },
+      {
+        "pos": "n.",
+        "text": "孔洞"
+      }
+    ]
+  },
+  {
+    "word": "bound",
+    "homograph": 1,
+    "phonetic": "baʊnd",
+    "meaning": "adj. 一定会的；受约束的；前往的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "一定会的；受约束的；前往的"
+      }
+    ]
+  },
+  {
+    "word": "bound",
+    "homograph": 2,
+    "phonetic": "baʊnd",
+    "meaning": "v. 跳跃  n. 跳跃",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "跳跃"
+      },
+      {
+        "pos": "n.",
+        "text": "跳跃"
+      }
+    ]
+  },
+  {
+    "word": "bound",
+    "homograph": 3,
+    "phonetic": "baʊnd",
+    "meaning": "n. 界限；范围",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "界限；范围"
+      }
+    ]
+  },
+  {
+    "word": "bow",
+    "homograph": 1,
+    "phonetic": "baʊ",
+    "meaning": "v. 鞠躬；低头  n. 鞠躬",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "鞠躬；低头"
+      },
+      {
+        "pos": "n.",
+        "text": "鞠躬"
+      }
+    ]
+  },
+  {
+    "word": "bow",
+    "homograph": 2,
+    "phonetic": "bəʊ",
+    "meaning": "n. 弓；蝴蝶结；琴弓",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "弓；蝴蝶结；琴弓"
+      }
+    ]
+  },
+  {
+    "word": "box",
+    "homograph": 1,
+    "phonetic": "bɒks",
+    "meaning": "n. 箱；盒",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "箱；盒"
+      }
+    ]
+  },
+  {
+    "word": "box",
+    "homograph": 2,
+    "phonetic": "bɒks",
+    "meaning": "v. 拳击",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "拳击"
+      }
+    ]
+  },
+  {
+    "word": "can",
+    "homograph": 1,
+    "phonetic": "kæn",
+    "meaning": "aux. 能；可以",
+    "senses": [
+      {
+        "pos": "aux.",
+        "text": "能；可以"
+      }
+    ]
+  },
+  {
+    "word": "can",
+    "homograph": 2,
+    "phonetic": "kæn",
+    "meaning": "n. 罐；罐头  v. 装罐",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "罐；罐头"
+      },
+      {
+        "pos": "v.",
+        "text": "装罐"
+      }
+    ]
+  },
+  {
+    "word": "check",
+    "homograph": 1,
+    "phonetic": "tʃek",
+    "meaning": "v. 检查；核实  n. 检查",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "检查；核实"
+      },
+      {
+        "pos": "n.",
+        "text": "检查"
+      }
+    ]
+  },
+  {
+    "word": "check",
+    "homograph": 2,
+    "phonetic": "tʃek",
+    "meaning": "n. 支票",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "支票"
+      }
+    ]
+  },
+  {
+    "word": "compound",
+    "homograph": 1,
+    "phonetic": "ˈkɒmpaʊnd",
+    "meaning": "n. 化合物；复合词  adj. 复合的",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "化合物；复合词"
+      },
+      {
+        "pos": "adj.",
+        "text": "复合的"
+      }
+    ]
+  },
+  {
+    "word": "compound",
+    "homograph": 2,
+    "phonetic": "kəmˈpaʊnd",
+    "meaning": "v. 混合；加重；使复杂化",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "混合；加重；使复杂化"
+      }
+    ]
+  },
+  {
+    "word": "content",
+    "homograph": 1,
+    "phonetic": "ˈkɒntent",
+    "meaning": "n. 内容；含量",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "内容；含量"
+      }
+    ]
+  },
+  {
+    "word": "content",
+    "homograph": 2,
+    "phonetic": "kənˈtent",
+    "meaning": "adj. 满意的  v. 使满足",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "满意的"
+      },
+      {
+        "pos": "v.",
+        "text": "使满足"
+      }
+    ]
+  },
+  {
+    "word": "contract",
+    "homograph": 1,
+    "phonetic": "ˈkɒntrækt",
+    "meaning": "n. 合同；契约",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "合同；契约"
+      }
+    ]
+  },
+  {
+    "word": "contract",
+    "homograph": 2,
+    "phonetic": "kənˈtrækt",
+    "meaning": "v. 收缩；染上（疾病）；订立合同",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "收缩；染上（疾病）；订立合同"
+      }
+    ]
+  },
+  {
+    "word": "converse",
+    "homograph": 1,
+    "phonetic": "kənˈvɜːs",
+    "meaning": "v. 交谈",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "交谈"
+      }
+    ]
+  },
+  {
+    "word": "converse",
+    "homograph": 2,
+    "phonetic": "ˈkɒnvɜːs",
+    "meaning": "adj. 相反的  n. 相反情况",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "相反的"
+      },
+      {
+        "pos": "n.",
+        "text": "相反情况"
+      }
+    ]
+  },
+  {
+    "word": "court",
+    "homograph": 1,
+    "phonetic": "kɔːt",
+    "meaning": "n. 法院；球场；宫廷",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "法院；球场；宫廷"
+      }
+    ]
+  },
+  {
+    "word": "court",
+    "homograph": 2,
+    "phonetic": "kɔːt",
+    "meaning": "v. 追求；争取；招致",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "追求；争取；招致"
+      }
+    ]
+  },
+  {
+    "word": "date",
+    "homograph": 1,
+    "phonetic": "deɪt",
+    "meaning": "n. 日期；约会  v. 约会",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "日期；约会"
+      },
+      {
+        "pos": "v.",
+        "text": "约会"
+      }
+    ]
+  },
+  {
+    "word": "date",
+    "homograph": 2,
+    "phonetic": "deɪt",
+    "meaning": "n. 椰枣",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "椰枣"
+      }
+    ]
+  },
+  {
+    "word": "deal",
+    "homograph": 1,
+    "phonetic": "diːl",
+    "meaning": "v. 处理；交易；发牌",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "处理；交易；发牌"
+      }
+    ]
+  },
+  {
+    "word": "deal",
+    "homograph": 2,
+    "phonetic": "diːl",
+    "meaning": "n. 交易；大量",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "交易；大量"
+      }
+    ]
+  },
+  {
+    "word": "defect",
+    "homograph": 1,
+    "phonetic": "ˈdiːfekt",
+    "meaning": "n. 缺点；缺陷",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "缺点；缺陷"
+      }
+    ]
+  },
+  {
+    "word": "defect",
+    "homograph": 2,
+    "phonetic": "dɪˈfekt",
+    "meaning": "v. 叛逃；背叛",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "叛逃；背叛"
+      }
+    ]
+  },
+  {
+    "word": "desert",
+    "homograph": 1,
+    "phonetic": "ˈdezət",
+    "meaning": "n. 沙漠",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "沙漠"
+      }
+    ]
+  },
+  {
+    "word": "desert",
+    "homograph": 2,
+    "phonetic": "dɪˈzɜːt",
+    "meaning": "v. 抛弃；遗弃；擅离",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "抛弃；遗弃；擅离"
+      }
+    ]
+  },
+  {
+    "word": "fair",
+    "homograph": 1,
+    "phonetic": "feə",
+    "meaning": "adj. 公平的；合理的；晴朗的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "公平的；合理的；晴朗的"
+      }
+    ]
+  },
+  {
+    "word": "fair",
+    "homograph": 2,
+    "phonetic": "feə",
+    "meaning": "n. 集市；展览会",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "集市；展览会"
+      }
+    ]
+  },
+  {
+    "word": "fall",
+    "homograph": 1,
+    "phonetic": "fɔːl",
+    "meaning": "v. 落下；跌倒；下降",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "落下；跌倒；下降"
+      }
+    ]
+  },
+  {
+    "word": "fall",
+    "homograph": 2,
+    "phonetic": "fɔːl",
+    "meaning": "n. 秋天",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "秋天"
+      }
+    ]
+  },
+  {
+    "word": "fine",
+    "homograph": 1,
+    "phonetic": "faɪn",
+    "meaning": "adj. 好的；精细的；晴朗的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "好的；精细的；晴朗的"
+      }
+    ]
+  },
+  {
+    "word": "fine",
+    "homograph": 2,
+    "phonetic": "faɪn",
+    "meaning": "n. 罚款  v. 对…处以罚款",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "罚款"
+      },
+      {
+        "pos": "v.",
+        "text": "对…处以罚款"
+      }
+    ]
+  },
+  {
+    "word": "firm",
+    "homograph": 1,
+    "phonetic": "fɜːm",
+    "meaning": "n. 公司；商行",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "公司；商行"
+      }
+    ]
+  },
+  {
+    "word": "firm",
+    "homograph": 2,
+    "phonetic": "fɜːm",
+    "meaning": "adj. 坚固的；坚定的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "坚固的；坚定的"
+      }
+    ]
+  },
+  {
+    "word": "flat",
+    "homograph": 1,
+    "phonetic": "flæt",
+    "meaning": "adj. 平坦的；扁平的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "平坦的；扁平的"
+      }
+    ]
+  },
+  {
+    "word": "flat",
+    "homograph": 2,
+    "phonetic": "flæt",
+    "meaning": "n. 公寓",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "公寓"
+      }
+    ]
+  },
+  {
+    "word": "fly",
+    "homograph": 1,
+    "phonetic": "flaɪ",
+    "meaning": "v. 飞；乘飞机",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "飞；乘飞机"
+      }
+    ]
+  },
+  {
+    "word": "fly",
+    "homograph": 2,
+    "phonetic": "flaɪ",
+    "meaning": "n. 苍蝇",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "苍蝇"
+      }
+    ]
+  },
+  {
+    "word": "hack",
+    "homograph": 1,
+    "phonetic": "hæk",
+    "meaning": "v. 非法侵入计算机系统",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "非法侵入计算机系统"
+      }
+    ]
+  },
+  {
+    "word": "hack",
+    "homograph": 2,
+    "phonetic": "hæk",
+    "meaning": "v. 砍；劈",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "砍；劈"
+      }
+    ]
+  },
+  {
+    "word": "hail",
+    "homograph": 1,
+    "phonetic": "heɪl",
+    "meaning": "n. 冰雹  v. 下冰雹",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "冰雹"
+      },
+      {
+        "pos": "v.",
+        "text": "下冰雹"
+      }
+    ]
+  },
+  {
+    "word": "hail",
+    "homograph": 2,
+    "phonetic": "heɪl",
+    "meaning": "v. 欢呼；称赞；招呼",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "欢呼；称赞；招呼"
+      }
+    ]
+  },
+  {
+    "word": "host",
+    "homograph": 1,
+    "phonetic": "həʊst",
+    "meaning": "n. 主人；主持人  v. 主办；主持",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "主人；主持人"
+      },
+      {
+        "pos": "v.",
+        "text": "主办；主持"
+      }
+    ]
+  },
+  {
+    "word": "host",
+    "homograph": 2,
+    "phonetic": "həʊst",
+    "meaning": "n. 大群；大量",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "大群；大量"
+      }
+    ]
+  },
+  {
+    "word": "implement",
+    "homograph": 1,
+    "phonetic": "ˈɪmplɪment",
+    "meaning": "v. 实施；执行",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "实施；执行"
+      }
+    ]
+  },
+  {
+    "word": "implement",
+    "homograph": 2,
+    "phonetic": "ˈɪmplɪmənt",
+    "meaning": "n. 工具；器具",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "工具；器具"
+      }
+    ]
+  },
+  {
+    "word": "invalid",
+    "homograph": 1,
+    "phonetic": "ˈɪnvəlɪd",
+    "meaning": "n. 病弱者",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "病弱者"
+      }
+    ]
+  },
+  {
+    "word": "invalid",
+    "homograph": 2,
+    "phonetic": "ɪnˈvælɪd",
+    "meaning": "adj. 无效的；不成立的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "无效的；不成立的"
+      }
+    ]
+  },
+  {
+    "word": "jam",
+    "homograph": 1,
+    "phonetic": "dʒæm",
+    "meaning": "n. 果酱",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "果酱"
+      }
+    ]
+  },
+  {
+    "word": "jam",
+    "homograph": 2,
+    "phonetic": "dʒæm",
+    "meaning": "n. 堵塞；拥挤  v. 卡住；堵塞",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "堵塞；拥挤"
+      },
+      {
+        "pos": "v.",
+        "text": "卡住；堵塞"
+      }
+    ]
+  },
+  {
+    "word": "jar",
+    "homograph": 1,
+    "phonetic": "dʒɑː",
+    "meaning": "n. 罐；广口瓶",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "罐；广口瓶"
+      }
+    ]
+  },
+  {
+    "word": "jar",
+    "homograph": 2,
+    "phonetic": "dʒɑː",
+    "meaning": "v. 使震动；使不快",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使震动；使不快"
+      }
+    ]
+  },
+  {
+    "word": "just",
+    "homograph": 1,
+    "phonetic": "dʒʌst",
+    "meaning": "adv. 刚刚；仅仅；恰好",
+    "senses": [
+      {
+        "pos": "adv.",
+        "text": "刚刚；仅仅；恰好"
+      }
+    ]
+  },
+  {
+    "word": "just",
+    "homograph": 2,
+    "phonetic": "dʒʌst",
+    "meaning": "adj. 公正的；正当的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "公正的；正当的"
+      }
+    ]
+  },
+  {
+    "word": "lead",
+    "homograph": 1,
+    "phonetic": "liːd",
+    "meaning": "v. 带领；引导  n. 领先",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "带领；引导"
+      },
+      {
+        "pos": "n.",
+        "text": "领先"
+      }
+    ]
+  },
+  {
+    "word": "lead",
+    "homograph": 2,
+    "phonetic": "led",
+    "meaning": "n. 铅",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "铅"
+      }
+    ]
+  },
+  {
+    "word": "lie",
+    "homograph": 1,
+    "phonetic": "laɪ",
+    "meaning": "v. 说谎  n. 谎言",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "说谎"
+      },
+      {
+        "pos": "n.",
+        "text": "谎言"
+      }
+    ]
+  },
+  {
+    "word": "lie",
+    "homograph": 2,
+    "phonetic": "laɪ",
+    "meaning": "v. 躺；位于；存在于",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "躺；位于；存在于"
+      }
+    ]
+  },
+  {
+    "word": "light",
+    "homograph": 1,
+    "phonetic": "laɪt",
+    "meaning": "n. 光；灯  v. 点燃；照亮",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "光；灯"
+      },
+      {
+        "pos": "v.",
+        "text": "点燃；照亮"
+      }
+    ]
+  },
+  {
+    "word": "light",
+    "homograph": 2,
+    "phonetic": "laɪt",
+    "meaning": "adj. 轻的；少量的；浅色的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "轻的；少量的；浅色的"
+      }
+    ]
+  },
+  {
+    "word": "like",
+    "homograph": 1,
+    "phonetic": "laɪk",
+    "meaning": "v. 喜欢",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "喜欢"
+      }
+    ]
+  },
+  {
+    "word": "like",
+    "homograph": 2,
+    "phonetic": "laɪk",
+    "meaning": "prep. 像；如同  adj. 相似的",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "像；如同"
+      },
+      {
+        "pos": "adj.",
+        "text": "相似的"
+      }
+    ]
+  },
+  {
+    "word": "live",
+    "homograph": 1,
+    "phonetic": "lɪv",
+    "meaning": "v. 居住；生活；活着",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "居住；生活；活着"
+      }
+    ]
+  },
+  {
+    "word": "live",
+    "homograph": 2,
+    "phonetic": "laɪv",
+    "meaning": "adj. 活的；现场直播的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "活的；现场直播的"
+      }
+    ]
+  },
+  {
+    "word": "long",
+    "homograph": 1,
+    "phonetic": "lɒŋ",
+    "meaning": "adj. 长的；长久的  adv. 长时间地",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "长的；长久的"
+      },
+      {
+        "pos": "adv.",
+        "text": "长时间地"
+      }
+    ]
+  },
+  {
+    "word": "long",
+    "homograph": 2,
+    "phonetic": "lɒŋ",
+    "meaning": "v. 渴望",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "渴望"
+      }
+    ]
+  },
+  {
+    "word": "mean",
+    "homograph": 1,
+    "phonetic": "miːn",
+    "meaning": "v. 意思是；意味着；打算",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "意思是；意味着；打算"
+      }
+    ]
+  },
+  {
+    "word": "mean",
+    "homograph": 2,
+    "phonetic": "miːn",
+    "meaning": "adj. 吝啬的；刻薄的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "吝啬的；刻薄的"
+      }
+    ]
+  },
+  {
+    "word": "mean",
+    "homograph": 3,
+    "phonetic": "miːn",
+    "meaning": "n. 平均值  adj. 平均的",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "平均值"
+      },
+      {
+        "pos": "adj.",
+        "text": "平均的"
+      }
+    ]
+  },
+  {
+    "word": "mine",
+    "homograph": 1,
+    "phonetic": "maɪn",
+    "meaning": "pron. 我的（东西）",
+    "senses": [
+      {
+        "pos": "pron.",
+        "text": "我的（东西）"
+      }
+    ]
+  },
+  {
+    "word": "mine",
+    "homograph": 2,
+    "phonetic": "maɪn",
+    "meaning": "n. 矿；矿山  v. 开采",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "矿；矿山"
+      },
+      {
+        "pos": "v.",
+        "text": "开采"
+      }
+    ]
+  },
+  {
+    "word": "mine",
+    "homograph": 3,
+    "phonetic": "maɪn",
+    "meaning": "n. 地雷；水雷  v. 布雷",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "地雷；水雷"
+      },
+      {
+        "pos": "v.",
+        "text": "布雷"
+      }
+    ]
+  },
+  {
+    "word": "minute",
+    "homograph": 1,
+    "phonetic": "ˈmɪnɪt",
+    "meaning": "n. 分钟；片刻",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "分钟；片刻"
+      }
+    ]
+  },
+  {
+    "word": "minute",
+    "homograph": 2,
+    "phonetic": "maɪˈnjuːt",
+    "meaning": "adj. 微小的；细致的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "微小的；细致的"
+      }
+    ]
+  },
+  {
+    "word": "miss",
+    "homograph": 1,
+    "phonetic": "mɪs",
+    "meaning": "v. 错过；想念；未击中",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "错过；想念；未击中"
+      }
+    ]
+  },
+  {
+    "word": "miss",
+    "homograph": 2,
+    "phonetic": "mɪs",
+    "meaning": "n. 小姐（称呼未婚女子）",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "小姐（称呼未婚女子）"
+      }
+    ]
+  },
+  {
+    "word": "mount",
+    "homograph": 1,
+    "phonetic": "maʊnt",
+    "meaning": "v. 登上；增加；安装",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "登上；增加；安装"
+      }
+    ]
+  },
+  {
+    "word": "mount",
+    "homograph": 2,
+    "phonetic": "maʊnt",
+    "meaning": "n. 山；山峰",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "山；山峰"
+      }
+    ]
+  },
+  {
+    "word": "novel",
+    "homograph": 1,
+    "phonetic": "ˈnɒvl",
+    "meaning": "n. 小说",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "小说"
+      }
+    ]
+  },
+  {
+    "word": "novel",
+    "homograph": 2,
+    "phonetic": "ˈnɒvl",
+    "meaning": "adj. 新颖的；新奇的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "新颖的；新奇的"
+      }
+    ]
+  },
+  {
+    "word": "object",
+    "homograph": 1,
+    "phonetic": "ˈɒbdʒɪkt",
+    "meaning": "n. 物体；对象；目标",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "物体；对象；目标"
+      }
+    ]
+  },
+  {
+    "word": "object",
+    "homograph": 2,
+    "phonetic": "əbˈdʒekt",
+    "meaning": "v. 反对",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "反对"
+      }
+    ]
+  },
+  {
+    "word": "orient",
+    "homograph": 1,
+    "phonetic": "ˈɔːrient",
+    "meaning": "v. 确定方向；使适应",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "确定方向；使适应"
+      }
+    ]
+  },
+  {
+    "word": "orient",
+    "homograph": 2,
+    "phonetic": "ˈɔːriənt",
+    "meaning": "n. 东方；东方国家",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "东方；东方国家"
+      }
+    ]
+  },
+  {
+    "word": "park",
+    "homograph": 1,
+    "phonetic": "pɑːk",
+    "meaning": "n. 公园",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "公园"
+      }
+    ]
+  },
+  {
+    "word": "park",
+    "homograph": 2,
+    "phonetic": "pɑːk",
+    "meaning": "v. 停车；停放",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "停车；停放"
+      }
+    ]
+  },
+  {
+    "word": "patient",
+    "homograph": 1,
+    "phonetic": "ˈpeɪʃnt",
+    "meaning": "adj. 有耐心的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "有耐心的"
+      }
+    ]
+  },
+  {
+    "word": "patient",
+    "homograph": 2,
+    "phonetic": "ˈpeɪʃnt",
+    "meaning": "n. 病人",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "病人"
+      }
+    ]
+  },
+  {
+    "word": "post",
+    "homograph": 1,
+    "phonetic": "pəʊst",
+    "meaning": "n. 邮件；邮政  v. 邮寄",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "邮件；邮政"
+      },
+      {
+        "pos": "v.",
+        "text": "邮寄"
+      }
+    ]
+  },
+  {
+    "word": "post",
+    "homograph": 2,
+    "phonetic": "pəʊst",
+    "meaning": "n. 岗位；职位；柱子",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "岗位；职位；柱子"
+      }
+    ]
+  },
+  {
+    "word": "pound",
+    "homograph": 1,
+    "phonetic": "paʊnd",
+    "meaning": "n. 英镑；磅（重量单位）",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "英镑；磅（重量单位）"
+      }
+    ]
+  },
+  {
+    "word": "pound",
+    "homograph": 2,
+    "phonetic": "paʊnd",
+    "meaning": "v. 猛击；捣碎",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "猛击；捣碎"
+      }
+    ]
+  },
+  {
+    "word": "present",
+    "homograph": 1,
+    "phonetic": "ˈpreznt",
+    "meaning": "adj. 在场的；目前的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "在场的；目前的"
+      }
+    ]
+  },
+  {
+    "word": "present",
+    "homograph": 2,
+    "phonetic": "prɪˈzent",
+    "meaning": "v. 赠送；呈现；介绍",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "赠送；呈现；介绍"
+      }
+    ]
+  },
+  {
+    "word": "present",
+    "homograph": 3,
+    "phonetic": "ˈpreznt",
+    "meaning": "n. 礼物；现在",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "礼物；现在"
+      }
+    ]
+  },
+  {
+    "word": "press",
+    "homograph": 1,
+    "phonetic": "pres",
+    "meaning": "n. 新闻界；报刊；出版社",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "新闻界；报刊；出版社"
+      }
+    ]
+  },
+  {
+    "word": "press",
+    "homograph": 2,
+    "phonetic": "pres",
+    "meaning": "v. 按；压；催促",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "按；压；催促"
+      }
+    ]
+  },
+  {
+    "word": "project",
+    "homograph": 1,
+    "phonetic": "ˈprɒdʒekt",
+    "meaning": "n. 项目；工程；计划",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "项目；工程；计划"
+      }
+    ]
+  },
+  {
+    "word": "project",
+    "homograph": 2,
+    "phonetic": "prəˈdʒekt",
+    "meaning": "v. 投射；预计；突出",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "投射；预计；突出"
+      }
+    ]
+  },
+  {
+    "word": "race",
+    "homograph": 1,
+    "phonetic": "reɪs",
+    "meaning": "n. 种族",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "种族"
+      }
+    ]
+  },
+  {
+    "word": "race",
+    "homograph": 2,
+    "phonetic": "reɪs",
+    "meaning": "n. 比赛；竞赛  v. 竞赛；疾驰",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "比赛；竞赛"
+      },
+      {
+        "pos": "v.",
+        "text": "竞赛；疾驰"
+      }
+    ]
+  },
+  {
+    "word": "resort",
+    "homograph": 1,
+    "phonetic": "rɪˈzɔːt",
+    "meaning": "n. 度假胜地",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "度假胜地"
+      }
+    ]
+  },
+  {
+    "word": "resort",
+    "homograph": 2,
+    "phonetic": "rɪˈzɔːt",
+    "meaning": "v. 求助于；诉诸",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "求助于；诉诸"
+      }
+    ]
+  },
+  {
+    "word": "rest",
+    "homograph": 1,
+    "phonetic": "rest",
+    "meaning": "n. 休息  v. 休息",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "休息"
+      },
+      {
+        "pos": "v.",
+        "text": "休息"
+      }
+    ]
+  },
+  {
+    "word": "rest",
+    "homograph": 2,
+    "phonetic": "rest",
+    "meaning": "n. 剩余部分；其余的人",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "剩余部分；其余的人"
+      }
+    ]
+  },
+  {
+    "word": "row",
+    "homograph": 1,
+    "phonetic": "rəʊ",
+    "meaning": "n. 一排；一行  v. 划船",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "一排；一行"
+      },
+      {
+        "pos": "v.",
+        "text": "划船"
+      }
+    ]
+  },
+  {
+    "word": "row",
+    "homograph": 2,
+    "phonetic": "raʊ",
+    "meaning": "n. 争吵  v. 争吵",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "争吵"
+      },
+      {
+        "pos": "v.",
+        "text": "争吵"
+      }
+    ]
+  },
+  {
+    "word": "second",
+    "homograph": 1,
+    "phonetic": "ˈsekənd",
+    "meaning": "num. 第二  adj. 次要的",
+    "senses": [
+      {
+        "pos": "num.",
+        "text": "第二"
+      },
+      {
+        "pos": "adj.",
+        "text": "次要的"
+      }
+    ]
+  },
+  {
+    "word": "second",
+    "homograph": 2,
+    "phonetic": "ˈsekənd",
+    "meaning": "n. 秒；片刻",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "秒；片刻"
+      }
+    ]
+  },
+  {
+    "word": "sound",
+    "homograph": 1,
+    "phonetic": "saʊnd",
+    "meaning": "n. 声音  v. 听起来；发声",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "声音"
+      },
+      {
+        "pos": "v.",
+        "text": "听起来；发声"
+      }
+    ]
+  },
+  {
+    "word": "sound",
+    "homograph": 2,
+    "phonetic": "saʊnd",
+    "meaning": "adj. 健全的；可靠的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "健全的；可靠的"
+      }
+    ]
+  },
+  {
+    "word": "stamp",
+    "homograph": 1,
+    "phonetic": "stæmp",
+    "meaning": "n. 邮票；印章",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "邮票；印章"
+      }
+    ]
+  },
+  {
+    "word": "stamp",
+    "homograph": 2,
+    "phonetic": "stæmp",
+    "meaning": "v. 跺脚；盖章",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "跺脚；盖章"
+      }
+    ]
+  },
+  {
+    "word": "staple",
+    "homograph": 1,
+    "phonetic": "ˈsteɪpl",
+    "meaning": "adj. 主要的  n. 主食；主要产品",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "主要的"
+      },
+      {
+        "pos": "n.",
+        "text": "主食；主要产品"
+      }
+    ]
+  },
+  {
+    "word": "staple",
+    "homograph": 2,
+    "phonetic": "ˈsteɪpl",
+    "meaning": "n. 订书钉  v. 用订书钉订",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "订书钉"
+      },
+      {
+        "pos": "v.",
+        "text": "用订书钉订"
+      }
+    ]
+  },
+  {
+    "word": "stem",
+    "homograph": 1,
+    "phonetic": "stem",
+    "meaning": "n. 茎；词干  v. 起源于",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "茎；词干"
+      },
+      {
+        "pos": "v.",
+        "text": "起源于"
+      }
+    ]
+  },
+  {
+    "word": "stem",
+    "homograph": 2,
+    "phonetic": "stem",
+    "meaning": "v. 阻止；止住",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "阻止；止住"
+      }
+    ]
+  },
+  {
+    "word": "stick",
+    "homograph": 1,
+    "phonetic": "stɪk",
+    "meaning": "n. 棍；手杖",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "棍；手杖"
+      }
+    ]
+  },
+  {
+    "word": "stick",
+    "homograph": 2,
+    "phonetic": "stɪk",
+    "meaning": "v. 粘住；刺入；坚持",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "粘住；刺入；坚持"
+      }
+    ]
+  },
+  {
+    "word": "still",
+    "homograph": 1,
+    "phonetic": "stɪl",
+    "meaning": "adv. 仍然；还",
+    "senses": [
+      {
+        "pos": "adv.",
+        "text": "仍然；还"
+      }
+    ]
+  },
+  {
+    "word": "still",
+    "homograph": 2,
+    "phonetic": "stɪl",
+    "meaning": "adj. 静止的；平静的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "静止的；平静的"
+      }
+    ]
+  },
+  {
+    "word": "store",
+    "homograph": 1,
+    "phonetic": "stɔː",
+    "meaning": "n. 商店",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "商店"
+      }
+    ]
+  },
+  {
+    "word": "store",
+    "homograph": 2,
+    "phonetic": "stɔː",
+    "meaning": "v. 储存  n. 储备",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "储存"
+      },
+      {
+        "pos": "n.",
+        "text": "储备"
+      }
+    ]
+  },
+  {
+    "word": "story",
+    "homograph": 1,
+    "phonetic": "ˈstɔːri",
+    "meaning": "n. 故事；报道",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "故事；报道"
+      }
+    ]
+  },
+  {
+    "word": "story",
+    "homograph": 2,
+    "phonetic": "ˈstɔːri",
+    "meaning": "n. 楼层",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "楼层"
+      }
+    ]
+  },
+  {
+    "word": "strain",
+    "homograph": 1,
+    "phonetic": "streɪn",
+    "meaning": "n. 压力；拉伤  v. 拉伤；使紧张",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "压力；拉伤"
+      },
+      {
+        "pos": "v.",
+        "text": "拉伤；使紧张"
+      }
+    ]
+  },
+  {
+    "word": "strain",
+    "homograph": 2,
+    "phonetic": "streɪn",
+    "meaning": "n. 品种；菌株",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "品种；菌株"
+      }
+    ]
+  },
+  {
+    "word": "stroke",
+    "homograph": 1,
+    "phonetic": "strəʊk",
+    "meaning": "n. 中风；击打；笔画",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "中风；击打；笔画"
+      }
+    ]
+  },
+  {
+    "word": "stroke",
+    "homograph": 2,
+    "phonetic": "strəʊk",
+    "meaning": "v. 轻抚；抚摸",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "轻抚；抚摸"
+      }
+    ]
+  },
+  {
+    "word": "subject",
+    "homograph": 1,
+    "phonetic": "ˈsʌbdʒɪkt",
+    "meaning": "n. 主题；科目；受试者",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "主题；科目；受试者"
+      }
+    ]
+  },
+  {
+    "word": "subject",
+    "homograph": 2,
+    "phonetic": "səbˈdʒekt",
+    "meaning": "v. 使遭受；使服从",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使遭受；使服从"
+      }
+    ]
+  },
+  {
+    "word": "suit",
+    "homograph": 1,
+    "phonetic": "suːt",
+    "meaning": "v. 适合；合心意",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "适合；合心意"
+      }
+    ]
+  },
+  {
+    "word": "suit",
+    "homograph": 2,
+    "phonetic": "suːt",
+    "meaning": "n. 套装；诉讼",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "套装；诉讼"
+      }
+    ]
+  },
+  {
+    "word": "swallow",
+    "homograph": 1,
+    "phonetic": "ˈswɒləʊ",
+    "meaning": "v. 吞咽；咽下",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "吞咽；咽下"
+      }
+    ]
+  },
+  {
+    "word": "swallow",
+    "homograph": 2,
+    "phonetic": "ˈswɒləʊ",
+    "meaning": "n. 燕子",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "燕子"
+      }
+    ]
+  },
+  {
+    "word": "tear",
+    "homograph": 1,
+    "phonetic": "tɪə",
+    "meaning": "n. 眼泪",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "眼泪"
+      }
+    ]
+  },
+  {
+    "word": "tear",
+    "homograph": 2,
+    "phonetic": "teə",
+    "meaning": "v. 撕；撕裂",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "撕；撕裂"
+      }
+    ]
+  },
+  {
+    "word": "tense",
+    "homograph": 1,
+    "phonetic": "tens",
+    "meaning": "adj. 紧张的  v. 绷紧",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "紧张的"
+      },
+      {
+        "pos": "v.",
+        "text": "绷紧"
+      }
+    ]
+  },
+  {
+    "word": "tense",
+    "homograph": 2,
+    "phonetic": "tens",
+    "meaning": "n. 时态",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "时态"
+      }
+    ]
+  },
+  {
+    "word": "utter",
+    "homograph": 1,
+    "phonetic": "ˈʌtə",
+    "meaning": "v. 说出；发出",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "说出；发出"
+      }
+    ]
+  },
+  {
+    "word": "utter",
+    "homograph": 2,
+    "phonetic": "ˈʌtə",
+    "meaning": "adj. 完全的；彻底的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "完全的；彻底的"
+      }
+    ]
+  },
+  {
+    "word": "well",
+    "homograph": 1,
+    "phonetic": "wel",
+    "meaning": "adv. 好；顺利地  adj. 健康的",
+    "senses": [
+      {
+        "pos": "adv.",
+        "text": "好；顺利地"
+      },
+      {
+        "pos": "adj.",
+        "text": "健康的"
+      }
+    ]
+  },
+  {
+    "word": "well",
+    "homograph": 2,
+    "phonetic": "wel",
+    "meaning": "n. 井",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "井"
+      }
+    ]
+  },
+  {
+    "word": "wind",
+    "homograph": 1,
+    "phonetic": "wɪnd",
+    "meaning": "n. 风",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "风"
+      }
+    ]
+  },
+  {
+    "word": "wind",
+    "homograph": 2,
+    "phonetic": "waɪnd",
+    "meaning": "v. 缠绕；蜿蜒；上发条",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "缠绕；蜿蜒；上发条"
+      }
+    ]
+  },
+  {
+    "word": "a",
+    "phonetic": "ə",
+    "meaning": "art. 一个；一",
+    "senses": [
+      {
+        "pos": "art.",
+        "text": "一个；一"
+      }
+    ]
+  },
+  {
+    "word": "according to",
+    "phonetic": "əˈkɔːdɪŋ tə",
+    "meaning": "prep. 根据；按照",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "根据；按照"
+      }
+    ]
+  },
+  {
+    "word": "air-conditioning",
+    "phonetic": "ˈeə kənˌdɪʃənɪŋ",
+    "meaning": "n. 空调；空气调节",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "空调；空气调节"
+      }
+    ]
+  },
+  {
+    "word": "am",
+    "phonetic": "æm",
+    "meaning": "v. 是（现在时第一人称单数）",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "是（现在时第一人称单数）"
+      }
+    ]
+  },
+  {
+    "word": "app",
+    "phonetic": "æp",
+    "meaning": "n. 应用程序",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "应用程序"
+      }
+    ]
+  },
+  {
+    "word": "barracks",
+    "phonetic": "ˈbærəks",
+    "meaning": "n. 兵营；营房",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "兵营；营房"
+      }
+    ]
+  },
+  {
+    "word": "best-seller",
+    "phonetic": "ˌbest ˈselə",
+    "meaning": "n. 畅销书；畅销商品",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "畅销书；畅销商品"
+      }
+    ]
+  },
+  {
+    "word": "blog",
+    "phonetic": "blɒɡ",
+    "meaning": "n. 博客  v. 写博客",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "博客"
+      },
+      {
+        "pos": "v.",
+        "text": "写博客"
+      }
+    ]
+  },
+  {
+    "word": "brand-new",
+    "phonetic": "ˌbrænd ˈnjuː",
+    "meaning": "adj. 崭新的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "崭新的"
+      }
+    ]
+  },
+  {
+    "word": "bystander",
+    "phonetic": "ˈbaɪstændə",
+    "meaning": "n. 旁观者；目击者",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "旁观者；目击者"
+      }
+    ]
+  },
+  {
+    "word": "cigaret",
+    "phonetic": "ˌsɪɡəˈret",
+    "meaning": "n. 香烟",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "香烟"
+      }
+    ]
+  },
+  {
+    "word": "clear-cut",
+    "phonetic": "ˌklɪə ˈkʌt",
+    "meaning": "adj. 明确的；清晰的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "明确的；清晰的"
+      }
+    ]
+  },
+  {
+    "word": "cliché",
+    "phonetic": "ˈkliːʃeɪ",
+    "meaning": "n. 陈词滥调",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "陈词滥调"
+      }
+    ]
+  },
+  {
+    "word": "Confucian",
+    "phonetic": "kənˈfjuːʃən",
+    "meaning": "adj. 孔子的；儒家的  n. 儒家信徒",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "孔子的；儒家的"
+      },
+      {
+        "pos": "n.",
+        "text": "儒家信徒"
+      }
+    ]
+  },
+  {
+    "word": "customs",
+    "phonetic": "ˈkʌstəmz",
+    "meaning": "n. 海关；关税",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "海关；关税"
+      }
+    ]
+  },
+  {
+    "word": "cyberspace",
+    "phonetic": "ˈsaɪbəspeɪs",
+    "meaning": "n. 网络空间",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "网络空间"
+      }
+    ]
+  },
+  {
+    "word": "deregulate",
+    "phonetic": "ˌdiːˈreɡjʊleɪt",
+    "meaning": "v. 解除管制；放宽监管",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "解除管制；放宽监管"
+      }
+    ]
+  },
+  {
+    "word": "distil",
+    "phonetic": "dɪˈstɪl",
+    "meaning": "v. 蒸馏；提炼",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "蒸馏；提炼"
+      }
+    ]
+  },
+  {
+    "word": "downgrade",
+    "phonetic": "ˌdaʊnˈɡreɪd",
+    "meaning": "v. 降级；降低评价",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "降级；降低评价"
+      }
+    ]
+  },
+  {
+    "word": "download",
+    "phonetic": "ˌdaʊnˈləʊd",
+    "meaning": "v. 下载",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "下载"
+      }
+    ]
+  },
+  {
+    "word": "easy-going",
+    "phonetic": "ˌiːzi ˈɡəʊɪŋ",
+    "meaning": "adj. 随和的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "随和的"
+      }
+    ]
+  },
+  {
+    "word": "freshman",
+    "phonetic": "ˈfreʃmən",
+    "meaning": "n. 大一新生",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "大一新生"
+      }
+    ]
+  },
+  {
+    "word": "god",
+    "phonetic": "ɡɒd",
+    "meaning": "n. 神；上帝",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "神；上帝"
+      }
+    ]
+  },
+  {
+    "word": "grandchild",
+    "phonetic": "ˈɡræntʃaɪld",
+    "meaning": "n. 孙辈；外孙辈",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "孙辈；外孙辈"
+      }
+    ]
+  },
+  {
+    "word": "high-tech",
+    "phonetic": "ˌhaɪ ˈtek",
+    "meaning": "adj. 高科技的  n. 高科技",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "高科技的"
+      },
+      {
+        "pos": "n.",
+        "text": "高科技"
+      }
+    ]
+  },
+  {
+    "word": "hotdog",
+    "phonetic": "ˈhɒt dɒɡ",
+    "meaning": "n. 热狗",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "热狗"
+      }
+    ]
+  },
+  {
+    "word": "instal",
+    "phonetic": "ɪnˈstɔːl",
+    "meaning": "v. 安装；使就任",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "安装；使就任"
+      }
+    ]
+  },
+  {
+    "word": "Internet",
+    "phonetic": "ˈɪntənet",
+    "meaning": "n. 互联网",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "互联网"
+      }
+    ]
+  },
+  {
+    "word": "jetlag",
+    "phonetic": "ˈdʒet læɡ",
+    "meaning": "n. 时差反应",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "时差反应"
+      }
+    ]
+  },
+  {
+    "word": "knowhow",
+    "phonetic": "ˈnəʊ haʊ",
+    "meaning": "n. 专门技能；诀窍",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "专门技能；诀窍"
+      }
+    ]
+  },
+  {
+    "word": "laptop",
+    "phonetic": "ˈlæptɒp",
+    "meaning": "n. 笔记本电脑",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "笔记本电脑"
+      }
+    ]
+  },
+  {
+    "word": "linguistic",
+    "phonetic": "lɪŋˈɡwɪstɪk",
+    "meaning": "adj. 语言的；语言学的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "语言的；语言学的"
+      }
+    ]
+  },
+  {
+    "word": "living-room",
+    "phonetic": "ˈlɪvɪŋ ruːm",
+    "meaning": "n. 客厅；起居室",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "客厅；起居室"
+      }
+    ]
+  },
+  {
+    "word": "mindset",
+    "phonetic": "ˈmaɪndset",
+    "meaning": "n. 思维方式；心态",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "思维方式；心态"
+      }
+    ]
+  },
+  {
+    "word": "Olympic",
+    "phonetic": "əˈlɪmpɪk",
+    "meaning": "adj. 奥林匹克运动会的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "奥林匹克运动会的"
+      }
+    ]
+  },
+  {
+    "word": "online",
+    "phonetic": "ˌɒnˈlaɪn",
+    "meaning": "adj. 在线的  adv. 在网上",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "在线的"
+      },
+      {
+        "pos": "adv.",
+        "text": "在网上"
+      }
+    ]
+  },
+  {
+    "word": "ought to",
+    "phonetic": "ˈɔːt tə",
+    "meaning": "aux. 应该；应当",
+    "senses": [
+      {
+        "pos": "aux.",
+        "text": "应该；应当"
+      }
+    ]
+  },
+  {
+    "word": "podcast",
+    "phonetic": "ˈpɒdkɑːst",
+    "meaning": "n. 播客",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "播客"
+      }
+    ]
+  },
+  {
+    "word": "résumé",
+    "phonetic": "ˈrezjʊmeɪ",
+    "meaning": "n. 简历",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "简历"
+      }
+    ]
+  },
+  {
+    "word": "smartphone",
+    "phonetic": "ˈsmɑːtfəʊn",
+    "meaning": "n. 智能手机",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "智能手机"
+      }
+    ]
+  },
+  {
+    "word": "so-called",
+    "phonetic": "ˌsəʊ ˈkɔːld",
+    "meaning": "adj. 所谓的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "所谓的"
+      }
+    ]
+  },
+  {
+    "word": "swipe",
+    "phonetic": "swaɪp",
+    "meaning": "v. 刷卡；滑动；挥击",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "刷卡；滑动；挥击"
+      }
+    ]
+  },
+  {
+    "word": "telecommunications",
+    "phonetic": "ˌtelikəˌmjuːnɪˈkeɪʃənz",
+    "meaning": "n. 电信；远程通信",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "电信；远程通信"
+      }
+    ]
+  },
+  {
+    "word": "Thanksgiving",
+    "phonetic": "ˌθæŋksˈɡɪvɪŋ",
+    "meaning": "n. 感恩节",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "感恩节"
+      }
+    ]
+  },
+  {
+    "word": "upload",
+    "phonetic": "ˌʌpˈləʊd",
+    "meaning": "v. 上传",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "上传"
+      }
+    ]
+  },
+  {
+    "word": "webcast",
+    "phonetic": "ˈwebkɑːst",
+    "meaning": "n. 网络直播；网络广播",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "网络直播；网络广播"
+      }
+    ]
+  },
+  {
+    "word": "website",
+    "phonetic": "ˈwebsaɪt",
+    "meaning": "n. 网站",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "网站"
+      }
+    ]
+  },
+  {
+    "word": "well-known",
+    "phonetic": "ˌwel ˈnəʊn",
+    "meaning": "adj. 著名的；众所周知的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "著名的；众所周知的"
+      }
+    ]
+  },
+  {
+    "word": "well-off",
+    "phonetic": "ˌwel ˈɒf",
+    "meaning": "adj. 富裕的；经济宽裕的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "富裕的；经济宽裕的"
+      }
+    ]
+  },
+  {
+    "word": "whereby",
+    "phonetic": "weəˈbaɪ",
+    "meaning": "adv. 凭借；通过…方式",
+    "senses": [
+      {
+        "pos": "adv.",
+        "text": "凭借；通过…方式"
+      }
+    ]
+  },
+  {
+    "word": "workforce",
+    "phonetic": "ˈwɜːkfɔːs",
+    "meaning": "n. 劳动力；全体员工",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "劳动力；全体员工"
+      }
+    ]
+  },
+  {
+    "word": "Medicare",
+    "phonetic": "ˈmedɪkeə",
+    "meaning": "n. 美国老年人等的公共医疗保险",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "美国老年人等的公共医疗保险"
+      }
+    ]
+  },
+  {
+    "word": "commend",
+    "phonetic": "kəˈmend",
+    "meaning": "v. 表扬；推荐",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "表扬；推荐"
+      }
+    ]
+  },
+  {
+    "word": "coup",
+    "phonetic": "kuː",
+    "meaning": "n. 政变",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "政变"
+      }
+    ]
+  },
+  {
+    "word": "portray",
+    "phonetic": "pɔːˈtreɪ",
+    "meaning": "v. 描绘；刻画；扮演",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "描绘；刻画；扮演"
+      }
+    ]
+  },
+  {
+    "word": "abbreviation",
+    "phonetic": "əˌbriːviˈeɪʃn",
+    "meaning": "n. 缩写；缩写词",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "缩写；缩写词"
+      }
+    ]
+  },
+  {
+    "word": "ail",
+    "phonetic": "eɪl",
+    "meaning": "v. 使苦恼；使不适",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使苦恼；使不适"
+      }
+    ]
+  },
+  {
+    "word": "alone",
+    "phonetic": "əˈləʊn",
+    "meaning": "adj. 独自的  adv. 独自；仅仅",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "独自的"
+      },
+      {
+        "pos": "adv.",
+        "text": "独自；仅仅"
+      }
+    ]
+  },
+  {
+    "word": "armor",
+    "phonetic": "ˈɑːmə",
+    "meaning": "n. 盔甲；装甲",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "盔甲；装甲"
+      }
+    ]
+  },
+  {
+    "word": "credential",
+    "phonetic": "krɪˈdenʃl",
+    "meaning": "n. 资格证明；证书",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "资格证明；证书"
+      }
+    ]
+  },
+  {
+    "word": "grill",
+    "phonetic": "ɡrɪl",
+    "meaning": "n. 烤架  v. 烧烤；盘问",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "烤架"
+      },
+      {
+        "pos": "v.",
+        "text": "烧烤；盘问"
+      }
+    ]
+  },
+  {
+    "word": "maternal",
+    "phonetic": "məˈtɜːnl",
+    "meaning": "adj. 母亲的；母系的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "母亲的；母系的"
+      }
+    ]
+  },
+  {
+    "word": "nineteen",
+    "phonetic": "ˌnaɪnˈtiːn",
+    "meaning": "num. 十九",
+    "senses": [
+      {
+        "pos": "num.",
+        "text": "十九"
+      }
+    ]
+  },
+  {
+    "word": "peddle",
+    "phonetic": "ˈpedl",
+    "meaning": "v. 沿街叫卖；兜售",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "沿街叫卖；兜售"
+      }
+    ]
+  },
+  {
+    "word": "proofread",
+    "phonetic": "ˈpruːfriːd",
+    "meaning": "v. 校对",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "校对"
+      }
+    ]
+  },
+  {
+    "word": "repel",
+    "phonetic": "rɪˈpel",
+    "meaning": "v. 击退；排斥；使厌恶",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "击退；排斥；使厌恶"
+      }
+    ]
+  },
+  {
+    "word": "rub",
+    "phonetic": "rʌb",
+    "meaning": "v. 擦；搓；揉",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "擦；搓；揉"
+      }
+    ]
+  },
+  {
+    "word": "sulfur",
+    "phonetic": "ˈsʌlfə",
+    "meaning": "n. 硫；硫磺",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "硫；硫磺"
+      }
+    ]
+  },
+  {
+    "word": "tumor",
+    "phonetic": "ˈtjuːmə",
+    "meaning": "n. 肿瘤；肿块",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "肿瘤；肿块"
+      }
+    ]
+  },
+  {
+    "word": "tune",
+    "phonetic": "tjuːn",
+    "meaning": "n. 曲调  v. 调音；调整",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "曲调"
+      },
+      {
+        "pos": "v.",
+        "text": "调音；调整"
+      }
+    ]
+  },
+  {
+    "word": "up-to-date",
+    "phonetic": "ˌʌp tə ˈdeɪt",
+    "meaning": "adj. 最新的；跟上时代的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "最新的；跟上时代的"
+      }
+    ]
+  },
+  {
+    "word": "maneuver",
+    "phonetic": "məˈnuːvə",
+    "meaning": "n. 策略；演习  v. 调动；操纵",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "策略；演习"
+      },
+      {
+        "pos": "v.",
+        "text": "调动；操纵"
+      }
+    ]
+  },
+  {
+    "word": "mold",
+    "phonetic": "məʊld",
+    "meaning": "n. 模具；霉菌  v. 塑造",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "模具；霉菌"
+      },
+      {
+        "pos": "v.",
+        "text": "塑造"
+      }
+    ]
+  },
+  {
+    "word": "zoom",
+    "phonetic": "zuːm",
+    "meaning": "v. 快速移动；迅速上升；缩放",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "快速移动；迅速上升；缩放"
+      }
+    ]
+  },
+  {
+    "word": "abnormal",
+    "phonetic": "æbˈnɔːml",
+    "meaning": "adj. 不正常的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "不正常的"
+      }
+    ]
+  },
+  {
+    "word": "damn",
+    "phonetic": "dæm",
+    "meaning": "v. 谴责；诅咒  int. 该死",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "谴责；诅咒"
+      },
+      {
+        "pos": "int.",
+        "text": "该死"
+      }
+    ]
+  },
+  {
+    "word": "emancipate",
+    "phonetic": "ɪˈmænsɪpeɪt",
+    "meaning": "v. 解放；使摆脱束缚",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "解放；使摆脱束缚"
+      }
+    ]
+  },
+  {
+    "word": "labor",
+    "phonetic": "ˈleɪbə",
+    "meaning": "n. 劳动；劳工  v. 劳动；努力",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "劳动；劳工"
+      },
+      {
+        "pos": "v.",
+        "text": "劳动；努力"
+      }
+    ]
+  },
+  {
+    "word": "rigor",
+    "phonetic": "ˈrɪɡə",
+    "meaning": "n. 严谨；严格；艰苦",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "严谨；严格；艰苦"
+      }
+    ]
+  },
+  {
+    "word": "overdue",
+    "phonetic": "ˌəʊvəˈdjuː",
+    "meaning": "adj. 逾期的；早该发生的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "逾期的；早该发生的"
+      }
+    ]
+  },
+  {
+    "word": "coconut",
+    "phonetic": "ˈkəʊkənʌt",
+    "meaning": "n. 椰子",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "椰子"
+      }
+    ]
+  },
+  {
+    "word": "aboard",
+    "phonetic": "əˈbɔːd",
+    "meaning": "prep. 在船上  adv. 上船；登机",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "在船上"
+      },
+      {
+        "pos": "adv.",
+        "text": "上船；登机"
+      }
+    ]
+  },
+  {
+    "word": "about",
+    "phonetic": "əˈbaʊt",
+    "meaning": "prep. 关于；大约  adv. 大约；到处",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "关于；大约"
+      },
+      {
+        "pos": "adv.",
+        "text": "大约；到处"
+      }
+    ]
+  },
+  {
+    "word": "across",
+    "phonetic": "əˈkrɒs",
+    "meaning": "prep. 穿过；在…对面  adv. 到对面",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "穿过；在…对面"
+      },
+      {
+        "pos": "adv.",
+        "text": "到对面"
+      }
+    ]
+  },
+  {
+    "word": "advise",
+    "phonetic": "ədˈvaɪz",
+    "meaning": "v. 建议；劝告；通知",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "建议；劝告；通知"
+      }
+    ]
+  },
+  {
+    "word": "appreciate",
+    "phonetic": "əˈpriːʃieɪt",
+    "meaning": "v. 欣赏；感激；理解",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "欣赏；感激；理解"
+      }
+    ]
+  },
+  {
+    "word": "approach",
+    "phonetic": "əˈprəʊtʃ",
+    "meaning": "v. 接近；处理  n. 方法；接近",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "接近；处理"
+      },
+      {
+        "pos": "n.",
+        "text": "方法；接近"
+      }
+    ]
+  },
+  {
+    "word": "approve",
+    "phonetic": "əˈpruːv",
+    "meaning": "v. 赞成；批准",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "赞成；批准"
+      }
+    ]
+  },
+  {
+    "word": "around",
+    "phonetic": "əˈraʊnd",
+    "meaning": "prep. 在…周围  adv. 大约；到处",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "在…周围"
+      },
+      {
+        "pos": "adv.",
+        "text": "大约；到处"
+      }
+    ]
+  },
+  {
+    "word": "as",
+    "phonetic": "æz",
+    "meaning": "prep. 作为  conj. 当…时；因为",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "作为"
+      },
+      {
+        "pos": "conj.",
+        "text": "当…时；因为"
+      }
+    ]
+  },
+  {
+    "word": "assess",
+    "phonetic": "əˈses",
+    "meaning": "v. 评估；评价",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "评估；评价"
+      }
+    ]
+  },
+  {
+    "word": "assimilate",
+    "phonetic": "əˈsɪmɪleɪt",
+    "meaning": "v. 吸收；同化",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "吸收；同化"
+      }
+    ]
+  },
+  {
+    "word": "commit",
+    "phonetic": "kəˈmɪt",
+    "meaning": "v. 犯（罪）；承诺；投入",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "犯（罪）；承诺；投入"
+      }
+    ]
+  },
+  {
+    "word": "contend",
+    "phonetic": "kənˈtend",
+    "meaning": "v. 声称；竞争；争论",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "声称；竞争；争论"
+      }
+    ]
+  },
+  {
+    "word": "crash",
+    "phonetic": "kræʃ",
+    "meaning": "n. 撞击；崩溃  v. 撞车；坠毁",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "撞击；崩溃"
+      },
+      {
+        "pos": "v.",
+        "text": "撞车；坠毁"
+      }
+    ]
+  },
+  {
+    "word": "describe",
+    "phonetic": "dɪˈskraɪb",
+    "meaning": "v. 描述；描绘",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "描述；描绘"
+      }
+    ]
+  },
+  {
+    "word": "dismantle",
+    "phonetic": "dɪsˈmæntl",
+    "meaning": "v. 拆卸；拆除",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "拆卸；拆除"
+      }
+    ]
+  },
+  {
+    "word": "ditch",
+    "phonetic": "dɪtʃ",
+    "meaning": "n. 沟渠  v. 抛弃；摆脱",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "沟渠"
+      },
+      {
+        "pos": "v.",
+        "text": "抛弃；摆脱"
+      }
+    ]
+  },
+  {
+    "word": "dress",
+    "phonetic": "dres",
+    "meaning": "n. 连衣裙；衣服  v. 穿衣；打扮",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "连衣裙；衣服"
+      },
+      {
+        "pos": "v.",
+        "text": "穿衣；打扮"
+      }
+    ]
+  },
+  {
+    "word": "dry",
+    "phonetic": "draɪ",
+    "meaning": "adj. 干燥的；枯燥的  v. 弄干；变干",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "干燥的；枯燥的"
+      },
+      {
+        "pos": "v.",
+        "text": "弄干；变干"
+      }
+    ]
+  },
+  {
+    "word": "entitle",
+    "phonetic": "ɪnˈtaɪtl",
+    "meaning": "v. 使有权；给…命名",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使有权；给…命名"
+      }
+    ]
+  },
+  {
+    "word": "rid",
+    "phonetic": "rɪd",
+    "meaning": "v. 使摆脱；清除",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使摆脱；清除"
+      }
+    ]
+  },
+  {
+    "word": "riddle",
+    "phonetic": "ˈrɪdl",
+    "meaning": "n. 谜语  v. 使布满窟窿",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "谜语"
+      },
+      {
+        "pos": "v.",
+        "text": "使布满窟窿"
+      }
+    ]
+  },
+  {
+    "word": "risk",
+    "phonetic": "rɪsk",
+    "meaning": "n. 风险  v. 冒险",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "风险"
+      },
+      {
+        "pos": "v.",
+        "text": "冒险"
+      }
+    ]
+  },
+  {
+    "word": "sack",
+    "phonetic": "sæk",
+    "meaning": "n. 麻袋  v. 解雇；洗劫",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "麻袋"
+      },
+      {
+        "pos": "v.",
+        "text": "解雇；洗劫"
+      }
+    ]
+  },
+  {
+    "word": "schedule",
+    "phonetic": "ˈʃedjuːl",
+    "meaning": "n. 日程表；计划  v. 安排",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "日程表；计划"
+      },
+      {
+        "pos": "v.",
+        "text": "安排"
+      }
+    ]
+  },
+  {
+    "word": "seat",
+    "phonetic": "siːt",
+    "meaning": "n. 座位；席位  v. 使就座",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "座位；席位"
+      },
+      {
+        "pos": "v.",
+        "text": "使就座"
+      }
+    ]
+  },
+  {
+    "word": "seed",
+    "phonetic": "siːd",
+    "meaning": "n. 种子  v. 播种",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "种子"
+      },
+      {
+        "pos": "v.",
+        "text": "播种"
+      }
+    ]
+  },
+  {
+    "word": "signal",
+    "phonetic": "ˈsɪɡnəl",
+    "meaning": "n. 信号  v. 示意",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "信号"
+      },
+      {
+        "pos": "v.",
+        "text": "示意"
+      }
+    ]
+  },
+  {
+    "word": "slot",
+    "phonetic": "slɒt",
+    "meaning": "n. 狭槽；时段  v. 把…放入",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "狭槽；时段"
+      },
+      {
+        "pos": "v.",
+        "text": "把…放入"
+      }
+    ]
+  },
+  {
+    "word": "smell",
+    "phonetic": "smel",
+    "meaning": "n. 气味；嗅觉  v. 闻；闻起来",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "气味；嗅觉"
+      },
+      {
+        "pos": "v.",
+        "text": "闻；闻起来"
+      }
+    ]
+  },
+  {
+    "word": "sock",
+    "phonetic": "sɒk",
+    "meaning": "n. 短袜",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "短袜"
+      }
+    ]
+  },
+  {
+    "word": "spot",
+    "phonetic": "spɒt",
+    "meaning": "n. 地点；斑点  v. 发现",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "地点；斑点"
+      },
+      {
+        "pos": "v.",
+        "text": "发现"
+      }
+    ]
+  },
+  {
+    "word": "staff",
+    "phonetic": "stɑːf",
+    "meaning": "n. 全体员工  v. 配备人员",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "全体员工"
+      },
+      {
+        "pos": "v.",
+        "text": "配备人员"
+      }
+    ]
+  },
+  {
+    "word": "survive",
+    "phonetic": "səˈvaɪv",
+    "meaning": "v. 存活；幸免；比…活得久",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "存活；幸免；比…活得久"
+      }
+    ]
+  },
+  {
+    "word": "tan",
+    "phonetic": "tæn",
+    "meaning": "n. 棕褐色  v. 晒黑",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "棕褐色"
+      },
+      {
+        "pos": "v.",
+        "text": "晒黑"
+      }
+    ]
+  },
+  {
+    "word": "truck",
+    "phonetic": "trʌk",
+    "meaning": "n. 卡车",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "卡车"
+      }
+    ]
+  },
+  {
+    "word": "underline",
+    "phonetic": "ˌʌndəˈlaɪn",
+    "meaning": "v. 在…下面画线；强调",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "在…下面画线；强调"
+      }
+    ]
+  },
+  {
+    "word": "undermine",
+    "phonetic": "ˌʌndəˈmaɪn",
+    "meaning": "v. 削弱；损害",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "削弱；损害"
+      }
+    ]
+  },
+  {
+    "word": "unleash",
+    "phonetic": "ʌnˈliːʃ",
+    "meaning": "v. 释放；发泄",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "释放；发泄"
+      }
+    ]
+  },
+  {
+    "word": "weigh",
+    "phonetic": "weɪ",
+    "meaning": "v. 称重；重达；权衡",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "称重；重达；权衡"
+      }
+    ]
+  },
+  {
+    "word": "wet",
+    "phonetic": "wet",
+    "meaning": "adj. 湿的  v. 弄湿",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "湿的"
+      },
+      {
+        "pos": "v.",
+        "text": "弄湿"
+      }
+    ]
+  },
+  {
+    "word": "zip",
+    "phonetic": "zɪp",
+    "meaning": "n. 拉链  v. 拉上拉链；快速移动",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "拉链"
+      },
+      {
+        "pos": "v.",
+        "text": "拉上拉链；快速移动"
+      }
+    ]
+  },
+  {
+    "word": "alloy",
+    "phonetic": "ˈælɔɪ",
+    "meaning": "n. 合金  v. 熔合",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "合金"
+      },
+      {
+        "pos": "v.",
+        "text": "熔合"
+      }
+    ]
+  },
+  {
+    "word": "alongside",
+    "phonetic": "əˌlɒŋˈsaɪd",
+    "meaning": "prep. 在…旁边；与…一起  adv. 在旁边",
+    "senses": [
+      {
+        "pos": "prep.",
+        "text": "在…旁边；与…一起"
+      },
+      {
+        "pos": "adv.",
+        "text": "在旁边"
+      }
+    ]
+  },
+  {
+    "word": "apt",
+    "phonetic": "æpt",
+    "meaning": "adj. 易于…的；恰当的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "易于…的；恰当的"
+      }
+    ]
+  },
+  {
+    "word": "archive",
+    "phonetic": "ˈɑːkaɪv",
+    "meaning": "n. 档案；档案馆  v. 归档",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "档案；档案馆"
+      },
+      {
+        "pos": "v.",
+        "text": "归档"
+      }
+    ]
+  },
+  {
+    "word": "attribute",
+    "phonetic": "əˈtrɪbjuːt",
+    "meaning": "v. 把…归因于  n. 属性；特征",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "把…归因于"
+      },
+      {
+        "pos": "n.",
+        "text": "属性；特征"
+      }
+    ]
+  },
+  {
+    "word": "base",
+    "phonetic": "beɪs",
+    "meaning": "n. 基础；基地  v. 以…为基础",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "基础；基地"
+      },
+      {
+        "pos": "v.",
+        "text": "以…为基础"
+      }
+    ]
+  },
+  {
+    "word": "border",
+    "phonetic": "ˈbɔːdə",
+    "meaning": "n. 边界；边缘  v. 与…接壤",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "边界；边缘"
+      },
+      {
+        "pos": "v.",
+        "text": "与…接壤"
+      }
+    ]
+  },
+  {
+    "word": "brief",
+    "phonetic": "briːf",
+    "meaning": "adj. 简短的；短暂的  v. 向…介绍情况",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "简短的；短暂的"
+      },
+      {
+        "pos": "v.",
+        "text": "向…介绍情况"
+      }
+    ]
+  },
+  {
+    "word": "challenge",
+    "phonetic": "ˈtʃælɪndʒ",
+    "meaning": "n. 挑战；质疑  v. 挑战；质疑",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "挑战；质疑"
+      },
+      {
+        "pos": "v.",
+        "text": "挑战；质疑"
+      }
+    ]
+  },
+  {
+    "word": "channel",
+    "phonetic": "ˈtʃænl",
+    "meaning": "n. 频道；渠道；海峡  v. 引导",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "频道；渠道；海峡"
+      },
+      {
+        "pos": "v.",
+        "text": "引导"
+      }
+    ]
+  },
+  {
+    "word": "clothe",
+    "phonetic": "kləʊð",
+    "meaning": "v. 给…穿衣；为…提供衣服",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "给…穿衣；为…提供衣服"
+      }
+    ]
+  },
+  {
+    "word": "coat",
+    "phonetic": "kəʊt",
+    "meaning": "n. 外套；涂层  v. 覆盖；涂上",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "外套；涂层"
+      },
+      {
+        "pos": "v.",
+        "text": "覆盖；涂上"
+      }
+    ]
+  },
+  {
+    "word": "color",
+    "phonetic": "ˈkʌlə",
+    "meaning": "n. 颜色；肤色  v. 着色；影响",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "颜色；肤色"
+      },
+      {
+        "pos": "v.",
+        "text": "着色；影响"
+      }
+    ]
+  },
+  {
+    "word": "combat",
+    "phonetic": "ˈkɒmbæt",
+    "meaning": "n. 战斗  v. 与…战斗；防治",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "战斗"
+      },
+      {
+        "pos": "v.",
+        "text": "与…战斗；防治"
+      }
+    ]
+  },
+  {
+    "word": "concern",
+    "phonetic": "kənˈsɜːn",
+    "meaning": "n. 担忧；关切  v. 涉及；使担忧",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "担忧；关切"
+      },
+      {
+        "pos": "v.",
+        "text": "涉及；使担忧"
+      }
+    ]
+  },
+  {
+    "word": "construct",
+    "phonetic": "kənˈstrʌkt",
+    "meaning": "v. 建造；构建",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "建造；构建"
+      }
+    ]
+  },
+  {
+    "word": "discourse",
+    "phonetic": "ˈdɪskɔːs",
+    "meaning": "n. 话语；论述；交谈",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "话语；论述；交谈"
+      }
+    ]
+  },
+  {
+    "word": "document",
+    "phonetic": "ˈdɒkjumənt",
+    "meaning": "n. 文件；文献  v. 记录；提供证据",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "文件；文献"
+      },
+      {
+        "pos": "v.",
+        "text": "记录；提供证据"
+      }
+    ]
+  },
+  {
+    "word": "drown",
+    "phonetic": "draʊn",
+    "meaning": "v. 淹死；淹没",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "淹死；淹没"
+      }
+    ]
+  },
+  {
+    "word": "duck",
+    "phonetic": "dʌk",
+    "meaning": "n. 鸭子  v. 低头躲避；逃避",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "鸭子"
+      },
+      {
+        "pos": "v.",
+        "text": "低头躲避；逃避"
+      }
+    ]
+  },
+  {
+    "word": "excuse",
+    "phonetic": "ɪkˈskjuːz",
+    "meaning": "v. 原谅；为…开脱  n. 借口；理由",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "原谅；为…开脱"
+      },
+      {
+        "pos": "n.",
+        "text": "借口；理由"
+      }
+    ]
+  },
+  {
+    "word": "fear",
+    "phonetic": "fɪə",
+    "meaning": "n. 恐惧；担忧  v. 害怕；担心",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "恐惧；担忧"
+      },
+      {
+        "pos": "v.",
+        "text": "害怕；担心"
+      }
+    ]
+  },
+  {
+    "word": "feature",
+    "phonetic": "ˈfiːtʃə",
+    "meaning": "n. 特征；特色  v. 以…为特色",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "特征；特色"
+      },
+      {
+        "pos": "v.",
+        "text": "以…为特色"
+      }
+    ]
+  },
+  {
+    "word": "finance",
+    "phonetic": "ˈfaɪnæns",
+    "meaning": "n. 财政；金融  v. 提供资金",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "财政；金融"
+      },
+      {
+        "pos": "v.",
+        "text": "提供资金"
+      }
+    ]
+  },
+  {
+    "word": "harness",
+    "phonetic": "ˈhɑːnɪs",
+    "meaning": "v. 利用；驾驭  n. 马具；安全带",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "利用；驾驭"
+      },
+      {
+        "pos": "n.",
+        "text": "马具；安全带"
+      }
+    ]
+  },
+  {
+    "word": "huddle",
+    "phonetic": "ˈhʌdl",
+    "meaning": "v. 挤在一起；蜷缩  n. 聚集的人群",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "挤在一起；蜷缩"
+      },
+      {
+        "pos": "n.",
+        "text": "聚集的人群"
+      }
+    ]
+  },
+  {
+    "word": "humble",
+    "phonetic": "ˈhʌmbl",
+    "meaning": "adj. 谦逊的；卑微的  v. 使谦卑",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "谦逊的；卑微的"
+      },
+      {
+        "pos": "v.",
+        "text": "使谦卑"
+      }
+    ]
+  },
+  {
+    "word": "identify",
+    "phonetic": "aɪˈdentɪfaɪ",
+    "meaning": "v. 识别；确认；认同",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "识别；确认；认同"
+      }
+    ]
+  },
+  {
+    "word": "impose",
+    "phonetic": "ɪmˈpəʊz",
+    "meaning": "v. 强加；征收（税款）；施行",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "强加；征收（税款）；施行"
+      }
+    ]
+  },
+  {
+    "word": "improve",
+    "phonetic": "ɪmˈpruːv",
+    "meaning": "v. 改善；提高",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "改善；提高"
+      }
+    ]
+  },
+  {
+    "word": "include",
+    "phonetic": "ɪnˈkluːd",
+    "meaning": "v. 包括；包含",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "包括；包含"
+      }
+    ]
+  },
+  {
+    "word": "intrigue",
+    "phonetic": "ɪnˈtriːɡ",
+    "meaning": "v. 激起好奇心；密谋  n. 阴谋",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "激起好奇心；密谋"
+      },
+      {
+        "pos": "n.",
+        "text": "阴谋"
+      }
+    ]
+  },
+  {
+    "word": "justify",
+    "phonetic": "ˈdʒʌstɪfaɪ",
+    "meaning": "v. 证明…有理；为…辩护",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "证明…有理；为…辩护"
+      }
+    ]
+  },
+  {
+    "word": "offset",
+    "phonetic": "ˌɒfˈset",
+    "meaning": "v. 抵消；弥补",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "抵消；弥补"
+      }
+    ]
+  },
+  {
+    "word": "orbit",
+    "phonetic": "ˈɔːbɪt",
+    "meaning": "n. 轨道  v. 绕…运行",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "轨道"
+      },
+      {
+        "pos": "v.",
+        "text": "绕…运行"
+      }
+    ]
+  },
+  {
+    "word": "outlaw",
+    "phonetic": "ˈaʊtlɔː",
+    "meaning": "v. 宣布非法；禁止  n. 逃犯",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "宣布非法；禁止"
+      },
+      {
+        "pos": "n.",
+        "text": "逃犯"
+      }
+    ]
+  },
+  {
+    "word": "overlap",
+    "phonetic": "ˌəʊvəˈlæp",
+    "meaning": "v. 部分重叠；交叠  n. 重叠部分",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "部分重叠；交叠"
+      },
+      {
+        "pos": "n.",
+        "text": "重叠部分"
+      }
+    ]
+  },
+  {
+    "word": "owe",
+    "phonetic": "əʊ",
+    "meaning": "v. 欠；应归功于",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "欠；应归功于"
+      }
+    ]
+  },
+  {
+    "word": "patent",
+    "phonetic": "ˈpeɪtnt",
+    "meaning": "n. 专利  v. 获得专利",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "专利"
+      },
+      {
+        "pos": "v.",
+        "text": "获得专利"
+      }
+    ]
+  },
+  {
+    "word": "peel",
+    "phonetic": "piːl",
+    "meaning": "v. 削皮；剥落  n. 果皮",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "削皮；剥落"
+      },
+      {
+        "pos": "n.",
+        "text": "果皮"
+      }
+    ]
+  },
+  {
+    "word": "pending",
+    "phonetic": "ˈpendɪŋ",
+    "meaning": "adj. 待定的；待处理的  prep. 等待…期间",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "待定的；待处理的"
+      },
+      {
+        "pos": "prep.",
+        "text": "等待…期间"
+      }
+    ]
+  },
+  {
+    "word": "peril",
+    "phonetic": "ˈperəl",
+    "meaning": "n. 危险；险境",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "危险；险境"
+      }
+    ]
+  },
+  {
+    "word": "plead",
+    "phonetic": "pliːd",
+    "meaning": "v. 恳求；辩护",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "恳求；辩护"
+      }
+    ]
+  },
+  {
+    "word": "poise",
+    "phonetic": "pɔɪz",
+    "meaning": "n. 镇定；优雅姿态  v. 保持平衡",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "镇定；优雅姿态"
+      },
+      {
+        "pos": "v.",
+        "text": "保持平衡"
+      }
+    ]
+  },
+  {
+    "word": "poll",
+    "phonetic": "pəʊl",
+    "meaning": "n. 民意调查；投票  v. 做民意调查",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "民意调查；投票"
+      },
+      {
+        "pos": "v.",
+        "text": "做民意调查"
+      }
+    ]
+  },
+  {
+    "word": "precede",
+    "phonetic": "prɪˈsiːd",
+    "meaning": "v. 在…之前；先于",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "在…之前；先于"
+      }
+    ]
+  },
+  {
+    "word": "preface",
+    "phonetic": "ˈprefəs",
+    "meaning": "n. 序言  v. 为…作序",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "序言"
+      },
+      {
+        "pos": "v.",
+        "text": "为…作序"
+      }
+    ]
+  },
+  {
+    "word": "process",
+    "phonetic": "ˈprəʊses",
+    "meaning": "n. 过程；工序  v. 处理；加工",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "过程；工序"
+      },
+      {
+        "pos": "v.",
+        "text": "处理；加工"
+      }
+    ]
+  },
+  {
+    "word": "prone",
+    "phonetic": "prəʊn",
+    "meaning": "adj. 易于…的；俯卧的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "易于…的；俯卧的"
+      }
+    ]
+  },
+  {
+    "word": "rack",
+    "phonetic": "ræk",
+    "meaning": "n. 架子  v. 折磨；使痛苦",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "架子"
+      },
+      {
+        "pos": "v.",
+        "text": "折磨；使痛苦"
+      }
+    ]
+  },
+  {
+    "word": "reassure",
+    "phonetic": "ˌriːəˈʃʊə",
+    "meaning": "v. 使安心；打消顾虑",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "使安心；打消顾虑"
+      }
+    ]
+  },
+  {
+    "word": "refer",
+    "phonetic": "rɪˈfɜː",
+    "meaning": "v. 提及；参考；指的是",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "提及；参考；指的是"
+      }
+    ]
+  },
+  {
+    "word": "regret",
+    "phonetic": "rɪˈɡret",
+    "meaning": "v. 后悔；惋惜  n. 遗憾；悔意",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "后悔；惋惜"
+      },
+      {
+        "pos": "n.",
+        "text": "遗憾；悔意"
+      }
+    ]
+  },
+  {
+    "word": "respond",
+    "phonetic": "rɪˈspɒnd",
+    "meaning": "v. 回答；作出反应",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "回答；作出反应"
+      }
+    ]
+  },
+  {
+    "word": "serve",
+    "phonetic": "sɜːv",
+    "meaning": "v. 服务；提供；担任；招待",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "服务；提供；担任；招待"
+      }
+    ]
+  },
+  {
+    "word": "shore",
+    "phonetic": "ʃɔː",
+    "meaning": "n. 岸  v. 支撑",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "岸"
+      },
+      {
+        "pos": "v.",
+        "text": "支撑"
+      }
+    ]
+  },
+  {
+    "word": "skirt",
+    "phonetic": "skɜːt",
+    "meaning": "n. 裙子  v. 绕过；回避",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "裙子"
+      },
+      {
+        "pos": "v.",
+        "text": "绕过；回避"
+      }
+    ]
+  },
+  {
+    "word": "so",
+    "phonetic": "səʊ",
+    "meaning": "adv. 如此；这么  conj. 所以",
+    "senses": [
+      {
+        "pos": "adv.",
+        "text": "如此；这么"
+      },
+      {
+        "pos": "conj.",
+        "text": "所以"
+      }
+    ]
+  },
+  {
+    "word": "susceptible",
+    "phonetic": "səˈseptəbl",
+    "meaning": "adj. 易受影响的；易感染的",
+    "senses": [
+      {
+        "pos": "adj.",
+        "text": "易受影响的；易感染的"
+      }
+    ]
+  },
+  {
+    "word": "taste",
+    "phonetic": "teɪst",
+    "meaning": "n. 味道；味觉；品味  v. 尝；有…味道",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "味道；味觉；品味"
+      },
+      {
+        "pos": "v.",
+        "text": "尝；有…味道"
+      }
+    ]
+  },
+  {
+    "word": "tempt",
+    "phonetic": "tempt",
+    "meaning": "v. 诱惑；引诱",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "诱惑；引诱"
+      }
+    ]
+  },
+  {
+    "word": "tutor",
+    "phonetic": "ˈtjuːtə",
+    "meaning": "n. 家庭教师；导师  v. 辅导",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "家庭教师；导师"
+      },
+      {
+        "pos": "v.",
+        "text": "辅导"
+      }
+    ]
+  },
+  {
+    "word": "venture",
+    "phonetic": "ˈventʃə",
+    "meaning": "n. 冒险行动；创业项目  v. 冒险；敢于",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "冒险行动；创业项目"
+      },
+      {
+        "pos": "v.",
+        "text": "冒险；敢于"
+      }
+    ]
+  },
+  {
+    "word": "wed",
+    "phonetic": "wed",
+    "meaning": "v. 结婚；使结合",
+    "senses": [
+      {
+        "pos": "v.",
+        "text": "结婚；使结合"
+      }
+    ]
+  },
+  {
+    "word": "weed",
+    "phonetic": "wiːd",
+    "meaning": "n. 杂草  v. 除草；剔除",
+    "senses": [
+      {
+        "pos": "n.",
+        "text": "杂草"
+      },
+      {
+        "pos": "v.",
+        "text": "除草；剔除"
+      }
+    ]
+  }
+]

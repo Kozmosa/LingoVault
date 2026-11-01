@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, type Schema } from "@google/genai";
 import { AISettings, SmartImportFieldMap, SmartImportPlan, WordItem, EssayImportResult } from "../types";
 
 type ResponseFormat = "json_object";
@@ -7,7 +7,7 @@ interface ProviderRequest {
   systemPrompt: string;
   userPrompt: string;
   responseFormat?: ResponseFormat;
-  geminiSchema?: Type;
+  geminiSchema?: Schema;
 }
 
 interface EssayExtractionDraft {
@@ -205,7 +205,7 @@ const SMART_IMPORT_PROMPT = (sample: string) =>
     "Ensure english always maps to the column/path that best represents the base vocabulary."
   ].join("\n\n");
 
-const SMART_IMPORT_SCHEMA: Type = {
+const SMART_IMPORT_SCHEMA: Schema = {
   type: Type.OBJECT,
   properties: {
     format: { type: Type.STRING },
@@ -348,7 +348,7 @@ const ESSAY_EXTRACTION_PROMPT = (text: string) =>
     text
   ].join("\n\n");
 
-const ESSAY_EXTRACTION_SCHEMA: Type = {
+const ESSAY_EXTRACTION_SCHEMA: Schema = {
   type: Type.OBJECT,
   properties: {
     structureComplete: { type: Type.BOOLEAN },
@@ -369,7 +369,7 @@ const ESSAY_TITLE_PROMPT = (content: string) =>
 const ESSAY_TITLE_SYSTEM_PROMPT =
   "You infer concise essay titles from provided compositions. Respond strictly with JSON.";
 
-const ESSAY_TITLE_SCHEMA: Type = {
+const ESSAY_TITLE_SCHEMA: Schema = {
   type: Type.OBJECT,
   properties: {
     title: { type: Type.STRING }
@@ -387,7 +387,7 @@ const ESSAY_REWRITE_PROMPT = (content: string) =>
 const ESSAY_REWRITE_SYSTEM_PROMPT =
   "You polish essay formatting without altering meaning. Respond strictly with JSON.";
 
-const ESSAY_REWRITE_SCHEMA: Type = {
+const ESSAY_REWRITE_SCHEMA: Schema = {
   type: Type.OBJECT,
   properties: {
     content: { type: Type.STRING }

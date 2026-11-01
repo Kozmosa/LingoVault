@@ -38,8 +38,8 @@ export const AddWordModal: React.FC<AddWordModalProps> = ({
   const { t } = useTranslation();
   const [isMounted, setIsMounted] = useState(isOpen);
   const [isVisible, setIsVisible] = useState(isOpen);
-  const enterFrameRef = useRef<number>();
-  const enterDelayRef = useRef<number>();
+  const enterFrameRef = useRef<number | undefined>(undefined);
+  const enterDelayRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     let exitTimer: number | undefined;
